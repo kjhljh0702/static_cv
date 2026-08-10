@@ -3,7 +3,8 @@
 
   var STORAGE_KEYS = {
     language: "myhub-language",
-    theme: "myhub-theme"
+    theme: "myhub-theme",
+    view: "myhub-view-mode"
   };
 
   var UI = {
@@ -27,6 +28,8 @@
       print: "이력서 인쇄",
       themeDark: "다크 모드 켜기",
       themeLight: "라이트 모드 켜기",
+      viewMetaverse: "3D 메타버스 모드 켜기",
+      viewClassic: "기본 CV 모드로 돌아가기",
       language: "Switch to English",
       menuOpen: "메뉴 열기",
       menuClose: "메뉴 닫기",
@@ -55,6 +58,8 @@
       print: "Print CV",
       themeDark: "Enable dark mode",
       themeLight: "Enable light mode",
+      viewMetaverse: "Enable 3D metaverse mode",
+      viewClassic: "Return to classic CV mode",
       language: "한국어로 전환",
       menuOpen: "Open menu",
       menuClose: "Close menu",
@@ -69,6 +74,7 @@
     data: null,
     language: readPreference(STORAGE_KEYS.language) === "en" ? "en" : "ko",
     theme: readPreference(STORAGE_KEYS.theme) === "dark" ? "dark" : "light",
+    view: readPreference(STORAGE_KEYS.view) === "metaverse" ? "metaverse" : "classic",
     observer: null
   };
 
@@ -81,6 +87,7 @@
     headerName: document.getElementById("header-name"),
     menuButton: document.getElementById("menu-button"),
     printButton: document.getElementById("print-button"),
+    viewButton: document.getElementById("view-button"),
     themeButton: document.getElementById("theme-button"),
     languageButton: document.getElementById("language-button"),
     dialog: document.getElementById("media-dialog"),
@@ -510,8 +517,10 @@
   function updateControls() {
     var ui = UI[state.language];
     var isDark = state.theme === "dark";
+    var isMetaverse = state.view === "metaverse";
     elements.root.lang = state.language;
     elements.root.dataset.theme = state.theme;
+    elements.root.dataset.view = state.view;
     elements.headerName.textContent = localize(state.data.profile.displayName);
     elements.languageButton.textContent = state.language === "ko" ? "EN" : "한";
     elements.languageButton.setAttribute("aria-label", ui.language);
@@ -520,12 +529,28 @@
     elements.printButton.title = ui.print;
     elements.themeButton.setAttribute("aria-label", isDark ? ui.themeLight : ui.themeDark);
     elements.themeButton.title = isDark ? ui.themeLight : ui.themeDark;
+    elements.viewButton.setAttribute("aria-label", isMetaverse ? ui.viewClassic : ui.viewMetaverse);
+    elements.viewButton.setAttribute("aria-pressed", String(isMetaverse));
+    elements.viewButton.title = isMetaverse ? ui.viewClassic : ui.viewMetaverse;
     elements.menuButton.setAttribute(
       "aria-label",
       elements.body.classList.contains("nav-open") ? ui.menuClose : ui.menuOpen
     );
     elements.dialogClose.setAttribute("aria-label", ui.closeImage);
     document.title = escapeHtml(localize(state.data.profile.name)) + " CV";
+  }
+
+  function syncMetaverse() {
+    var enabled = state.view === "metaverse";
+    elements.root.dataset.view = state.view;
+    if (window.MyHubMetaverse) {
+      window.MyHubMetaverse.setEnabled(enabled);
+      window.MyHubMetaverse.setTheme(state.theme);
+      return;
+    }
+    window.dispatchEvent(new CustomEvent("myhub-view-change", {
+      detail: { enabled: enabled, theme: state.theme }
+    }));
   }
 
   function renderAll() {
@@ -578,6 +603,7 @@
         }
       });
     }, {
+      root: window.matchMedia("(min-width: 769px)").matches ? elements.content : null,
       rootMargin: "-18% 0px -60% 0px",
       threshold: [0.05, 0.2, 0.5]
     });
@@ -621,6 +647,16 @@
       state.theme = state.theme === "light" ? "dark" : "light";
       savePreference(STORAGE_KEYS.theme, state.theme);
       elements.root.dataset.theme = state.theme;
+      syncMetaverse();
+      if (state.data) {
+        updateControls();
+      }
+    });
+
+    elements.viewButton.addEventListener("click", function () {
+      state.view = state.view === "classic" ? "metaverse" : "classic";
+      savePreference(STORAGE_KEYS.view, state.view);
+      syncMetaverse();
       if (state.data) {
         updateControls();
       }
@@ -669,6 +705,15 @@
     window.addEventListener("afterprint", function () {
       elements.root.removeAttribute("data-print-theme");
     });
+
+    var desktopLayout = window.matchMedia("(min-width: 769px)").matches;
+    window.addEventListener("resize", function () {
+      var nextDesktopLayout = window.matchMedia("(min-width: 769px)").matches;
+      if (desktopLayout !== nextDesktopLayout && state.data) {
+        desktopLayout = nextDesktopLayout;
+        observeSections();
+      }
+    });
   }
 
   async function loadData() {
@@ -681,7 +726,9 @@
 
   async function initialize() {
     elements.root.dataset.theme = state.theme;
+    elements.root.dataset.view = state.view;
     bindEvents();
+    syncMetaverse();
     try {
       state.data = await loadData();
       renderAll();

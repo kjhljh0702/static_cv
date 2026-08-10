@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" data-theme="light">
+<html lang="ko" data-theme="light" data-view="classic">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,9 +12,16 @@
     <link rel="icon" type="image/jpeg" href="res/my_profile.jpeg" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
+    <script type="module" src="metaverse.js?v=184.1"></script>
   </head>
   <body>
     <a class="skip-link" href="#content-panel">본문으로 바로가기</a>
+
+    <div class="metaverse-stage" id="metaverse-stage" aria-hidden="true">
+      <canvas id="metaverse-canvas"></canvas>
+      <div class="metaverse-hud metaverse-hud-left">MYHUB // DIGITAL TWIN</div>
+      <div class="metaverse-hud metaverse-hud-right">THREE.JS r184</div>
+    </div>
 
     <header class="site-header" id="site-header">
       <div class="header-shell">
@@ -44,6 +51,19 @@
           <button class="icon-button" id="print-button" type="button" aria-label="이력서 인쇄">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M7 8V4h10v4M7 17H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M7 14h10v6H7z" />
+            </svg>
+          </button>
+
+          <button
+            class="icon-button view-button"
+            id="view-button"
+            type="button"
+            aria-label="3D 메타버스 모드 켜기"
+            aria-pressed="false"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z" />
+              <path d="m4.4 7.7 7.6 4.4 7.6-4.4M12 12.1V21" />
             </svg>
           </button>
 

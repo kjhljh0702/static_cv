@@ -55,7 +55,7 @@
           "ko": "생년월일",
           "en": "Born"
         },
-        "value": "1998.08.21"
+        "value": "2003.07.02"
       },
       {
         "label": {
@@ -73,8 +73,8 @@
           "en": "Military"
         },
         "value": {
-          "ko": "군필",
-          "en": "Completed"
+          "ko": "면제",
+          "en": "Exempt"
         }
       }
     ],
@@ -84,16 +84,16 @@
           "ko": "이메일",
           "en": "Email"
         },
-        "value": "jeonghun.lee.cv@example.com",
-        "href": "mailto:jeonghun.lee.cv@example.com"
+        "value": "jeonghuni443@gmail.com",
+        "href": "mailto:jeonghuni443@gmail.com"
       },
       {
         "label": {
           "ko": "모바일",
           "en": "Mobile"
         },
-        "value": "010-0000-0000",
-        "href": "tel:+821000000000"
+        "value": "+82 01-7552-7598",
+        "href": "tel:+820175527598"
       }
     ],
     "affiliation": {
@@ -160,7 +160,6 @@
         "ko": "로봇융합공학",
         "en": "Robotics Engineering"
       },
-      "grade": "4.12 / 4.5",
       "description": {
         "ko": "모바일 로봇, 임베디드 시스템, FPGA, 3D CAD 및 프로토타이핑 중심의 프로젝트 수행",
         "en": "Project-focused study in mobile robotics, embedded systems, FPGA design, 3D CAD, and rapid prototyping."

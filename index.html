@@ -51,14 +51,17 @@
 
         <div class="world-touch-controls" id="world-touch-controls" aria-label="3D 이동 컨트롤">
           <div class="world-touch-pad">
-            <button type="button" data-move="forward" aria-label="앞으로 이동">▲</button>
+            <button type="button" data-move="forward" aria-label="앞으로 이동 · 더블탭 달리기">▲</button>
             <button type="button" data-move="left" aria-label="왼쪽으로 이동">◀</button>
             <button type="button" data-move="backward" aria-label="뒤로 이동">▼</button>
             <button type="button" data-move="right" aria-label="오른쪽으로 이동">▶</button>
           </div>
-          <button class="world-touch-interact" id="world-touch-interact" type="button" disabled>
-            열기
-          </button>
+          <div class="world-touch-actions">
+            <button class="world-touch-jump" id="world-touch-jump" type="button">점프</button>
+            <button class="world-touch-interact" id="world-touch-interact" type="button" disabled>
+              열기
+            </button>
+          </div>
         </div>
       </div>
     </div>

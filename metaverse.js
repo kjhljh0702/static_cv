@@ -9,6 +9,7 @@ const interactionPanel = document.getElementById("world-interaction");
 const interactionTitle = document.getElementById("world-interaction-title");
 const interactionAction = document.getElementById("world-interaction-action");
 const touchControls = document.getElementById("world-touch-controls");
+const touchJump = document.getElementById("world-touch-jump");
 const touchInteract = document.getElementById("world-touch-interact");
 const detailDialog = document.getElementById("world-detail-dialog");
 const detailTitle = document.getElementById("world-detail-title");
@@ -45,13 +46,14 @@ const copy = {
     startTitle: "모던 연구 공간을 거닐어 보세요",
     startBody: "전시대로 걸어가 <kbd>E</kbd>를 누르면 CV 섹션이 열립니다.",
     startButton: "탐험 시작",
-    startControls: "WASD 이동 · Shift 달리기 · 더블 탭 점프 · E 열기",
+    startControls: "WASD 이동 · Shift 달리기 · Space 점프 · 모바일 전진 더블탭 달리기 · E 열기",
     openSuffix: "전시대 열기",
     move: "이동",
     look: "시점",
     open: "열기",
     reset: "위치 초기화",
     jump: "점프",
+    touchJump: "점프",
     touchOpen: "열기",
     close: "전시대 닫기"
   },
@@ -59,13 +61,14 @@ const copy = {
     startTitle: "Explore the modern research house",
     startBody: "Walk through the house and press <kbd>E</kbd> at an exhibit to open its CV section.",
     startButton: "Start exploring",
-    startControls: "WASD move · Shift sprint · Double-tap jump · E open",
+    startControls: "WASD move · Shift sprint · Space jump · mobile forward double-tap sprint · E open",
     openSuffix: "Open exhibit",
     move: "Move",
     look: "Look",
     open: "Open",
     reset: "Reset",
     jump: "Jump",
+    touchJump: "Jump",
     touchOpen: "Open",
     close: "Close exhibit"
   }
@@ -135,9 +138,11 @@ let touchLookY = 0;
 let touchLookStartX = 0;
 let touchLookStartY = 0;
 let touchLookMoved = false;
+let touchSprintMode = false;
 let lastTouchTapTime = 0;
 let lastTouchTapX = 0;
 let lastTouchTapY = 0;
+let lastForwardTapTime = 0;
 
 const keys = new Set();
 const touchMoves = new Set();
@@ -391,11 +396,12 @@ function createStation(definition) {
 
   addBox(group, [2.32, 0.14, 0.62], [0, 0.07, 0], baseMaterial);
   addBox(group, [0.14, 1.08, 0.14], [0, 0.62, 0], frameMaterial);
-  const panel = addBox(group, [2.68, 1.44, 0.12], [0, 1.48, 0], panelMaterial);
-  addBox(group, [2.84, 0.085, 0.16], [0, 2.23, 0], frameMaterial);
-  addBox(group, [2.84, 0.085, 0.16], [0, 0.73, 0], frameMaterial);
-  addBox(group, [0.085, 1.55, 0.16], [-1.38, 1.48, 0], frameMaterial);
-  addBox(group, [0.085, 1.55, 0.16], [1.38, 1.48, 0], frameMaterial);
+  const panel = addBox(group, [2.68, 1.44, 0.28], [0, 1.48, -0.02], panelMaterial);
+  addBox(group, [2.7, 1.32, 0.1], [0, 1.48, -0.2], baseMaterial, { castShadow: false });
+  addBox(group, [2.84, 0.085, 0.3], [0, 2.23, 0], frameMaterial);
+  addBox(group, [2.84, 0.085, 0.3], [0, 0.73, 0], frameMaterial);
+  addBox(group, [0.085, 1.55, 0.3], [-1.38, 1.48, 0], frameMaterial);
+  addBox(group, [0.085, 1.55, 0.3], [1.38, 1.48, 0], frameMaterial);
 
   const primary = language === "ko" ? definition.ko : definition.en;
   const secondary = language === "ko" ? definition.en : definition.ko;
@@ -404,7 +410,7 @@ function createStation(definition) {
     transparent: false
   });
   const label = new THREE.Mesh(new THREE.PlaneGeometry(2.48, 1.18), labelMaterial);
-  label.position.set(0, 1.48, 0.07);
+  label.position.set(0, 1.48, 0.14);
   group.add(label);
 
   const ringMaterial = new THREE.MeshBasicMaterial({
@@ -612,6 +618,12 @@ function resetPlayer() {
   camera.rotation.set(pitch, yaw, 0);
   keys.clear();
   touchMoves.clear();
+  touchSprintMode = false;
+  lastForwardTapTime = 0;
+  const forwardButton = touchControls.querySelector('[data-move="forward"]');
+  if (forwardButton) {
+    delete forwardButton.dataset.sprinting;
+  }
   stage.dataset.sprinting = "false";
   stage.dataset.jumping = "false";
   lastTouchTapTime = 0;
@@ -643,12 +655,15 @@ function updateMovement(delta) {
     const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, yaw);
     const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(UP_AXIS, yaw);
     const direction = forward.multiplyScalar(forwardAmount).add(right.multiplyScalar(rightAmount)).normalize();
-    const sprinting = keys.has("ShiftLeft") || keys.has("ShiftRight");
+    const sprinting = keys.has("ShiftLeft") || keys.has("ShiftRight") || (touchSprintMode && forwardAmount > 0);
     const speed = WALK_SPEED * (sprinting ? SPRINT_MULTIPLIER : 1);
     camera.position.addScaledVector(direction, speed * delta);
     camera.position.x = THREE.MathUtils.clamp(camera.position.x, -ROOM_LIMIT_X, ROOM_LIMIT_X);
     camera.position.z = THREE.MathUtils.clamp(camera.position.z, ROOM_LIMIT_Z_MIN, ROOM_LIMIT_Z_MAX);
     stage.dataset.sprinting = String(sprinting);
+  }
+  if (!forwardAmount && !rightAmount) {
+    stage.dataset.sprinting = "false";
   }
 
   if (jumpVelocity !== 0 || jumpOffset > 0) {
@@ -908,6 +923,8 @@ function setLanguage(nextLanguage) {
   startPanel.querySelector("p").innerHTML = text.startBody;
   startButton.textContent = text.startButton;
   startPanel.querySelector(".world-start-controls").textContent = text.startControls;
+  touchJump.textContent = text.touchJump;
+  touchJump.setAttribute("aria-label", text.touchJump);
   touchInteract.textContent = text.touchOpen;
   interactionAction.textContent = text.openSuffix;
   document.getElementById("world-help-move").textContent = text.move;
@@ -915,6 +932,10 @@ function setLanguage(nextLanguage) {
   document.getElementById("world-help-open").textContent = text.open;
   document.getElementById("world-help-reset").textContent = text.reset;
   document.getElementById("world-help-jump").textContent = text.jump;
+  touchControls.querySelector('[data-move="forward"]').setAttribute(
+    "aria-label",
+    language === "ko" ? "앞으로 이동 · 더블탭 달리기" : "Move forward · double-tap to sprint"
+  );
   updateWallDisplay();
   detailClose.setAttribute("aria-label", text.close);
   if (changed && stations.length) {
@@ -1031,6 +1052,16 @@ function bindTouchControls() {
       if (!started) {
         beginExploration();
       }
+      if (direction === "forward") {
+        const now = performance.now();
+        if (now - lastForwardTapTime < 320) {
+          touchSprintMode = !touchSprintMode;
+          button.dataset.sprinting = String(touchSprintMode);
+          lastForwardTapTime = 0;
+        } else {
+          lastForwardTapTime = now;
+        }
+      }
       touchMoves.add(direction);
       button.setPointerCapture?.(event.pointerId);
     };
@@ -1042,6 +1073,13 @@ function bindTouchControls() {
     button.addEventListener("pointerup", deactivate);
     button.addEventListener("pointercancel", deactivate);
     button.addEventListener("pointerleave", deactivate);
+  });
+  touchJump.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    if (!started) {
+      beginExploration();
+    }
+    triggerJump();
   });
 }
 

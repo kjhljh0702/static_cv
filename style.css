@@ -303,7 +303,16 @@ kbd {
   pointer-events: auto;
 }
 
+.world-touch-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  pointer-events: auto;
+}
+
 .world-touch-pad button,
+.world-touch-jump,
 .world-touch-interact {
   display: grid;
   padding: 0;
@@ -340,12 +349,28 @@ kbd {
   grid-column: 3;
 }
 
+.world-touch-pad button[data-sprinting="true"] {
+  border-color: #b2744d;
+  background: rgba(178, 116, 77, 0.92);
+  color: #ffffff;
+}
+
 .world-touch-interact {
   min-width: 72px;
   min-height: 48px;
   border-color: #9f603d;
   border-radius: 999px;
   background: rgba(168, 103, 68, 0.92);
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.world-touch-jump {
+  min-width: 72px;
+  min-height: 48px;
+  border-color: #b2744d;
+  border-radius: 999px;
+  background: rgba(178, 116, 77, 0.94);
   color: #ffffff;
   pointer-events: auto;
 }
@@ -1639,6 +1664,7 @@ svg {
   }
 
   .world-touch-pad button,
+  .world-touch-jump,
   .world-touch-interact {
     display: grid;
     padding: 0;
@@ -1675,12 +1701,28 @@ svg {
     grid-column: 3;
   }
 
+  .world-touch-pad button[data-sprinting="true"] {
+    border-color: #93c5fd;
+    background: rgba(37, 99, 235, 0.92);
+    color: #ffffff;
+  }
+
   .world-touch-interact {
     min-width: 72px;
     min-height: 48px;
     border-color: #60a5fa;
     border-radius: 999px;
     background: rgba(37, 99, 235, 0.82);
+    pointer-events: auto;
+  }
+
+  .world-touch-jump {
+    min-width: 72px;
+    min-height: 48px;
+    border-color: #60a5fa;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.9);
+    color: #ffffff;
     pointer-events: auto;
   }
 

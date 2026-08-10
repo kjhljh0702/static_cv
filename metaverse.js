@@ -19,6 +19,9 @@ const coarsePointer = window.matchMedia("(pointer: coarse)");
 
 const PLAYER_HEIGHT = 1.68;
 const WALK_SPEED = 3.75;
+const SPRINT_MULTIPLIER = 1.8;
+const JUMP_SPEED = 5.4;
+const GRAVITY = 16;
 const ROOM_LIMIT_X = 12.65;
 const ROOM_LIMIT_Z_MIN = -10.5;
 const ROOM_LIMIT_Z_MAX = 10.2;
@@ -42,12 +45,13 @@ const copy = {
     startTitle: "모던 연구 공간을 거닐어 보세요",
     startBody: "전시대로 걸어가 <kbd>E</kbd>를 누르면 CV 섹션이 열립니다.",
     startButton: "탐험 시작",
-    startControls: "WASD 이동 · 마우스 시점 · E 열기 · R 시작 위치",
+    startControls: "WASD 이동 · Shift 달리기 · 더블 탭 점프 · E 열기",
     openSuffix: "전시대 열기",
     move: "이동",
     look: "시점",
     open: "열기",
     reset: "위치 초기화",
+    jump: "점프",
     touchOpen: "열기",
     close: "전시대 닫기"
   },
@@ -55,12 +59,13 @@ const copy = {
     startTitle: "Explore the modern research house",
     startBody: "Walk through the house and press <kbd>E</kbd> at an exhibit to open its CV section.",
     startButton: "Start exploring",
-    startControls: "WASD move · Mouse look · E open · R reset position",
+    startControls: "WASD move · Shift sprint · Double-tap jump · E open",
     openSuffix: "Open exhibit",
     move: "Move",
     look: "Look",
     open: "Open",
     reset: "Reset",
+    jump: "Jump",
     touchOpen: "Open",
     close: "Close exhibit"
   }
@@ -120,9 +125,19 @@ let nearestStation = null;
 let activeSectionId = null;
 let robotArm;
 let rover;
+let universityLogo;
+let wallDisplayMaterial;
+let jumpVelocity = 0;
+let jumpOffset = 0;
 let touchLookPointer = null;
 let touchLookX = 0;
 let touchLookY = 0;
+let touchLookStartX = 0;
+let touchLookStartY = 0;
+let touchLookMoved = false;
+let lastTouchTapTime = 0;
+let lastTouchTapX = 0;
+let lastTouchTapY = 0;
 
 const keys = new Set();
 const touchMoves = new Set();
@@ -201,11 +216,65 @@ function createTextTexture(primary, secondary, code, compact = false) {
 }
 
 function createWallDisplay() {
-  const texture = createTextTexture("연구의 집", "JEONGHUN LEE · RESEARCH HOUSE", "MYHUB", true);
+  const primary = language === "ko" ? "연구의 집" : "RESEARCH HOUSE";
+  const secondary = language === "ko" ? "JEONGHUN LEE · RESEARCH HOUSE" : "JEONGHUN LEE · 연구의 집";
+  const texture = createTextTexture(primary, secondary, "MYHUB", true);
   const displayMaterial = new THREE.MeshBasicMaterial({ map: texture });
+  wallDisplayMaterial = displayMaterial;
   const display = new THREE.Mesh(new THREE.PlaneGeometry(4.8, 1.2), displayMaterial);
-  display.position.set(0, 3.25, -11.72);
+  display.position.set(0, 3.25, -11.34);
   scene.add(display);
+}
+
+function updateWallDisplay() {
+  if (!wallDisplayMaterial) {
+    return;
+  }
+  const primary = language === "ko" ? "연구의 집" : "RESEARCH HOUSE";
+  const secondary = language === "ko" ? "JEONGHUN LEE · RESEARCH HOUSE" : "JEONGHUN LEE · 연구의 집";
+  const oldTexture = wallDisplayMaterial.map;
+  wallDisplayMaterial.map = createTextTexture(primary, secondary, "MYHUB", true);
+  wallDisplayMaterial.needsUpdate = true;
+  oldTexture?.dispose();
+}
+
+function createUniversityLogo() {
+  const loader = new THREE.TextureLoader();
+  loader.load("res/hanyang-logo.png", (texture) => {
+    const image = texture.image;
+    const logoCanvas = document.createElement("canvas");
+    logoCanvas.width = image.width;
+    logoCanvas.height = image.height;
+    const context = logoCanvas.getContext("2d", { willReadFrequently: true });
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, logoCanvas.width, logoCanvas.height);
+    for (let index = 0; index < pixels.data.length; index += 4) {
+      const red = pixels.data[index];
+      const green = pixels.data[index + 1];
+      const blue = pixels.data[index + 2];
+      if (red > 232 && green > 232 && blue > 232) {
+        pixels.data[index + 3] = 0;
+      }
+    }
+    context.putImageData(pixels, 0, 0);
+    const logoTexture = new THREE.CanvasTexture(logoCanvas);
+    logoTexture.colorSpace = THREE.SRGBColorSpace;
+    texture.dispose();
+    const material = new THREE.MeshBasicMaterial({
+      map: logoTexture,
+      transparent: true,
+      alphaTest: 0.03,
+      side: THREE.DoubleSide,
+      depthWrite: false
+    });
+    const logo = new THREE.Mesh(new THREE.PlaneGeometry(2.35, 2.35), material);
+    universityLogo = new THREE.Group();
+    universityLogo.position.set(0, 3.02, -4.25);
+    universityLogo.userData.baseY = 3.02;
+    universityLogo.add(logo);
+    scene.add(universityLogo);
+    stage.dataset.logoReady = "true";
+  });
 }
 
 function createPlant(position, scale = 1) {
@@ -299,10 +368,11 @@ function createRoom() {
 
   createWallDisplay();
   createLounge();
-  createPlant([-11.85, 9.2], 1.28);
-  createPlant([11.85, 9.2], 1.28);
+  createPlant([-5.9, 9.35], 1.12);
+  createPlant([5.9, 9.35], 1.12);
   createPlant([-11.85, -9.15], 1.16);
   createPlant([11.85, -9.15], 1.16);
+  createUniversityLogo();
 }
 
 function createStation(definition) {
@@ -537,13 +607,26 @@ function resetPlayer() {
   camera.position.copy(START_POSITION);
   yaw = 0;
   pitch = -0.06;
+  jumpVelocity = 0;
+  jumpOffset = 0;
   camera.rotation.set(pitch, yaw, 0);
   keys.clear();
   touchMoves.clear();
+  stage.dataset.sprinting = "false";
+  stage.dataset.jumping = "false";
+  lastTouchTapTime = 0;
+  touchLookMoved = false;
 }
 
 function getMoveState(name, code) {
   return touchMoves.has(name) || keys.has(code);
+}
+
+function triggerJump() {
+  if (!enabled || !started || detailDialog.open || jumpOffset > 0.01 || jumpVelocity > 0) {
+    return;
+  }
+  jumpVelocity = JUMP_SPEED;
 }
 
 function updateMovement(delta) {
@@ -556,17 +639,28 @@ function updateMovement(delta) {
   const rightAmount = Number(getMoveState("right", "KeyD") || keys.has("ArrowRight")) -
     Number(getMoveState("left", "KeyA") || keys.has("ArrowLeft"));
 
-  if (!forwardAmount && !rightAmount) {
-    return;
+  if (forwardAmount || rightAmount) {
+    const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, yaw);
+    const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(UP_AXIS, yaw);
+    const direction = forward.multiplyScalar(forwardAmount).add(right.multiplyScalar(rightAmount)).normalize();
+    const sprinting = keys.has("ShiftLeft") || keys.has("ShiftRight");
+    const speed = WALK_SPEED * (sprinting ? SPRINT_MULTIPLIER : 1);
+    camera.position.addScaledVector(direction, speed * delta);
+    camera.position.x = THREE.MathUtils.clamp(camera.position.x, -ROOM_LIMIT_X, ROOM_LIMIT_X);
+    camera.position.z = THREE.MathUtils.clamp(camera.position.z, ROOM_LIMIT_Z_MIN, ROOM_LIMIT_Z_MAX);
+    stage.dataset.sprinting = String(sprinting);
   }
 
-  const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, yaw);
-  const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(UP_AXIS, yaw);
-  const direction = forward.multiplyScalar(forwardAmount).add(right.multiplyScalar(rightAmount)).normalize();
-  camera.position.addScaledVector(direction, WALK_SPEED * delta);
-  camera.position.x = THREE.MathUtils.clamp(camera.position.x, -ROOM_LIMIT_X, ROOM_LIMIT_X);
-  camera.position.z = THREE.MathUtils.clamp(camera.position.z, ROOM_LIMIT_Z_MIN, ROOM_LIMIT_Z_MAX);
-  camera.position.y = PLAYER_HEIGHT;
+  if (jumpVelocity !== 0 || jumpOffset > 0) {
+    jumpOffset += jumpVelocity * delta;
+    jumpVelocity -= GRAVITY * delta;
+    if (jumpOffset <= 0) {
+      jumpOffset = 0;
+      jumpVelocity = 0;
+    }
+  }
+  camera.position.y = PLAYER_HEIGHT + jumpOffset;
+  stage.dataset.jumping = String(jumpOffset > 0);
 }
 
 function updateNearestStation(elapsed) {
@@ -615,6 +709,10 @@ function updateDecorations(elapsed) {
   }
   if (rover) {
     rover.rotation.y = Math.sin(elapsed * 0.28) * 0.04;
+  }
+  if (universityLogo) {
+    universityLogo.rotation.y = elapsed * 0.18;
+    universityLogo.position.y = universityLogo.userData.baseY + Math.sin(elapsed * 0.8) * 0.06;
   }
 }
 
@@ -791,7 +889,7 @@ function setTheme(nextTheme) {
   themedMaterials.forEach(({ material, key }) => material.color.setHex(palette[key]));
   if (grid) {
     grid.material.color.setHex(palette.grid);
-    grid.material.opacity = theme === "dark" ? 0.24 : 0.18;
+    grid.material.opacity = theme === "dark" ? 0.07 : 0.025;
   }
   if (hemisphereLight) {
     hemisphereLight.color.setHex(palette.ambientSky);
@@ -816,6 +914,8 @@ function setLanguage(nextLanguage) {
   document.getElementById("world-help-look").textContent = text.look;
   document.getElementById("world-help-open").textContent = text.open;
   document.getElementById("world-help-reset").textContent = text.reset;
+  document.getElementById("world-help-jump").textContent = text.jump;
+  updateWallDisplay();
   detailClose.setAttribute("aria-label", text.close);
   if (changed && stations.length) {
     updateStationLabels();
@@ -827,9 +927,13 @@ function handleKeyDown(event) {
   if (!enabled || detailDialog.open) {
     return;
   }
-  if (["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.code)) {
+  if (["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "ShiftLeft", "ShiftRight"].includes(event.code)) {
     event.preventDefault();
     keys.add(event.code);
+  }
+  if (event.code === "Space" && !event.repeat) {
+    event.preventDefault();
+    triggerJump();
   }
   if (event.code === "KeyE" && !event.repeat) {
     event.preventDefault();
@@ -870,6 +974,9 @@ function handleCanvasPointerDown(event) {
     touchLookPointer = event.pointerId;
     touchLookX = event.clientX;
     touchLookY = event.clientY;
+    touchLookStartX = event.clientX;
+    touchLookStartY = event.clientY;
+    touchLookMoved = false;
     canvas.setPointerCapture?.(event.pointerId);
     return;
   }
@@ -886,6 +993,9 @@ function handleCanvasPointerMove(event) {
   }
   const dx = event.clientX - touchLookX;
   const dy = event.clientY - touchLookY;
+  if (Math.hypot(event.clientX - touchLookStartX, event.clientY - touchLookStartY) > 12) {
+    touchLookMoved = true;
+  }
   touchLookX = event.clientX;
   touchLookY = event.clientY;
   yaw -= dx * 0.008;
@@ -896,6 +1006,20 @@ function handleCanvasPointerMove(event) {
 function releaseTouchLook(event) {
   if (event.pointerId === touchLookPointer) {
     touchLookPointer = null;
+  }
+  if (event.type === "pointerup" && event.pointerType === "touch" && started && !detailDialog.open) {
+    const now = performance.now();
+    const distance = Math.hypot(event.clientX - lastTouchTapX, event.clientY - lastTouchTapY);
+    if (!touchLookMoved && now - lastTouchTapTime < 320 && distance < 32) {
+      triggerJump();
+      lastTouchTapTime = 0;
+      return;
+    }
+    lastTouchTapTime = touchLookMoved ? 0 : now;
+    if (!touchLookMoved) {
+      lastTouchTapX = event.clientX;
+      lastTouchTapY = event.clientY;
+    }
   }
 }
 

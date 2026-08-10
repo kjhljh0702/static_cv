@@ -616,6 +616,10 @@ svg {
   gap: 28px;
 }
 
+.page-shell[hidden] {
+  display: none !important;
+}
+
 .profile-panel {
   position: relative;
   min-height: 0;
@@ -839,6 +843,8 @@ svg {
 
 .content-panel {
   display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
   min-width: 0;
   min-height: 0;
   overflow-x: hidden;

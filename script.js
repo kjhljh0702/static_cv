@@ -90,6 +90,7 @@
     viewButton: document.getElementById("view-button"),
     themeButton: document.getElementById("theme-button"),
     languageButton: document.getElementById("language-button"),
+    pageShell: document.querySelector(".page-shell"),
     dialog: document.getElementById("media-dialog"),
     dialogClose: document.getElementById("dialog-close"),
     dialogImage: document.getElementById("media-image"),
@@ -543,6 +544,8 @@
   function syncMetaverse() {
     var enabled = state.view === "metaverse";
     elements.root.dataset.view = state.view;
+    elements.pageShell.hidden = enabled;
+    elements.pageShell.inert = enabled;
     if (window.MyHubMetaverse) {
       window.MyHubMetaverse.setEnabled(enabled);
       window.MyHubMetaverse.setTheme(state.theme);
@@ -705,10 +708,14 @@
 
     window.addEventListener("beforeprint", function () {
       elements.root.setAttribute("data-print-theme", "light");
+      elements.pageShell.hidden = false;
+      elements.pageShell.inert = false;
     });
 
     window.addEventListener("afterprint", function () {
       elements.root.removeAttribute("data-print-theme");
+      elements.pageShell.hidden = state.view === "metaverse";
+      elements.pageShell.inert = state.view === "metaverse";
     });
 
     var desktopLayout = window.matchMedia("(min-width: 769px)").matches;

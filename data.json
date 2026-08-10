@@ -1,0 +1,652 @@
+{
+  "profile": {
+    "photo": "res/my_profile.jpeg",
+    "name": {
+      "ko": "이정훈",
+      "en": "Jeonghun Lee"
+    },
+    "displayName": {
+      "ko": "이정훈 · Jeonghun Lee",
+      "en": "Jeonghun Lee · 이정훈"
+    },
+    "headline": {
+      "ko": "정적 분석 · 코드 인텔리전스 · 로보틱스",
+      "en": "Static Analysis · Code Intelligence · Robotics"
+    },
+    "roles": [
+      {
+        "ko": "컴퓨터공학 석사과정",
+        "en": "M.S. Student in Computer Science"
+      },
+      {
+        "ko": "연구자",
+        "en": "Researcher"
+      },
+      {
+        "ko": "로보틱스 엔지니어",
+        "en": "Robotics Engineer"
+      }
+    ],
+    "introTitle": {
+      "ko": "코드의 의미를 이해하고, 실제 시스템의 문제를 해결합니다.",
+      "en": "Understanding code semantics to solve real-world system problems."
+    },
+    "about": {
+      "ko": "한양대학교 프로그램 시스템 연구실에서 Type-4 악성 코드 클론 탐지와 정적 분석 알람 랭킹을 연구하는 컴퓨터공학 석사과정생입니다. 로봇융합공학 학사 과정에서 쌓은 하드웨어·제어 경험에 대조학습 기반 표현 학습을 결합해, 수작업 특징 설계 없이도 재발 취약점과 의미적으로 유사한 코드를 식별하는 방법을 탐구합니다. 로봇 기업의 국제 미팅 및 MOU 커뮤니케이션 통번역과 영어 교육 경험을 바탕으로 기술과 사람 사이를 명확하게 연결하는 데 강점이 있습니다.",
+      "en": "I am an M.S. student in Computer Science at Hanyang University's Programming Systems Lab, researching Type-4 malicious code clone detection and static-analysis alarm ranking. I combine hands-on hardware and control experience from my B.S. in Robotics Engineering with contrastive representation learning to identify recurring vulnerabilities and semantically similar code without handcrafted features. My experience translating international robotics meetings and MOU discussions, along with teaching English, helps me communicate complex technical ideas clearly across teams."
+    },
+    "focusAreas": [
+      {
+        "ko": "정적 분석",
+        "en": "Static Analysis"
+      },
+      {
+        "ko": "대조학습",
+        "en": "Contrastive Learning"
+      },
+      {
+        "ko": "코드 클론 탐지",
+        "en": "Code Clone Detection"
+      }
+    ],
+    "details": [
+      {
+        "label": {
+          "ko": "생년월일",
+          "en": "Born"
+        },
+        "value": "1998.08.21"
+      },
+      {
+        "label": {
+          "ko": "주소",
+          "en": "Location"
+        },
+        "value": {
+          "ko": "경기도 안산시 상록구",
+          "en": "Sangnok-gu, Ansan, Korea"
+        }
+      },
+      {
+        "label": {
+          "ko": "병역",
+          "en": "Military"
+        },
+        "value": {
+          "ko": "군필",
+          "en": "Completed"
+        }
+      }
+    ],
+    "contacts": [
+      {
+        "label": {
+          "ko": "이메일",
+          "en": "Email"
+        },
+        "value": "jeonghun.lee.cv@example.com",
+        "href": "mailto:jeonghun.lee.cv@example.com"
+      },
+      {
+        "label": {
+          "ko": "모바일",
+          "en": "Mobile"
+        },
+        "value": "010-0000-0000",
+        "href": "tel:+821000000000"
+      }
+    ],
+    "affiliation": {
+      "organization": {
+        "ko": "한양대학교 프로그램 시스템 연구실",
+        "en": "Programming Systems Lab, Hanyang University"
+      },
+      "position": {
+        "ko": "컴퓨터공학 석사과정 · 연구원",
+        "en": "M.S. Student · Graduate Researcher"
+      }
+    },
+    "socials": [
+      {
+        "label": {
+          "ko": "LinkedIn",
+          "en": "LinkedIn"
+        },
+        "url": "https://www.linkedin.com/in/%EC%A0%95%ED%9B%88-%EC%9D%B4-7b7a793b8/"
+      },
+      {
+        "label": {
+          "ko": "한양대학교",
+          "en": "Hanyang University"
+        },
+        "url": "https://www.hanyang.ac.kr/"
+      }
+    ]
+  },
+  "education": [
+    {
+      "start": "2025.03",
+      "end": "2027.02",
+      "degree": {
+        "ko": "공학석사",
+        "en": "Master of Engineering"
+      },
+      "school": {
+        "ko": "한양대학교",
+        "en": "Hanyang University"
+      },
+      "department": {
+        "ko": "컴퓨터공학 · 프로그램 시스템 연구실",
+        "en": "Computer Science · Programming Systems Lab"
+      },
+      "grade": "4.36 / 4.5",
+      "description": {
+        "ko": "Encoder-only LLM 파인튜닝, 대조학습, 정적 분석, 코드 클론 탐지 및 재발 취약점 탐지 연구",
+        "en": "Research in encoder-only LLM fine-tuning, contrastive learning, static analysis, code clone detection, and recurring vulnerability detection."
+      }
+    },
+    {
+      "start": "2022.03",
+      "end": "2025.02",
+      "degree": {
+        "ko": "공학학사",
+        "en": "Bachelor of Engineering"
+      },
+      "school": {
+        "ko": "한양대학교 ERICA",
+        "en": "Hanyang University ERICA"
+      },
+      "department": {
+        "ko": "로봇융합공학",
+        "en": "Robotics Engineering"
+      },
+      "grade": "4.12 / 4.5",
+      "description": {
+        "ko": "모바일 로봇, 임베디드 시스템, FPGA, 3D CAD 및 프로토타이핑 중심의 프로젝트 수행",
+        "en": "Project-focused study in mobile robotics, embedded systems, FPGA design, 3D CAD, and rapid prototyping."
+      }
+    }
+  ],
+  "experience": [
+    {
+      "start": "2025.03",
+      "end": "present",
+      "organization": {
+        "ko": "한양대학교 프로그램 시스템 연구실",
+        "en": "Programming Systems Lab, Hanyang University"
+      },
+      "title": {
+        "ko": "석사과정 연구원",
+        "en": "Graduate Researcher"
+      },
+      "location": {
+        "ko": "경기도 안산",
+        "en": "Ansan, Korea"
+      },
+      "description": {
+        "ko": "대조학습된 encoder-only LLM을 활용한 Type-4 코드 클론 탐지와 정적 분석 알람 랭킹을 연구합니다. trace text 표현, sliding-window attention pooling, 다중 손실 가중 결합을 중심으로 실험 설계와 벤치마크 평가를 수행합니다.",
+        "en": "Researching Type-4 code clone detection and static-analysis alarm ranking with contrastively trained encoder-only LLMs. Work includes trace-text representation, sliding-window attention pooling, multi-loss aggregation, experimental design, and benchmark evaluation."
+      }
+    },
+    {
+      "start": "2024.03",
+      "end": "2025.03",
+      "organization": {
+        "ko": "(주)오토로보틱스",
+        "en": "Auto Robotics Co., Ltd."
+      },
+      "title": {
+        "ko": "국제 커뮤니케이션 · 기술 통번역",
+        "en": "International Communications & Technical Translator"
+      },
+      "location": {
+        "ko": "대구 · 하이브리드",
+        "en": "Daegu · Hybrid"
+      },
+      "description": {
+        "ko": "해외 기업과의 MOU 체결을 위한 화상·대면 회의 및 이메일 커뮤니케이션을 통번역하고, 로봇 기술 맥락을 이해해 양측의 요구사항을 정확히 전달했습니다.",
+        "en": "Interpreted video and in-person meetings and translated email communications for MOU discussions with international companies, bridging technical and business requirements in robotics contexts."
+      }
+    },
+    {
+      "start": "2023.03",
+      "end": "2023.09",
+      "organization": {
+        "ko": "주식회사 실리코너스",
+        "en": "Siliconus Co., Ltd."
+      },
+      "title": {
+        "ko": "3D CAD 디자이너 · 영어 미팅 지원",
+        "en": "3D CAD Designer & English Meeting Support"
+      },
+      "location": {
+        "ko": "경기도 부천",
+        "en": "Bucheon, Korea"
+      },
+      "description": {
+        "ko": "SolidWorks로 프로토타입을 설계하고 3D 프린팅을 통해 제작 가능성을 검증했습니다. 해외 관계자 대면 회의에서 기술 커뮤니케이션을 지원했습니다.",
+        "en": "Designed prototypes in SolidWorks and validated manufacturability through 3D printing. Supported technical communication in face-to-face meetings with international stakeholders."
+      }
+    },
+    {
+      "start": "2021.12",
+      "end": "2023.01",
+      "organization": {
+        "ko": "(주)오토로보틱스",
+        "en": "Auto Robotics Co., Ltd."
+      },
+      "title": {
+        "ko": "영어 통번역 담당",
+        "en": "English Translator & Interpreter"
+      },
+      "location": {
+        "ko": "대구",
+        "en": "Daegu, Korea"
+      },
+      "description": {
+        "ko": "해외 기업과의 MOU 관련 화상·대면 회의 및 이메일의 한영 통번역을 담당했습니다.",
+        "en": "Provided Korean-English interpretation and translation for online and in-person MOU meetings and business email correspondence."
+      }
+    }
+  ],
+  "projects": [
+    {
+      "category": {
+        "ko": "석사 연구",
+        "en": "Graduate Research"
+      },
+      "start": "2025.08",
+      "end": "2026.06",
+      "organization": {
+        "ko": "프로그램 시스템 연구실",
+        "en": "Programming Systems Lab"
+      },
+      "title": {
+        "ko": "피처 엔지니어링 없는 정적 분석 알람 랭킹을 위한 트레이스 기반 대조학습",
+        "en": "Trace-Based Contrastive Learning for Static Analysis Alarm Ranking Without Feature Engineering"
+      },
+      "role": {
+        "ko": "trace 표현 설계 · 모델 파인튜닝 · 평가",
+        "en": "Trace Representation · Model Fine-tuning · Evaluation"
+      },
+      "summary": {
+        "ko": "source-to-sink trace를 텍스트로 변환하고 encoder-only LLM을 대조학습해 임베딩을 생성합니다. 새 알람과 SignatureDB의 확인된 취약점 간 cosine similarity로 recurring vulnerability 기반 우선순위를 계산합니다.",
+        "en": "Transforms source-to-sink traces into text and contrastively trains an encoder-only LLM to produce embeddings. New alarms are ranked by cosine similarity to confirmed vulnerability traces stored in SignatureDB."
+      },
+      "highlights": [
+        {
+          "ko": "Juliet 기반 SignatureDB와 Debian 알람으로 랭킹 성능 평가",
+          "en": "Evaluated ranking performance with a Juliet-derived SignatureDB and Debian alarms."
+        },
+        {
+          "ko": "trace text 대조학습 후 AUC 0.691을 달성해 선행 연구를 상회",
+          "en": "Achieved 0.691 AUC after trace-text contrastive training, outperforming the prior approach."
+        }
+      ],
+      "skills": [
+        "Static Analysis",
+        "Contrastive Learning",
+        "Encoder-only LLM",
+        "Python"
+      ],
+      "image": "res/project-trace-ranking.png",
+      "imageFit": "contain"
+    },
+    {
+      "category": {
+        "ko": "석사 연구",
+        "en": "Graduate Research"
+      },
+      "start": "2025.03",
+      "end": "2025.12",
+      "organization": {
+        "ko": "프로그램 시스템 연구실",
+        "en": "Programming Systems Lab"
+      },
+      "title": {
+        "ko": "슬라이딩 윈도우와 어텐션 강화 대조학습을 활용한 이종 언어 Type-4 클론 탐지",
+        "en": "Cross-language Type-4 Clone Detection with Sliding Window and Attention-enhanced Contrastive Learning"
+      },
+      "role": {
+        "ko": "대조학습 파이프라인 · 긴 코드 표현 · 실험",
+        "en": "Contrastive Pipeline · Long-code Representation · Experiments"
+      },
+      "summary": {
+        "ko": "LLM 생성 코드 설명을 의미적 가이드로 사용하고, sliding window와 attention pooling으로 encoder 길이 제한을 보완해 서로 다른 언어의 기능적으로 동일한 Type-4 클론을 탐지합니다.",
+        "en": "Uses LLM-generated code descriptions as semantic guidance and combines sliding windows with attention pooling to overcome encoder length limits for cross-language Type-4 clone detection."
+      },
+      "highlights": [
+        {
+          "ko": "코드-코드, 코드-설명, 교차 코드-설명 대조 손실 결합",
+          "en": "Fused code-to-code, code-to-description, and cross code-to-description contrastive losses."
+        },
+        {
+          "ko": "uncertainty-weighted aggregation으로 손실 가중치를 적응적으로 학습",
+          "en": "Adaptively learned loss weights with uncertainty-weighted aggregation."
+        }
+      ],
+      "skills": [
+        "Code Clone Detection",
+        "Attention Pooling",
+        "Multi-loss Learning",
+        "LLM"
+      ],
+      "image": "res/project-clone-detection.png",
+      "imageFit": "contain"
+    },
+    {
+      "category": {
+        "ko": "소프트웨어 연구 프로젝트",
+        "en": "Software Research Project"
+      },
+      "start": "2026.03",
+      "end": "2026.06",
+      "organization": {
+        "ko": "한양대학교",
+        "en": "Hanyang University"
+      },
+      "title": {
+        "ko": "D-STAR: 교육 도메인 특화 정규표현식 부분집합 합성기",
+        "en": "D-STAR: Domain-Specific Teaching Assistant Regex Subset Synthesizer"
+      },
+      "role": {
+        "ko": "합성 알고리즘 · DSL 탐색 · 설명 가능한 데모",
+        "en": "Synthesis Algorithm · DSL Search · Explainable Demo"
+      },
+      "summary": {
+        "ko": "학생 ID, 이름, 이메일, 과제 파일명 등의 positive/negative 예시로부터 검증 정규표현식을 학습하는 조교용 합성기입니다. 구조화 입력용 도메인 한정 합성기와 열거형 DSL 엔진을 결합합니다.",
+        "en": "A teaching-assistant-oriented synthesizer that learns validation regexes from positive and negative examples such as student IDs, names, emails, and assignment filenames."
+      },
+      "highlights": [
+        {
+          "ko": "불가능한 후보를 조기 제거해 탐색 공간을 축소",
+          "en": "Pruned impossible candidates early to reduce the search space."
+        },
+        {
+          "ko": "negative 반례의 원인 조각을 찾아 부분 제약으로 재합성",
+          "en": "Identified offending negative fragments and resynthesized with partial constraints."
+        }
+      ],
+      "skills": [
+        "Program Synthesis",
+        "Regex",
+        "DSL",
+        "Python"
+      ],
+      "image": "res/project-dstar.png",
+      "imageFit": "contain"
+    },
+    {
+      "category": {
+        "ko": "캡스톤 디자인",
+        "en": "Capstone Design"
+      },
+      "start": "2024.03",
+      "end": "2024.12",
+      "organization": {
+        "ko": "한양대학교 ERICA",
+        "en": "Hanyang University ERICA"
+      },
+      "title": {
+        "ko": "추력 기반 벽면 자유 이동 모바일 로봇",
+        "en": "Thrust-assisted Mobile Robot for Free Movement on Vertical Surfaces"
+      },
+      "role": {
+        "ko": "기구 설계 · 구동 제어 · 프로토타이핑",
+        "en": "Mechanical Design · Motion Control · Prototyping"
+      },
+      "summary": {
+        "ko": "덕트팬 추력으로 중력 영향을 상쇄하고 옴니휠로 벽면에서 다방향 주행하는 모듈형 고소 작업 로봇을 설계했습니다.",
+        "en": "Designed a modular elevated-work mobile robot that offsets gravity with duct-fan thrust and moves omnidirectionally across vertical surfaces using omni wheels."
+      },
+      "highlights": [
+        {
+          "ko": "추력·마찰·질량 중심을 고려한 부착 및 주행 조건 도출",
+          "en": "Derived adhesion and motion conditions from thrust, friction, and center-of-mass analysis."
+        },
+        {
+          "ko": "3D CAD 설계, 부품 제작, 하드웨어 통합 및 주행 테스트",
+          "en": "Completed 3D CAD, fabrication, hardware integration, and mobility testing."
+        }
+      ],
+      "skills": [
+        "Robotics",
+        "Raspberry Pi",
+        "3D CAD",
+        "Control"
+      ],
+      "image": "res/project-wall-robot.png",
+      "imageFit": "cover"
+    },
+    {
+      "category": {
+        "ko": "로보틱스 프로젝트",
+        "en": "Robotics Project"
+      },
+      "start": "2023.09",
+      "end": "2023.12",
+      "organization": {
+        "ko": "한양대학교 ERICA",
+        "en": "Hanyang University ERICA"
+      },
+      "title": {
+        "ko": "케블라 텐던 기반 5지 로봇 그리퍼",
+        "en": "Kevlar Tendon-driven Five-finger Robotic Gripper"
+      },
+      "role": {
+        "ko": "메커니즘 설계 · 제작 · 파지 테스트",
+        "en": "Mechanism Design · Fabrication · Grasp Testing"
+      },
+      "summary": {
+        "ko": "케블라 실과 소형 풀리로 5개의 실리콘 팁 클로를 구동하고, 손가락 사이 웹 메쉬로 깨지기 쉽거나 변형 가능한 물체를 적정 힘으로 파지하는 그리퍼를 제작했습니다.",
+        "en": "Built a five-finger gripper actuated by Kevlar tendons and small pulleys. Silicone tips and webbed mesh distribute contact force for fragile or deformable objects."
+      },
+      "highlights": [
+        {
+          "ko": "복잡한 액추에이터 없이 단일 인장 경로로 다지 연동",
+          "en": "Coupled multiple fingers through a compact tendon path without complex actuators."
+        },
+        {
+          "ko": "실리콘 접촉면과 메쉬로 파지 안정성 향상",
+          "en": "Improved grasp stability with silicone contact surfaces and flexible mesh."
+        }
+      ],
+      "skills": [
+        "Mechanical Design",
+        "3D Printing",
+        "SolidWorks",
+        "Prototyping"
+      ],
+      "image": "res/project-gripper.png",
+      "imageFit": "cover"
+    },
+    {
+      "category": {
+        "ko": "디지털 시스템",
+        "en": "Digital Systems"
+      },
+      "start": "2022.09",
+      "end": "2022.12",
+      "organization": {
+        "ko": "한양대학교 ERICA",
+        "en": "Hanyang University ERICA"
+      },
+      "title": {
+        "ko": "Altera DE2-115 기반 협력형 2대 엘리베이터 시뮬레이터",
+        "en": "Dual Cooperative Elevator Simulator on Altera DE2-115"
+      },
+      "role": {
+        "ko": "상태 머신 설계 · FPGA 구현 · 검증",
+        "en": "State-machine Design · FPGA Implementation · Verification"
+      },
+      "summary": {
+        "ko": "호출 층에 더 가까운 엘리베이터가 응답하도록 2대의 운행을 조정하고, LED로 승강·문 개폐 상태를 표현한 FPGA 시뮬레이터입니다.",
+        "en": "An FPGA simulator coordinating two elevators so the closer car answers each floor call, with LEDs representing motion and door state."
+      },
+      "highlights": [
+        {
+          "ko": "호출 배정, 방향 전환, 문 개폐를 유한상태기계로 모델링",
+          "en": "Modeled call assignment, direction changes, and door operation as finite-state machines."
+        },
+        {
+          "ko": "과적 이벤트와 승객 하차 스위치 복구 시나리오 구현",
+          "en": "Implemented an overload event and switch-based recovery scenario."
+        }
+      ],
+      "skills": [
+        "FPGA",
+        "Verilog",
+        "FSM",
+        "Altera DE2-115"
+      ],
+      "image": "res/project-elevator.png",
+      "imageFit": "cover"
+    }
+  ],
+  "publications": [
+    {
+      "year": "2026",
+      "type": {
+        "ko": "연구 포스터",
+        "en": "Research Poster"
+      },
+      "venue": {
+        "ko": "한양대학교 프로그램 시스템 연구실",
+        "en": "Programming Systems Lab, Hanyang University"
+      },
+      "title": {
+        "ko": "피처 엔지니어링 없는 정적 분석 알람 랭킹을 위한 트레이스 기반 대조학습",
+        "en": "Trace-Based Contrastive Learning for Static Analysis Alarm Ranking Without Feature Engineering"
+      },
+      "authors": {
+        "ko": "이정훈, 이우석",
+        "en": "Jeonghun Lee, Wooseok Lee"
+      }
+    },
+    {
+      "year": "2025",
+      "type": {
+        "ko": "연구 포스터",
+        "en": "Research Poster"
+      },
+      "venue": {
+        "ko": "SIGPL 포스터 세션",
+        "en": "SIGPL Poster Session"
+      },
+      "title": {
+        "ko": "슬라이딩 윈도우와 어텐션 강화 대조학습을 활용한 이종 언어 Type-4 클론 탐지",
+        "en": "Cross-language Type-4 Clone Detection with Sliding Window and Attention-enhanced Contrastive Learning"
+      },
+      "authors": {
+        "ko": "왕호, 이정훈, 이우석",
+        "en": "Hao Wang, Jeonghun Lee, Wooseok Lee"
+      }
+    },
+    {
+      "year": "2024",
+      "type": {
+        "ko": "특허 아이디어",
+        "en": "Patent Concept"
+      },
+      "venue": {
+        "ko": "캡스톤 디자인 산출물",
+        "en": "Capstone Design Output"
+      },
+      "title": {
+        "ko": "추력 기반 벽면 이동 모바일 로봇의 부착 및 전방향 주행 시스템",
+        "en": "Adhesion and Omnidirectional Locomotion System for a Thrust-assisted Wall-climbing Mobile Robot"
+      },
+      "authors": {
+        "ko": "이정훈 외 4인 · 출원 전 아이디어 단계",
+        "en": "Jeonghun Lee et al. · Pre-filing concept stage"
+      }
+    }
+  ],
+  "awards": [
+    {
+      "year": "2024",
+      "title": {
+        "ko": "캡스톤 디자인 페어 우수상",
+        "en": "Excellence Award, Capstone Design Fair"
+      },
+      "organization": {
+        "ko": "한양대학교 ERICA 공학대학",
+        "en": "College of Engineering, Hanyang University ERICA"
+      },
+      "description": {
+        "ko": "추력 기반 모듈형 고소 작업 로봇의 설계 완성도와 현장 적용 가능성을 인정받았습니다.",
+        "en": "Recognized for the design quality and field applicability of the thrust-assisted modular elevated-work robot."
+      }
+    }
+  ],
+  "skills": [
+    {
+      "category": {
+        "ko": "연구 · AI",
+        "en": "Research & AI"
+      },
+      "items": [
+        "Static Analysis",
+        "Contrastive Learning",
+        "Encoder-only LLM Fine-tuning",
+        "Code Clone Detection",
+        "Representation Learning",
+        "Program Synthesis"
+      ]
+    },
+    {
+      "category": {
+        "ko": "프로그래밍",
+        "en": "Programming"
+      },
+      "items": [
+        "Python",
+        "C / C++",
+        "Java",
+        "JavaScript",
+        "Verilog",
+        "Git",
+        "Linux"
+      ]
+    },
+    {
+      "category": {
+        "ko": "로보틱스 · 제작",
+        "en": "Robotics & Fabrication"
+      },
+      "items": [
+        "Raspberry Pi",
+        "SolidWorks",
+        "3D CAD",
+        "3D Printing",
+        "Embedded Systems",
+        "FPGA",
+        "Rapid Prototyping"
+      ]
+    },
+    {
+      "category": {
+        "ko": "언어 · 커뮤니케이션",
+        "en": "Language & Communication"
+      },
+      "items": [
+        {
+          "ko": "한국어 · 원어민",
+          "en": "Korean · Native"
+        },
+        {
+          "ko": "영어 · 비즈니스/기술 통번역",
+          "en": "English · Professional / Technical Translation"
+        },
+        {
+          "ko": "TESL 기반 영어 교육",
+          "en": "TESL-based English Teaching"
+        },
+        {
+          "ko": "국제 미팅 퍼실리테이션",
+          "en": "International Meeting Facilitation"
+        }
+      ]
+    }
+  ]
+}

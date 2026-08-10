@@ -28,7 +28,7 @@
       print: "이력서 인쇄",
       themeDark: "다크 모드 켜기",
       themeLight: "라이트 모드 켜기",
-      viewMetaverse: "3D 메타버스 모드 켜기",
+      viewMetaverse: "3D 가상 포트폴리오 열기",
       viewClassic: "기본 CV 모드로 돌아가기",
       language: "Switch to English",
       menuOpen: "메뉴 열기",
@@ -58,7 +58,7 @@
       print: "Print CV",
       themeDark: "Enable dark mode",
       themeLight: "Enable light mode",
-      viewMetaverse: "Enable 3D metaverse mode",
+      viewMetaverse: "Open 3D virtual portfolio",
       viewClassic: "Return to classic CV mode",
       language: "한국어로 전환",
       menuOpen: "Open menu",
@@ -546,10 +546,11 @@
     if (window.MyHubMetaverse) {
       window.MyHubMetaverse.setEnabled(enabled);
       window.MyHubMetaverse.setTheme(state.theme);
+      window.MyHubMetaverse.setLanguage(state.language);
       return;
     }
     window.dispatchEvent(new CustomEvent("myhub-view-change", {
-      detail: { enabled: enabled, theme: state.theme }
+      detail: { enabled: enabled, theme: state.theme, language: state.language }
     }));
   }
 
@@ -566,6 +567,10 @@
     renderNavigation();
     updateControls();
     observeSections();
+    if (window.MyHubMetaverse) {
+      window.MyHubMetaverse.setLanguage(state.language);
+      window.MyHubMetaverse.refreshContent();
+    }
   }
 
   function observeSections() {

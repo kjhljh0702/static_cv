@@ -12,15 +12,54 @@
     <link rel="icon" type="image/jpeg" href="res/my_profile.jpeg" />
     <link rel="stylesheet" href="style.css" />
     <script src="script.js" defer></script>
-    <script type="module" src="metaverse.js?v=184.1"></script>
+    <script type="module" src="metaverse.js?v=184.4"></script>
   </head>
   <body>
     <a class="skip-link" href="#content-panel">본문으로 바로가기</a>
 
     <div class="metaverse-stage" id="metaverse-stage" aria-hidden="true">
       <canvas id="metaverse-canvas"></canvas>
-      <div class="metaverse-hud metaverse-hud-left">MYHUB // DIGITAL TWIN</div>
-      <div class="metaverse-hud metaverse-hud-right">THREE.JS r184</div>
+      <div class="world-ui" id="world-ui">
+        <div class="world-statusbar" aria-hidden="true">
+          <span>MYHUB // VIRTUAL RESEARCH LAB</span>
+          <span>THREE.JS r184</span>
+        </div>
+
+        <div class="world-start" id="world-start" role="status">
+          <span class="world-start-kicker">SINGLE-PLAYER 3D PORTFOLIO</span>
+          <strong>가상 연구실을 탐험하세요</strong>
+          <p>전시대로 걸어가 <kbd>E</kbd>를 누르면 CV 섹션이 열립니다.</p>
+          <button class="world-start-button" id="world-start-button" type="button">
+            탐험 시작
+          </button>
+          <span class="world-start-controls">WASD 이동 · 마우스 시점 · E 열기 · R 시작 위치</span>
+        </div>
+
+        <div class="world-crosshair" id="world-crosshair" aria-hidden="true"></div>
+        <div class="world-interaction" id="world-interaction" role="status" hidden>
+          <span class="world-interaction-key">E</span>
+          <span><strong id="world-interaction-title"></strong> <span id="world-interaction-action">전시대 열기</span></span>
+        </div>
+
+        <div class="world-help" aria-hidden="true">
+          <span><kbd>WASD</kbd> <em id="world-help-move">이동</em></span>
+          <span><kbd>MOUSE</kbd> <em id="world-help-look">시점</em></span>
+          <span><kbd>E</kbd> <em id="world-help-open">열기</em></span>
+          <span><kbd>R</kbd> <em id="world-help-reset">위치 초기화</em></span>
+        </div>
+
+        <div class="world-touch-controls" id="world-touch-controls" aria-label="3D 이동 컨트롤">
+          <div class="world-touch-pad">
+            <button type="button" data-move="forward" aria-label="앞으로 이동">▲</button>
+            <button type="button" data-move="left" aria-label="왼쪽으로 이동">◀</button>
+            <button type="button" data-move="backward" aria-label="뒤로 이동">▼</button>
+            <button type="button" data-move="right" aria-label="오른쪽으로 이동">▶</button>
+          </div>
+          <button class="world-touch-interact" id="world-touch-interact" type="button" disabled>
+            열기
+          </button>
+        </div>
+      </div>
     </div>
 
     <header class="site-header" id="site-header">
@@ -58,7 +97,7 @@
             class="icon-button view-button"
             id="view-button"
             type="button"
-            aria-label="3D 메타버스 모드 켜기"
+            aria-label="3D 가상 포트폴리오 열기"
             aria-pressed="false"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -102,6 +141,23 @@
       </button>
       <img id="media-image" src="" alt="" />
       <p id="media-caption"></p>
+    </dialog>
+
+    <dialog class="world-detail-dialog" id="world-detail-dialog" aria-labelledby="world-detail-title">
+      <div class="world-detail-shell">
+        <header class="world-detail-header">
+          <div>
+            <span>MYHUB // EXHIBIT</span>
+            <h2 id="world-detail-title"></h2>
+          </div>
+          <button class="world-detail-close" id="world-detail-close" type="button" aria-label="전시대 닫기">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </header>
+        <div class="world-detail-content" id="world-detail-content"></div>
+      </div>
     </dialog>
 
     <noscript>

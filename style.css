@@ -28,32 +28,6 @@
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 12px 32px rgba(0, 0, 0, 0.18);
 }
 
-[data-view="metaverse"][data-theme="light"] {
-  --background: rgba(233, 238, 247, 0.72);
-  --surface: rgba(255, 255, 255, 0.72);
-  --surface-muted: rgba(244, 247, 252, 0.68);
-  --surface-hover: rgba(236, 241, 249, 0.82);
-  --text: #172033;
-  --text-muted: #536077;
-  --text-soft: #718096;
-  --border: rgba(80, 104, 143, 0.22);
-  --border-strong: rgba(37, 99, 235, 0.42);
-  --shadow: 0 18px 50px rgba(37, 99, 235, 0.1), 0 1px 2px rgba(15, 23, 42, 0.08);
-}
-
-[data-view="metaverse"][data-theme="dark"] {
-  --background: rgba(8, 10, 16, 0.76);
-  --surface: rgba(15, 19, 29, 0.72);
-  --surface-muted: rgba(24, 30, 43, 0.72);
-  --surface-hover: rgba(32, 40, 58, 0.82);
-  --text: #f4f7fb;
-  --text-muted: #b1bdd1;
-  --text-soft: #7e8aa0;
-  --border: rgba(134, 154, 190, 0.2);
-  --border-strong: rgba(37, 99, 235, 0.55);
-  --shadow: 0 20px 60px rgba(0, 0, 0, 0.32), 0 0 26px rgba(37, 99, 235, 0.07);
-}
-
 *,
 *::before,
 *::after {
@@ -82,59 +56,317 @@ body {
 
 .metaverse-stage {
   position: fixed;
-  z-index: 0;
-  inset: 0;
+  z-index: 40;
+  top: var(--header-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
   overflow: hidden;
   visibility: hidden;
-  background: #e9eef7;
+  background: #070b12;
   opacity: 0;
   pointer-events: none;
   transition: opacity 240ms ease, visibility 240ms ease;
 }
 
-[data-theme="dark"] .metaverse-stage {
-  background: #080a10;
-}
-
 [data-view="metaverse"] .metaverse-stage[data-active="true"] {
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
 }
 
 .metaverse-stage canvas {
   display: block;
   width: 100%;
   height: 100%;
+  outline: 0;
+  cursor: crosshair;
+  touch-action: none;
 }
 
-.metaverse-hud {
+.world-ui {
   position: absolute;
-  top: calc(var(--header-height) + 11px);
-  color: var(--text-soft);
+  inset: 0;
+  overflow: hidden;
+  color: #f8fafc;
+  pointer-events: none;
+}
+
+.world-statusbar {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  left: 20px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(226, 232, 240, 0.72);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 9px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.16em;
 }
 
-.metaverse-hud-left {
-  left: 18px;
+.world-start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  width: min(440px, calc(100% - 32px));
+  border: 1px solid rgba(148, 163, 184, 0.34);
+  border-radius: 18px;
+  padding: 30px;
+  background: rgba(7, 11, 18, 0.9);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  text-align: center;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(18px);
+  gap: 12px;
 }
 
-.metaverse-hud-right {
-  right: 18px;
+.world-start[hidden] {
+  display: none;
+}
+
+.world-start-kicker {
+  color: #60a5fa;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.world-start strong {
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.35;
+  letter-spacing: -0.04em;
+}
+
+.world-start p {
+  margin: 0;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.world-start-button {
+  min-height: 46px;
+  margin-top: 8px;
+  border: 1px solid #3b82f6;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.world-start-button:hover {
+  background: #1d4ed8;
+}
+
+.world-start-controls {
+  color: #94a3b8;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+kbd {
+  display: inline-flex;
+  min-width: 22px;
+  min-height: 20px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(148, 163, 184, 0.46);
+  border-radius: 5px;
+  padding: 0 5px;
+  background: rgba(15, 23, 42, 0.74);
+  color: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.world-crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.world-crosshair::before,
+.world-crosshair::after {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.84);
+  content: "";
+}
+
+.world-crosshair::before {
+  top: 8px;
+  left: 1px;
+  width: 16px;
+  height: 2px;
+}
+
+.world-crosshair::after {
+  top: 1px;
+  left: 8px;
+  width: 2px;
+  height: 16px;
+}
+
+.metaverse-stage[data-started="true"] .world-crosshair {
+  opacity: 1;
+}
+
+.world-interaction {
+  position: absolute;
+  bottom: 78px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(96, 165, 250, 0.58);
+  border-radius: 999px;
+  padding: 9px 16px 9px 9px;
+  background: rgba(7, 11, 18, 0.86);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
+  color: #e2e8f0;
+  font-size: 12px;
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+  gap: 10px;
+}
+
+.world-interaction[hidden] {
+  display: none;
+}
+
+.world-interaction-key {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid #60a5fa;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #ffffff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-weight: 900;
+}
+
+.world-help {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  border-radius: 9px;
+  padding: 7px 9px;
+  background: rgba(7, 11, 18, 0.64);
+  color: #94a3b8;
+  font-size: 9px;
+  backdrop-filter: blur(10px);
+  gap: 10px;
+}
+
+.world-help span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.world-help em {
+  font-style: normal;
+}
+
+.world-touch-controls {
+  display: none;
+  transition: opacity 160ms ease, visibility 160ms ease;
+}
+
+.metaverse-stage[data-started="false"] .world-interaction {
+  display: none;
+}
+
+.metaverse-stage[data-started="false"] .world-touch-controls {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.world-touch-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 44px);
+  grid-template-rows: repeat(2, 44px);
+  gap: 5px;
+  pointer-events: auto;
+}
+
+.world-touch-pad button,
+.world-touch-interact {
+  display: grid;
+  padding: 0;
+  place-items: center;
+  border: 1px solid rgba(148, 163, 184, 0.48);
+  background: rgba(7, 11, 18, 0.78);
+  color: #ffffff;
+  font-weight: 800;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(10px);
+  touch-action: none;
+}
+
+.world-touch-pad button {
+  border-radius: 10px;
+}
+
+.world-touch-pad button[data-move="forward"] {
+  grid-column: 2;
+}
+
+.world-touch-pad button[data-move="left"] {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.world-touch-pad button[data-move="backward"] {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.world-touch-pad button[data-move="right"] {
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.world-touch-interact {
+  min-width: 72px;
+  min-height: 48px;
+  border-color: #60a5fa;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.82);
+  pointer-events: auto;
+}
+
+.world-touch-interact:disabled {
+  border-color: rgba(148, 163, 184, 0.28);
+  background: rgba(7, 11, 18, 0.52);
+  color: #64748b;
 }
 
 [data-view="metaverse"] .site-header {
-  background: color-mix(in srgb, var(--surface) 82%, transparent);
-  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.05);
+  border-color: rgba(100, 116, 139, 0.38);
+  background: rgba(7, 11, 18, 0.92);
+  color: #f8fafc;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
 }
 
 [data-view="metaverse"] .view-button {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-  background: color-mix(in srgb, var(--accent) 11%, var(--surface));
-  color: var(--accent);
-  box-shadow: inset 0 0 14px color-mix(in srgb, var(--accent) 9%, transparent);
+  border-color: #60a5fa;
+  background: rgba(37, 99, 235, 0.28);
+  color: #93c5fd;
+  box-shadow: inset 0 0 16px rgba(37, 99, 235, 0.18);
 }
 
 .metaverse-unavailable .view-button {
@@ -142,8 +374,25 @@ body {
 }
 
 [data-view="metaverse"] .brand-mark {
-  border: 1px solid color-mix(in srgb, var(--accent) 72%, #ffffff);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 35%, transparent);
+  border: 1px solid #60a5fa;
+  box-shadow: 0 0 18px rgba(37, 99, 235, 0.42);
+}
+
+[data-view="metaverse"] .site-header .icon-button,
+[data-view="metaverse"] .site-header .language-button {
+  border-color: rgba(148, 163, 184, 0.28);
+  color: #cbd5e1;
+}
+
+[data-view="metaverse"] .site-header .icon-button:hover,
+[data-view="metaverse"] .site-header .language-button:hover {
+  background: rgba(51, 65, 85, 0.72);
+  color: #ffffff;
+}
+
+[data-view="metaverse"] .main-navigation {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 body.nav-open {
@@ -363,6 +612,7 @@ svg {
   min-height: 0;
   margin: calc(var(--header-height) + 20px) auto 20px;
   overflow: hidden;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
   gap: 28px;
 }
 
@@ -409,46 +659,11 @@ svg {
   padding: 20px;
 }
 
-[data-view="metaverse"] .profile-card,
-[data-view="metaverse"] .content-section,
-[data-view="metaverse"] .intro-card {
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
-  background: var(--surface);
-  backdrop-filter: blur(18px) saturate(112%);
-  transform: translateZ(0);
-  animation: metaverse-enter 260ms ease both;
-}
-
 [data-view="metaverse"] .page-shell {
-  perspective: 1400px;
-}
-
-[data-view="metaverse"] .profile-photo-frame {
-  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
-  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 14%, transparent);
-}
-
-[data-view="metaverse"] .intro-card::after {
-  position: absolute;
-  top: 14px;
-  right: 18px;
-  color: var(--text-soft);
-  content: "IMMERSIVE CV // 3D SPACE";
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-}
-
-@keyframes metaverse-enter {
-  from {
-    opacity: 0.78;
-    transform: translateY(5px) translateZ(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) translateZ(0);
-  }
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.985);
 }
 
 .profile-photo-frame {
@@ -1059,6 +1274,98 @@ svg {
   cursor: pointer;
 }
 
+.world-detail-dialog {
+  width: min(980px, calc(100vw - 32px));
+  max-width: none;
+  max-height: min(820px, calc(100dvh - 32px));
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 38%, var(--border-strong));
+  border-radius: 18px;
+  background: var(--background);
+  color: var(--text);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.46);
+}
+
+.world-detail-dialog::backdrop {
+  background: rgba(2, 6, 14, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.world-detail-shell {
+  display: grid;
+  max-height: min(820px, calc(100dvh - 32px));
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.world-detail-header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 76px;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px 14px 22px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  backdrop-filter: blur(14px);
+  gap: 20px;
+}
+
+.world-detail-header span {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.world-detail-header h2 {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.4;
+  letter-spacing: -0.04em;
+}
+
+.world-detail-close {
+  display: grid;
+  flex: 0 0 38px;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-muted);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.world-detail-content {
+  min-height: 0;
+  overflow: auto;
+  padding: 22px;
+  overscroll-behavior: contain;
+}
+
+.world-detail-section {
+  box-shadow: none;
+}
+
+.world-detail-content .project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.world-detail-content .project-media-button {
+  cursor: default;
+}
+
+.world-detail-content .project-media-button::after {
+  display: none;
+}
+
 .noscript-message {
   position: fixed;
   right: 16px;
@@ -1104,8 +1411,9 @@ svg {
     overflow: auto;
   }
 
-  .metaverse-hud {
-    display: none;
+  html[data-view="metaverse"] body {
+    height: 100%;
+    overflow: hidden;
   }
 
   .site-header {
@@ -1121,6 +1429,14 @@ svg {
   .mobile-menu-button {
     display: inline-grid;
     justify-self: start;
+  }
+
+  [data-view="metaverse"] .header-shell {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  [data-view="metaverse"] .mobile-menu-button {
+    display: none;
   }
 
   .brand {
@@ -1267,8 +1583,131 @@ svg {
     gap: 14px;
   }
 
-  [data-view="metaverse"] .intro-card::after {
+  .world-statusbar {
+    top: 10px;
+    right: 12px;
+    left: 12px;
+    font-size: 7px;
+  }
+
+  .world-statusbar span:last-child {
     display: none;
+  }
+
+  .world-start {
+    width: min(420px, calc(100% - 24px));
+    padding: 24px 20px;
+  }
+
+  .world-start p {
+    font-size: 13px;
+  }
+
+  .world-help {
+    display: none;
+  }
+
+  .world-interaction {
+    bottom: 112px;
+    max-width: calc(100% - 32px);
+    white-space: nowrap;
+  }
+
+  .world-touch-controls {
+    position: absolute;
+    right: 18px;
+    bottom: 16px;
+    left: 18px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  .world-touch-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 44px);
+    grid-template-rows: repeat(2, 44px);
+    gap: 5px;
+    pointer-events: auto;
+  }
+
+  .world-touch-pad button,
+  .world-touch-interact {
+    display: grid;
+    padding: 0;
+    place-items: center;
+    border: 1px solid rgba(148, 163, 184, 0.48);
+    background: rgba(7, 11, 18, 0.78);
+    color: #ffffff;
+    font-weight: 800;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+    touch-action: none;
+  }
+
+  .world-touch-pad button {
+    border-radius: 10px;
+  }
+
+  .world-touch-pad button[data-move="forward"] {
+    grid-column: 2;
+  }
+
+  .world-touch-pad button[data-move="left"] {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .world-touch-pad button[data-move="backward"] {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .world-touch-pad button[data-move="right"] {
+    grid-row: 2;
+    grid-column: 3;
+  }
+
+  .world-touch-interact {
+    min-width: 72px;
+    min-height: 48px;
+    border-color: #60a5fa;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.82);
+    pointer-events: auto;
+  }
+
+  .world-touch-interact:disabled {
+    border-color: rgba(148, 163, 184, 0.28);
+    background: rgba(7, 11, 18, 0.52);
+    color: #64748b;
+  }
+
+  .world-detail-dialog {
+    width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+    border-radius: 14px;
+  }
+
+  .world-detail-shell {
+    max-height: calc(100dvh - 20px);
+  }
+
+  .world-detail-header {
+    min-height: 66px;
+    padding: 11px 12px 11px 16px;
+  }
+
+  .world-detail-header h2 {
+    font-size: 18px;
+  }
+
+  .world-detail-content {
+    padding: 12px;
+  }
+
+  .world-detail-content .project-grid {
+    grid-template-columns: 1fr;
   }
 
   .content-section {
@@ -1287,6 +1726,26 @@ svg {
 
   .skills-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (pointer: coarse) {
+  [data-view="metaverse"] .world-touch-controls {
+    position: absolute;
+    right: 18px;
+    bottom: 16px;
+    left: 18px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+  }
+
+  [data-view="metaverse"] .world-help {
+    display: none;
+  }
+
+  [data-view="metaverse"] .world-interaction {
+    bottom: 112px;
   }
 }
 
@@ -1381,6 +1840,7 @@ svg {
 
   .site-header,
   .metaverse-stage,
+  .world-detail-dialog,
   .skip-link,
   .media-dialog,
   .noscript-message,
@@ -1394,6 +1854,13 @@ svg {
     height: auto;
     margin: 0;
     overflow: visible;
+  }
+
+  [data-view="metaverse"] .page-shell {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
   }
 
   .profile-panel {

@@ -18,27 +18,28 @@ const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const coarsePointer = window.matchMedia("(pointer: coarse)");
 
 const PLAYER_HEIGHT = 1.68;
-const WALK_SPEED = 4.2;
-const ROOM_LIMIT_X = 11.7;
-const ROOM_LIMIT_Z_MIN = -9.6;
-const ROOM_LIMIT_Z_MAX = 9.2;
-const INTERACTION_DISTANCE = 3.35;
-const START_POSITION = new THREE.Vector3(0, PLAYER_HEIGHT, 8.2);
+const WALK_SPEED = 3.75;
+const ROOM_LIMIT_X = 12.65;
+const ROOM_LIMIT_Z_MIN = -10.5;
+const ROOM_LIMIT_Z_MAX = 10.2;
+const INTERACTION_DISTANCE = 2.45;
+const START_POSITION = new THREE.Vector3(0, PLAYER_HEIGHT, 9.35);
 const UP_AXIS = new THREE.Vector3(0, 1, 0);
+const HOUSE_ACCENT = 0xb2744d;
 
 const stationDefinitions = [
-  { id: "about", ko: "소개", en: "ABOUT", code: "01", position: [0, 0, 5.2], rotation: 0 },
-  { id: "education", ko: "학력", en: "EDUCATION", code: "02", position: [-8.4, 0, 4.2], rotation: Math.PI / 2 },
-  { id: "experience", ko: "경력", en: "EXPERIENCE", code: "03", position: [-8.4, 0, -2.8], rotation: Math.PI / 2 },
-  { id: "projects", ko: "프로젝트", en: "PROJECTS", code: "04", position: [0, 0, -8.2], rotation: 0 },
-  { id: "publications", ko: "논문 · IP", en: "PUBLICATIONS", code: "05", position: [8.4, 0, -2.8], rotation: -Math.PI / 2 },
-  { id: "skills", ko: "스킬", en: "SKILLS", code: "06", position: [8.4, 0, 4.2], rotation: -Math.PI / 2 },
-  { id: "awards", ko: "수상", en: "AWARDS", code: "07", position: [0, 0, -2.3], rotation: 0 }
+  { id: "about", ko: "소개", en: "ABOUT", code: "01", position: [-11.55, 0, 8.45], rotation: Math.PI / 2 },
+  { id: "education", ko: "학력", en: "EDUCATION", code: "02", position: [-11.55, 0, 4.9], rotation: Math.PI / 2 },
+  { id: "experience", ko: "경력", en: "EXPERIENCE", code: "03", position: [-11.55, 0, -3.45], rotation: Math.PI / 2 },
+  { id: "projects", ko: "프로젝트", en: "PROJECTS", code: "04", position: [-4.5, 0, -10.35], rotation: 0 },
+  { id: "publications", ko: "논문 · IP", en: "PUBLICATIONS", code: "05", position: [11.55, 0, -3.45], rotation: -Math.PI / 2 },
+  { id: "skills", ko: "스킬", en: "SKILLS", code: "06", position: [11.55, 0, 4.9], rotation: -Math.PI / 2 },
+  { id: "awards", ko: "수상", en: "AWARDS", code: "07", position: [4.5, 0, -10.35], rotation: 0 }
 ];
 
 const copy = {
   ko: {
-    startTitle: "가상 연구실을 탐험하세요",
+    startTitle: "모던 연구 공간을 거닐어 보세요",
     startBody: "전시대로 걸어가 <kbd>E</kbd>를 누르면 CV 섹션이 열립니다.",
     startButton: "탐험 시작",
     startControls: "WASD 이동 · 마우스 시점 · E 열기 · R 시작 위치",
@@ -51,8 +52,8 @@ const copy = {
     close: "전시대 닫기"
   },
   en: {
-    startTitle: "Explore the virtual research lab",
-    startBody: "Walk up to an exhibit and press <kbd>E</kbd> to open its CV section.",
+    startTitle: "Explore the modern research house",
+    startBody: "Walk through the house and press <kbd>E</kbd> at an exhibit to open its CV section.",
     startButton: "Start exploring",
     startControls: "WASD move · Mouse look · E open · R reset position",
     openSuffix: "Open exhibit",
@@ -67,32 +68,38 @@ const copy = {
 
 const palettes = {
   light: {
-    sky: 0xdfe7f1,
-    fog: 0xdfe7f1,
-    floor: 0xc8d1dc,
-    floorAlt: 0xb8c3d0,
-    wall: 0xf4f7fa,
-    trim: 0x7b8796,
-    metal: 0x3f4b5a,
-    surface: 0xe9eef4,
-    screen: 0x101827,
-    grid: 0x8fa0b5,
-    ambientSky: 0xffffff,
-    ambientGround: 0x7b8796
+    sky: 0xdfe7e8,
+    fog: 0xdfe7e8,
+    floor: 0xdfd8cf,
+    floorAlt: 0xbc8c65,
+    wall: 0xf5f1e9,
+    trim: 0x484740,
+    metal: 0x71665b,
+    surface: 0xece4d8,
+    screen: 0x2a2925,
+    wood: 0x8a6953,
+    glass: 0xb8cbd0,
+    plant: 0x61745d,
+    grid: 0xc7b9a8,
+    ambientSky: 0xfff5e8,
+    ambientGround: 0x9b8a78
   },
   dark: {
-    sky: 0x070b12,
-    fog: 0x070b12,
-    floor: 0x111827,
-    floorAlt: 0x172033,
-    wall: 0x182131,
-    trim: 0x5d6b80,
-    metal: 0x8996aa,
-    surface: 0x222d40,
-    screen: 0x05070c,
-    grid: 0x334155,
-    ambientSky: 0xbfd2f4,
-    ambientGround: 0x111827
+    sky: 0x151714,
+    fog: 0x151714,
+    floor: 0x292722,
+    floorAlt: 0x624532,
+    wall: 0x272722,
+    trim: 0xa39280,
+    metal: 0x9b8a78,
+    surface: 0x3b3730,
+    screen: 0x191a17,
+    wood: 0x704634,
+    glass: 0x52656a,
+    plant: 0x7c9772,
+    grid: 0x5f584d,
+    ambientSky: 0xffe8cc,
+    ambientGround: 0x24211d
   }
 };
 
@@ -108,7 +115,7 @@ let started = false;
 let theme = root.dataset.theme === "dark" ? "dark" : "light";
 let language = root.lang === "en" ? "en" : "ko";
 let yaw = 0;
-let pitch = 0;
+let pitch = -0.06;
 let nearestStation = null;
 let activeSectionId = null;
 let robotArm;
@@ -151,39 +158,39 @@ function createTextTexture(primary, secondary, code, compact = false) {
   labelCanvas.width = 1024;
   labelCanvas.height = compact ? 256 : 512;
   const context = labelCanvas.getContext("2d");
-  context.fillStyle = "#0b1220";
+  context.fillStyle = compact ? "#34312c" : "#f7f2ea";
   context.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
-  context.fillStyle = "#2563eb";
-  context.fillRect(0, 0, 18, labelCanvas.height);
-  context.strokeStyle = "#334155";
-  context.lineWidth = 4;
+  context.fillStyle = "#b2744d";
+  context.fillRect(0, 0, compact ? 10 : 14, labelCanvas.height);
+  context.strokeStyle = compact ? "#806958" : "#d8cabb";
+  context.lineWidth = compact ? 3 : 4;
   context.strokeRect(2, 2, labelCanvas.width - 4, labelCanvas.height - 4);
 
   if (compact) {
-    context.fillStyle = "#93c5fd";
-    context.font = '700 30px "Noto Sans KR", sans-serif';
-    context.fillText(code, 58, 62);
-    context.fillStyle = "#f8fafc";
-    context.font = '800 58px "Noto Sans KR", sans-serif';
-    context.fillText(primary, 58, 145);
-    context.fillStyle = "#94a3b8";
-    context.font = '600 26px "Noto Sans KR", sans-serif';
-    context.fillText(secondary, 60, 198);
+    context.fillStyle = "#e5c4a8";
+    context.font = '700 25px "Noto Sans KR", sans-serif';
+    context.fillText(code, 46, 56);
+    context.fillStyle = "#fffaf2";
+    context.font = '800 52px "Noto Sans KR", sans-serif';
+    context.fillText(primary, 46, 133);
+    context.fillStyle = "#d5c7ba";
+    context.font = '600 23px "Noto Sans KR", sans-serif';
+    context.fillText(secondary, 48, 192);
   } else {
-    context.fillStyle = "#93c5fd";
-    context.font = '700 38px "Noto Sans KR", sans-serif';
-    context.fillText(`MYHUB EXHIBIT // ${code}`, 72, 92);
-    context.fillStyle = "#f8fafc";
-    context.font = '800 84px "Noto Sans KR", sans-serif';
-    context.fillText(primary, 72, 235);
-    context.fillStyle = "#94a3b8";
-    context.font = '650 42px "Noto Sans KR", sans-serif';
-    context.fillText(secondary, 75, 315);
-    context.fillStyle = "#2563eb";
-    context.fillRect(75, 376, 210, 8);
-    context.fillStyle = "#cbd5e1";
-    context.font = '600 27px "Noto Sans KR", sans-serif';
-    context.fillText("APPROACH + PRESS E", 75, 438);
+    context.fillStyle = "#a86744";
+    context.font = '700 30px "Noto Sans KR", sans-serif';
+    context.fillText(`EXHIBIT ${code}`, 56, 75);
+    context.fillStyle = "#272521";
+    context.font = '800 70px "Noto Sans KR", sans-serif';
+    context.fillText(primary, 56, 198);
+    context.fillStyle = "#74695f";
+    context.font = '650 33px "Noto Sans KR", sans-serif';
+    context.fillText(secondary, 58, 264);
+    context.fillStyle = "#b2744d";
+    context.fillRect(58, 322, 160, 6);
+    context.fillStyle = "#8c7e72";
+    context.font = '600 23px "Noto Sans KR", sans-serif';
+    context.fillText("WALK UP · PRESS E", 58, 386);
   }
 
   const texture = new THREE.CanvasTexture(labelCanvas);
@@ -194,47 +201,108 @@ function createTextTexture(primary, secondary, code, compact = false) {
 }
 
 function createWallDisplay() {
-  const texture = createTextTexture("이정훈 연구실", "JEONGHUN LEE · VIRTUAL PORTFOLIO", "MYHUB", true);
+  const texture = createTextTexture("연구의 집", "JEONGHUN LEE · RESEARCH HOUSE", "MYHUB", true);
   const displayMaterial = new THREE.MeshBasicMaterial({ map: texture });
-  const display = new THREE.Mesh(new THREE.PlaneGeometry(8.2, 2.05), displayMaterial);
-  display.position.set(0, 3.65, -10.86);
+  const display = new THREE.Mesh(new THREE.PlaneGeometry(4.8, 1.2), displayMaterial);
+  display.position.set(0, 3.25, -11.72);
   scene.add(display);
+}
+
+function createPlant(position, scale = 1) {
+  const plant = new THREE.Group();
+  plant.position.set(position[0], 0, position[1]);
+  const potMaterial = createThemedMaterial("metal", { roughness: 0.55, metalness: 0.24 });
+  const soilMaterial = createThemedMaterial("screen", { roughness: 0.92 });
+  const leafMaterial = createThemedMaterial("plant", { roughness: 0.84 });
+  const pot = new THREE.Mesh(new THREE.CylinderGeometry(0.36 * scale, 0.28 * scale, 0.48 * scale, 24), potMaterial);
+  pot.position.y = 0.24 * scale;
+  pot.castShadow = true;
+  plant.add(pot);
+  const soil = new THREE.Mesh(new THREE.CylinderGeometry(0.29 * scale, 0.29 * scale, 0.02, 24), soilMaterial);
+  soil.position.y = 0.49 * scale;
+  plant.add(soil);
+  for (let index = 0; index < 7; index += 1) {
+    const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.28 * scale, 12, 10), leafMaterial);
+    const angle = (Math.PI * 2 * index) / 7;
+    leaf.scale.set(0.55, 1.7, 0.55);
+    leaf.position.set(Math.cos(angle) * 0.22 * scale, 0.77 * scale + (index % 2) * 0.1, Math.sin(angle) * 0.22 * scale);
+    leaf.rotation.z = Math.cos(angle) * 0.48;
+    leaf.castShadow = true;
+    plant.add(leaf);
+  }
+  scene.add(plant);
+}
+
+function createLounge() {
+  const sofa = new THREE.Group();
+  sofa.position.set(0, 0, -1.7);
+  const woodMaterial = createThemedMaterial("wood", { roughness: 0.76 });
+  const cushionMaterial = createThemedMaterial("surface", { roughness: 0.88 });
+  addBox(sofa, [4.6, 0.28, 0.86], [0, 0.54, 0.88], cushionMaterial);
+  addBox(sofa, [4.6, 0.75, 0.18], [0, 0.9, 1.22], cushionMaterial);
+  addBox(sofa, [0.22, 0.72, 2.15], [-2.2, 0.76, 0.24], cushionMaterial);
+  addBox(sofa, [0.22, 0.72, 2.15], [2.2, 0.76, 0.24], cushionMaterial);
+  addBox(sofa, [4.9, 0.12, 2.45], [0, 0.28, 0.25], woodMaterial);
+  const table = new THREE.Group();
+  table.position.set(0, 0, -0.1);
+  const stoneMaterial = createThemedMaterial("floor", { roughness: 0.62 });
+  addBox(table, [2.05, 0.12, 1.05], [0, 0.53, 0], stoneMaterial);
+  addBox(table, [1.25, 0.42, 0.62], [0, 0.26, 0], woodMaterial);
+  scene.add(sofa, table);
 }
 
 function createRoom() {
   const floorMaterial = createThemedMaterial("floor", { roughness: 0.92 });
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(26, 22), floorMaterial);
+  const woodMaterial = createThemedMaterial("wood", { roughness: 0.82 });
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(28, 24), floorMaterial);
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
   scene.add(floor);
 
   const wallMaterial = createThemedMaterial("wall", { roughness: 0.88 });
-  const trimMaterial = createThemedMaterial("trim", { roughness: 0.52, metalness: 0.34 });
+  const trimMaterial = createThemedMaterial("trim", { roughness: 0.5, metalness: 0.28 });
+  const glassMaterial = createThemedMaterial("glass", {
+    roughness: 0.18,
+    metalness: 0.08,
+    transparent: true,
+    opacity: theme === "dark" ? 0.32 : 0.24
+  });
 
-  addBox(scene, [26, 5.8, 0.25], [0, 2.9, -11], wallMaterial, { castShadow: false });
-  addBox(scene, [0.25, 5.8, 22], [-13, 2.9, 0], wallMaterial, { castShadow: false });
-  addBox(scene, [0.25, 5.8, 22], [13, 2.9, 0], wallMaterial, { castShadow: false });
-  addBox(scene, [9.5, 5.8, 0.25], [-8.25, 2.9, 11], wallMaterial, { castShadow: false });
-  addBox(scene, [9.5, 5.8, 0.25], [8.25, 2.9, 11], wallMaterial, { castShadow: false });
+  addBox(scene, [27.6, 0.045, 6.15], [0, 0.025, 8.85], woodMaterial, { castShadow: false });
+  addBox(scene, [7.8, 0.022, 4.8], [0, 0.04, -1.7], createThemedMaterial("surface", { roughness: 0.96 }), { castShadow: false });
+  addBox(scene, [0.25, 5.9, 24], [-14, 2.95, 0], wallMaterial, { castShadow: false });
+  addBox(scene, [0.25, 5.9, 24], [14, 2.95, 0], wallMaterial, { castShadow: false });
+  addBox(scene, [4.2, 5.9, 0.25], [-11.9, 2.95, -12], wallMaterial, { castShadow: false });
+  addBox(scene, [4.2, 5.9, 0.25], [11.9, 2.95, -12], wallMaterial, { castShadow: false });
+  addBox(scene, [19.8, 0.24, 0.25], [0, 5.78, -12], trimMaterial, { castShadow: false });
+  addBox(scene, [0.25, 5.75, 0.25], [-9.9, 2.88, -12], trimMaterial, { castShadow: false });
+  addBox(scene, [0.25, 5.75, 0.25], [9.9, 2.88, -12], trimMaterial, { castShadow: false });
+  const glass = new THREE.Mesh(new THREE.PlaneGeometry(19.55, 5.5), glassMaterial);
+  glass.position.set(0, 2.75, -11.82);
+  scene.add(glass);
+  [-7.85, -3.9, 0, 3.9, 7.85].forEach((x) => {
+    addBox(scene, [0.12, 5.5, 0.12], [x, 2.75, -11.7], trimMaterial, { castShadow: false });
+  });
+  addBox(scene, [9.6, 5.9, 0.25], [-9.15, 2.95, 12], wallMaterial, { castShadow: false });
+  addBox(scene, [9.6, 5.9, 0.25], [9.15, 2.95, 12], wallMaterial, { castShadow: false });
+  addBox(scene, [4.6, 0.12, 23.2], [-13.72, 5.45, 0], woodMaterial, { castShadow: false });
+  addBox(scene, [4.6, 0.12, 23.2], [13.72, 5.45, 0], woodMaterial, { castShadow: false });
 
-  for (let x = -10; x <= 10; x += 5) {
-    addBox(scene, [0.12, 5.6, 0.12], [x, 2.8, -10.82], trimMaterial, { castShadow: false });
-  }
-  for (let z = -8; z <= 8; z += 4) {
-    addBox(scene, [25.4, 0.1, 0.1], [0, 5.45, z], trimMaterial, { castShadow: false });
-  }
-
-  grid = new THREE.GridHelper(25.5, 34, 0x2563eb, palettes[theme].grid);
+  grid = new THREE.GridHelper(27.5, 36, palettes[theme].grid, palettes[theme].grid);
   grid.position.y = 0.012;
-  grid.material.transparent = true;
-  grid.material.opacity = theme === "dark" ? 0.24 : 0.18;
+  grid.visible = false;
   scene.add(grid);
 
-  const accentMaterial = new THREE.MeshBasicMaterial({ color: 0x2563eb });
-  addBox(scene, [0.09, 0.018, 18.5], [-3.25, 0.03, -0.3], accentMaterial, { castShadow: false });
-  addBox(scene, [0.09, 0.018, 18.5], [3.25, 0.03, -0.3], accentMaterial, { castShadow: false });
+  const accentMaterial = new THREE.MeshBasicMaterial({ color: HOUSE_ACCENT });
+  addBox(scene, [0.055, 0.02, 5.5], [-5.3, 0.035, 8.8], accentMaterial, { castShadow: false });
+  addBox(scene, [0.055, 0.02, 5.5], [5.3, 0.035, 8.8], accentMaterial, { castShadow: false });
 
   createWallDisplay();
+  createLounge();
+  createPlant([-11.85, 9.2], 1.28);
+  createPlant([11.85, 9.2], 1.28);
+  createPlant([-11.85, -9.15], 1.16);
+  createPlant([11.85, -9.15], 1.16);
 }
 
 function createStation(definition) {
@@ -242,17 +310,22 @@ function createStation(definition) {
   group.position.set(definition.position[0], 0, definition.position[2]);
   group.rotation.y = definition.rotation;
 
-  const baseMaterial = createThemedMaterial("metal", { roughness: 0.44, metalness: 0.62 });
-  const panelMaterial = createThemedMaterial("screen", {
-    roughness: 0.38,
-    metalness: 0.18,
-    emissive: 0x2563eb,
-    emissiveIntensity: 0.12
+  const baseMaterial = createThemedMaterial("wood", { roughness: 0.7, metalness: 0.02 });
+  const frameMaterial = createThemedMaterial("metal", { roughness: 0.42, metalness: 0.5 });
+  const panelMaterial = createThemedMaterial("surface", {
+    roughness: 0.55,
+    metalness: 0.04,
+    emissive: HOUSE_ACCENT,
+    emissiveIntensity: 0.035
   });
 
-  addBox(group, [2.5, 0.16, 1.15], [0, 0.08, 0], baseMaterial);
-  addBox(group, [0.18, 1.35, 0.18], [0, 0.76, 0], baseMaterial);
-  const panel = addBox(group, [3.2, 1.78, 0.18], [0, 1.82, 0], panelMaterial);
+  addBox(group, [2.32, 0.14, 0.62], [0, 0.07, 0], baseMaterial);
+  addBox(group, [0.14, 1.08, 0.14], [0, 0.62, 0], frameMaterial);
+  const panel = addBox(group, [2.68, 1.44, 0.12], [0, 1.48, 0], panelMaterial);
+  addBox(group, [2.84, 0.085, 0.16], [0, 2.23, 0], frameMaterial);
+  addBox(group, [2.84, 0.085, 0.16], [0, 0.73, 0], frameMaterial);
+  addBox(group, [0.085, 1.55, 0.16], [-1.38, 1.48, 0], frameMaterial);
+  addBox(group, [0.085, 1.55, 0.16], [1.38, 1.48, 0], frameMaterial);
 
   const primary = language === "ko" ? definition.ko : definition.en;
   const secondary = language === "ko" ? definition.en : definition.ko;
@@ -260,17 +333,17 @@ function createStation(definition) {
     map: createTextTexture(primary, secondary, definition.code),
     transparent: false
   });
-  const label = new THREE.Mesh(new THREE.PlaneGeometry(3.02, 1.51), labelMaterial);
-  label.position.set(0, 1.82, 0.1);
+  const label = new THREE.Mesh(new THREE.PlaneGeometry(2.48, 1.18), labelMaterial);
+  label.position.set(0, 1.48, 0.07);
   group.add(label);
 
   const ringMaterial = new THREE.MeshBasicMaterial({
-    color: 0x2563eb,
+    color: HOUSE_ACCENT,
     transparent: true,
     opacity: 0.38,
     side: THREE.DoubleSide
   });
-  const ring = new THREE.Mesh(new THREE.RingGeometry(1.15, 1.23, 48), ringMaterial);
+  const ring = new THREE.Mesh(new THREE.RingGeometry(0.96, 1.02, 48), ringMaterial);
   ring.rotation.x = -Math.PI / 2;
   ring.position.y = 0.025;
   group.add(ring);
@@ -294,7 +367,7 @@ function updateStationLabels() {
 
 function createRover() {
   rover = new THREE.Group();
-  rover.position.set(-3.2, 0.38, -0.4);
+  rover.position.set(-6.35, 0.38, -0.4);
   const bodyMaterial = createThemedMaterial("metal", { roughness: 0.35, metalness: 0.62 });
   const surfaceMaterial = createThemedMaterial("surface", { roughness: 0.72 });
   const wheelMaterial = createThemedMaterial("screen", { roughness: 0.76 });
@@ -312,7 +385,7 @@ function createRover() {
     });
   });
 
-  const fanMaterial = new THREE.MeshStandardMaterial({ color: 0x2563eb, roughness: 0.42, metalness: 0.4 });
+  const fanMaterial = new THREE.MeshStandardMaterial({ color: HOUSE_ACCENT, roughness: 0.42, metalness: 0.4 });
   [-0.65, 0.65].forEach((x) => {
     const fan = new THREE.Mesh(new THREE.TorusGeometry(0.37, 0.09, 12, 28), fanMaterial);
     fan.rotation.x = Math.PI / 2;
@@ -325,7 +398,7 @@ function createRover() {
 
 function createRobotArm() {
   robotArm = new THREE.Group();
-  robotArm.position.set(3.4, 0, 0.5);
+  robotArm.position.set(6.35, 0, -0.55);
   const tableMaterial = createThemedMaterial("surface", { roughness: 0.7 });
   const metalMaterial = createThemedMaterial("metal", { roughness: 0.34, metalness: 0.7 });
   addBox(robotArm, [3.2, 0.18, 2], [0, 0.92, 0], tableMaterial);
@@ -339,7 +412,7 @@ function createRobotArm() {
   robotArm.add(base);
 
   const jointMaterial = new THREE.MeshStandardMaterial({
-    color: 0x2563eb,
+    color: HOUSE_ACCENT,
     roughness: 0.34,
     metalness: 0.5
   });
@@ -397,8 +470,8 @@ function createLighting() {
   hemisphereLight = new THREE.HemisphereLight(palette.ambientSky, palette.ambientGround, 1.65);
   scene.add(hemisphereLight);
 
-  const keyLight = new THREE.DirectionalLight(0xffffff, theme === "dark" ? 2.1 : 1.8);
-  keyLight.position.set(4, 8, 7);
+  const keyLight = new THREE.DirectionalLight(0xffe5c4, theme === "dark" ? 2.15 : 1.7);
+  keyLight.position.set(-4, 8, 6);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.set(1024, 1024);
   keyLight.shadow.camera.left = -14;
@@ -407,9 +480,13 @@ function createLighting() {
   keyLight.shadow.camera.bottom = -12;
   scene.add(keyLight);
 
-  const accentLight = new THREE.PointLight(0x2563eb, theme === "dark" ? 38 : 24, 18, 2);
-  accentLight.position.set(0, 4.4, -1.5);
+  const accentLight = new THREE.PointLight(HOUSE_ACCENT, theme === "dark" ? 34 : 20, 14, 2);
+  accentLight.position.set(0, 3.6, -1.7);
   scene.add(accentLight);
+
+  const windowLight = new THREE.DirectionalLight(0xd8eff2, theme === "dark" ? 0.65 : 1.1);
+  windowLight.position.set(0, 5.5, -10);
+  scene.add(windowLight);
 }
 
 function initializeScene() {
@@ -438,7 +515,6 @@ function initializeScene() {
   stationDefinitions.forEach(createStation);
   createRover();
   createRobotArm();
-  createScreens();
   resizeRenderer();
 
   stage.dataset.worldReady = "true";
@@ -460,7 +536,7 @@ function resizeRenderer() {
 function resetPlayer() {
   camera.position.copy(START_POSITION);
   yaw = 0;
-  pitch = 0;
+  pitch = -0.06;
   camera.rotation.set(pitch, yaw, 0);
   keys.clear();
   touchMoves.clear();
@@ -676,17 +752,22 @@ function refreshContent() {
 }
 
 function setEnabled(nextEnabled) {
-  enabled = Boolean(nextEnabled);
+  const nextState = Boolean(nextEnabled);
+  const stateChanged = enabled !== nextState;
+  enabled = nextState;
   stage.dataset.active = String(enabled);
   stage.setAttribute("aria-hidden", String(!enabled));
 
   if (enabled) {
-    started = false;
-    stage.dataset.started = "false";
-    startPanel.hidden = false;
+    if (stateChanged) {
+      started = false;
+      stage.dataset.started = "false";
+      startPanel.hidden = false;
+      resetPlayer();
+    }
     resizeRenderer();
     startAnimation();
-  } else {
+  } else if (stateChanged) {
     started = false;
     stage.dataset.started = "false";
     keys.clear();
@@ -770,7 +851,7 @@ function handleMouseMove(event) {
   }
   yaw -= event.movementX * 0.0022;
   pitch -= event.movementY * 0.002;
-  pitch = THREE.MathUtils.clamp(pitch, -1.15, 1.15);
+  pitch = THREE.MathUtils.clamp(pitch, -0.52, 0.66);
 }
 
 function handlePointerLockChange() {
@@ -809,7 +890,7 @@ function handleCanvasPointerMove(event) {
   touchLookY = event.clientY;
   yaw -= dx * 0.008;
   pitch -= dy * 0.006;
-  pitch = THREE.MathUtils.clamp(pitch, -1.05, 1.05);
+  pitch = THREE.MathUtils.clamp(pitch, -0.52, 0.66);
 }
 
 function releaseTouchLook(event) {

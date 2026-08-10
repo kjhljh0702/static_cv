@@ -63,7 +63,7 @@ body {
   left: 0;
   overflow: hidden;
   visibility: hidden;
-  background: #070b12;
+  background: #1b1c18;
   opacity: 0;
   pointer-events: none;
   transition: opacity 240ms ease, visibility 240ms ease;
@@ -88,7 +88,7 @@ body {
   position: absolute;
   inset: 0;
   overflow: hidden;
-  color: #f8fafc;
+  color: #302d28;
   pointer-events: none;
 }
 
@@ -99,7 +99,7 @@ body {
   left: 20px;
   display: flex;
   justify-content: space-between;
-  color: rgba(226, 232, 240, 0.72);
+  color: rgba(76, 67, 59, 0.8);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 9px;
   font-weight: 800;
@@ -112,11 +112,11 @@ body {
   left: 50%;
   display: grid;
   width: min(440px, calc(100% - 32px));
-  border: 1px solid rgba(148, 163, 184, 0.34);
+  border: 1px solid rgba(130, 105, 82, 0.34);
   border-radius: 18px;
   padding: 30px;
-  background: rgba(7, 11, 18, 0.9);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+  background: rgba(255, 251, 245, 0.94);
+  box-shadow: 0 24px 80px rgba(48, 37, 28, 0.2);
   text-align: center;
   pointer-events: auto;
   transform: translate(-50%, -50%);
@@ -129,7 +129,7 @@ body {
 }
 
 .world-start-kicker {
-  color: #60a5fa;
+  color: #a86744;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 10px;
   font-weight: 800;
@@ -144,27 +144,27 @@ body {
 
 .world-start p {
   margin: 0;
-  color: #cbd5e1;
+  color: #685e55;
   font-size: 14px;
 }
 
 .world-start-button {
   min-height: 46px;
   margin-top: 8px;
-  border: 1px solid #3b82f6;
+  border: 1px solid #9f603d;
   border-radius: 10px;
-  background: #2563eb;
+  background: #a86744;
   color: #ffffff;
   font-weight: 800;
   cursor: pointer;
 }
 
 .world-start-button:hover {
-  background: #1d4ed8;
+  background: #8f5537;
 }
 
 .world-start-controls {
-  color: #94a3b8;
+  color: #8a7a6c;
   font-size: 11px;
   font-weight: 650;
 }
@@ -175,11 +175,11 @@ kbd {
   min-height: 20px;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(148, 163, 184, 0.46);
+  border: 1px solid rgba(133, 110, 91, 0.42);
   border-radius: 5px;
   padding: 0 5px;
-  background: rgba(15, 23, 42, 0.74);
-  color: #ffffff;
+  background: rgba(71, 62, 53, 0.92);
+  color: #fffaf3;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 10px;
   box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.14);
@@ -198,7 +198,7 @@ kbd {
 .world-crosshair::before,
 .world-crosshair::after {
   position: absolute;
-  background: rgba(255, 255, 255, 0.84);
+  background: rgba(77, 60, 47, 0.78);
   content: "";
 }
 
@@ -226,12 +226,12 @@ kbd {
   left: 50%;
   display: flex;
   align-items: center;
-  border: 1px solid rgba(96, 165, 250, 0.58);
+  border: 1px solid rgba(168, 103, 68, 0.58);
   border-radius: 999px;
   padding: 9px 16px 9px 9px;
-  background: rgba(7, 11, 18, 0.86);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.3);
-  color: #e2e8f0;
+  background: rgba(255, 251, 245, 0.92);
+  box-shadow: 0 14px 34px rgba(60, 45, 33, 0.22);
+  color: #3b332c;
   font-size: 12px;
   transform: translateX(-50%);
   backdrop-filter: blur(12px);
@@ -247,9 +247,9 @@ kbd {
   width: 30px;
   height: 30px;
   place-items: center;
-  border: 1px solid #60a5fa;
+  border: 1px solid #9f603d;
   border-radius: 50%;
-  background: #2563eb;
+  background: #a86744;
   color: #ffffff;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-weight: 900;
@@ -261,11 +261,11 @@ kbd {
   bottom: 18px;
   display: flex;
   align-items: center;
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  border: 1px solid rgba(119, 97, 78, 0.26);
   border-radius: 9px;
   padding: 7px 9px;
-  background: rgba(7, 11, 18, 0.64);
-  color: #94a3b8;
+  background: rgba(255, 251, 245, 0.78);
+  color: #665b51;
   font-size: 9px;
   backdrop-filter: blur(10px);
   gap: 10px;
@@ -308,9 +308,9 @@ kbd {
   display: grid;
   padding: 0;
   place-items: center;
-  border: 1px solid rgba(148, 163, 184, 0.48);
-  background: rgba(7, 11, 18, 0.78);
-  color: #ffffff;
+  border: 1px solid rgba(119, 97, 78, 0.42);
+  background: rgba(255, 251, 245, 0.9);
+  color: #403830;
   font-weight: 800;
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(10px);
@@ -343,30 +343,31 @@ kbd {
 .world-touch-interact {
   min-width: 72px;
   min-height: 48px;
-  border-color: #60a5fa;
+  border-color: #9f603d;
   border-radius: 999px;
-  background: rgba(37, 99, 235, 0.82);
+  background: rgba(168, 103, 68, 0.92);
+  color: #ffffff;
   pointer-events: auto;
 }
 
 .world-touch-interact:disabled {
-  border-color: rgba(148, 163, 184, 0.28);
-  background: rgba(7, 11, 18, 0.52);
-  color: #64748b;
+  border-color: rgba(119, 97, 78, 0.25);
+  background: rgba(238, 229, 219, 0.82);
+  color: #9a8d80;
 }
 
 [data-view="metaverse"] .site-header {
-  border-color: rgba(100, 116, 139, 0.38);
-  background: rgba(7, 11, 18, 0.92);
-  color: #f8fafc;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+  border-color: rgba(91, 74, 60, 0.36);
+  background: rgba(46, 44, 39, 0.94);
+  color: #fffaf3;
+  box-shadow: 0 8px 30px rgba(36, 29, 23, 0.24);
 }
 
 [data-view="metaverse"] .view-button {
-  border-color: #60a5fa;
-  background: rgba(37, 99, 235, 0.28);
-  color: #93c5fd;
-  box-shadow: inset 0 0 16px rgba(37, 99, 235, 0.18);
+  border-color: #c58a61;
+  background: rgba(168, 103, 68, 0.38);
+  color: #f3d1b8;
+  box-shadow: inset 0 0 16px rgba(168, 103, 68, 0.16);
 }
 
 .metaverse-unavailable .view-button {
@@ -374,19 +375,19 @@ kbd {
 }
 
 [data-view="metaverse"] .brand-mark {
-  border: 1px solid #60a5fa;
-  box-shadow: 0 0 18px rgba(37, 99, 235, 0.42);
+  border: 1px solid #c58a61;
+  box-shadow: 0 0 18px rgba(168, 103, 68, 0.34);
 }
 
 [data-view="metaverse"] .site-header .icon-button,
 [data-view="metaverse"] .site-header .language-button {
-  border-color: rgba(148, 163, 184, 0.28);
-  color: #cbd5e1;
+  border-color: rgba(219, 198, 178, 0.24);
+  color: #eee3d8;
 }
 
 [data-view="metaverse"] .site-header .icon-button:hover,
 [data-view="metaverse"] .site-header .language-button:hover {
-  background: rgba(51, 65, 85, 0.72);
+  background: rgba(107, 82, 63, 0.72);
   color: #ffffff;
 }
 

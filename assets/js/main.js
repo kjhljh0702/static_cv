@@ -395,14 +395,23 @@ function choreograph() {
   qa('.eyebrow').forEach(el => scrambleOn(el));
 
   /* -- 5.1 hero scrolls away ------------------------------------ */
+  // A single mobile swipe (plus momentum) can easily travel close to a full
+  // viewport height in one gesture, which is much further than a mouse-wheel
+  // tick covers. Tying the whole fade to ~1 viewport meant one touch scroll
+  // wiped the hero out before it had been seen. A small dead zone means the
+  // first, hesitant bit of scroll does nothing, and ~1.7 viewports of travel
+  // to fully fade gives a swipe (even with momentum) room to breathe.
   const hero = q('.hero');
-  const heroRange = (vh) => [0, Math.max(1, hero.offsetHeight * 0.9)];
+  const heroRange = () => {
+    const h = hero.offsetHeight;
+    return [h * 0.08, h * 1.7];
+  };
   scrub('.hero__grid', {
     y: [0, -70], scale: [1, .93], opacity: [1, 0], filter: ['blur(0px)', 'blur(14px)']
   }, heroRange);
   /* the portrait drifts a touch slower than the copy -> depth */
   scrub('.hero__card', { y: [0, 46] }, heroRange);
-  scrub('.scrollcue', { opacity: [1, 0] }, () => [0, hero.offsetHeight * 0.28]);
+  scrub('.scrollcue', { opacity: [1, 0] }, () => [0, hero.offsetHeight * 0.4]);
 
   /* -- 5.2 about: word-by-word illumination --------------------- */
   const words = qa('.scrub .w');
@@ -720,9 +729,13 @@ function setWorld(on) {
 }
 
 function worldToggle() {
-  const btn = q('#worldBtn');
-  if (!btn) return;
-  btn.addEventListener('click', () => setWorld(!worldOn()));
+  const btn = q('#worldBtn'), exit = q('#worldExit');
+  if (btn) btn.addEventListener('click', () => setWorld(!worldOn()));
+  // #worldExit lives in .world-ui, not #cv-shell, so it stays reachable even
+  // while the world has hidden the CV nav (and with it #worldBtn) — the only
+  // way back on a touch device, which has no Escape key at all.
+  if (exit) exit.addEventListener('click', () => setWorld(false));
+  if (!btn && !exit) return;
   // the world dialog and pointer lock own Escape while it is open; only
   // fall back to leaving the world when nothing else is handling it
   addEventListener('keydown', e => {

@@ -132,6 +132,11 @@ let universityLogo;
 let wallDisplayMaterial;
 let jumpVelocity = 0;
 let jumpOffset = 0;
+let dustField;
+let certificate;
+let bobPhase = 0;
+let bobAmount = 0;
+let moveIntensity = 0;
 let touchLookPointer = null;
 let touchLookX = 0;
 let touchLookY = 0;
@@ -424,8 +429,16 @@ function createStation(definition) {
   ring.position.y = 0.025;
   group.add(ring);
 
+  // each exhibit gets its own pool of light, brought up as you approach
+  const spot = new THREE.SpotLight(0xffd9a8, 0, 7.2, Math.PI / 6.5, 0.55, 1.6);
+  spot.position.set(0, 3.45, 1.75);
+  const spotTarget = new THREE.Object3D();
+  spotTarget.position.set(0, 1.35, 0);
+  group.add(spot, spotTarget);
+  spot.target = spotTarget;
+
   scene.add(group);
-  stations.push({ definition, group, panel, panelMaterial, label, labelMaterial, ring });
+  stations.push({ definition, group, panel, panelMaterial, label, labelMaterial, ring, spot });
 }
 
 function updateStationLabels() {
@@ -549,7 +562,9 @@ function createLighting() {
   const keyLight = new THREE.DirectionalLight(0xffe5c4, theme === "dark" ? 2.15 : 1.7);
   keyLight.position.set(-4, 8, 6);
   keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(1024, 1024);
+  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.radius = 3;
+  keyLight.shadow.bias = -0.0006;
   keyLight.shadow.camera.left = -14;
   keyLight.shadow.camera.right = 14;
   keyLight.shadow.camera.top = 12;
@@ -563,6 +578,78 @@ function createLighting() {
   const windowLight = new THREE.DirectionalLight(0xd8eff2, theme === "dark" ? 0.65 : 1.1);
   windowLight.position.set(0, 5.5, -10);
   scene.add(windowLight);
+
+  // cool fill from the opposite side keeps the shadow side from going black
+  const fillLight = new THREE.DirectionalLight(0xa9c6d8, theme === "dark" ? 0.5 : 0.75);
+  fillLight.position.set(7, 4.2, 5);
+  scene.add(fillLight);
+
+  // a high, weak warm light lifts the ceiling without hotspotting the floor
+  // (a low bounce light here blew the near floor out to solid orange)
+  const lift = new THREE.PointLight(0xffc79a, theme === "dark" ? 9 : 6, 22, 2.6);
+  lift.position.set(0, 4.6, 3.5);
+  scene.add(lift);
+}
+
+/* drifting dust — cheap, and it gives the light shafts something to catch */
+function createAtmosphere() {
+  const count = 170;
+  const positions = new Float32Array(count * 3);
+  for (let i = 0; i < count; i += 1) {
+    positions[i * 3] = (Math.random() - 0.5) * 26;
+    // start above eye level so motes read as atmosphere, not snow in your face
+    positions[i * 3 + 1] = 1.95 + Math.random() * 2.8;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 22;
+  }
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  dustField = new THREE.Points(geometry, new THREE.PointsMaterial({
+    color: 0xffe3c0,
+    size: 0.019,
+    transparent: true,
+    opacity: 0.24,
+    depthWrite: false,
+    sizeAttenuation: true
+  }));
+  dustField.userData.base = positions.slice(0);
+  scene.add(dustField);
+}
+
+/* the KCC 2026 certificate, framed on the back-right wall */
+function createCertificate() {
+  const group = new THREE.Group();
+  group.position.set(11.9, 2.62, -11.82);
+
+  const frameMaterial = createThemedMaterial("metal", { roughness: 0.38, metalness: 0.55 });
+  addBox(group, [1.72, 2.26, 0.09], [0, 0, 0], frameMaterial, { castShadow: false });
+  addBox(group, [1.56, 2.1, 0.02], [0, 0, 0.055], createThemedMaterial("surface", {
+    roughness: 0.9
+  }), { castShadow: false });
+
+  const paperMaterial = new THREE.MeshBasicMaterial({ color: 0xf7f4ec });
+  const paper = new THREE.Mesh(new THREE.PlaneGeometry(1.44, 1.96), paperMaterial);
+  paper.position.set(0, 0, 0.07);
+  group.add(paper);
+
+  new THREE.TextureLoader().load("res/award-kcc-2026.jpeg", (texture) => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = renderer?.capabilities.getMaxAnisotropy?.() || 1;
+    paperMaterial.map = texture;
+    paperMaterial.color.set(0xffffff);
+    paperMaterial.needsUpdate = true;
+    renderer?.render(scene, camera);
+  });
+
+  // a small picture light so it reads from across the room
+  const light = new THREE.SpotLight(0xfff0d2, 16, 6.5, Math.PI / 6, 0.5, 1.7);
+  light.position.set(0, 1.6, 1.5);
+  const target = new THREE.Object3D();
+  target.position.set(0, -0.1, 0);
+  group.add(light, target);
+  light.target = target;
+
+  certificate = group;
+  scene.add(group);
 }
 
 function initializeScene() {
@@ -584,13 +671,15 @@ function initializeScene() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = theme === "dark" ? 1.18 : 1.02;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   createLighting();
   createRoom();
   stationDefinitions.forEach(createStation);
   createRover();
   createRobotArm();
+  createCertificate();
+  createAtmosphere();
   resizeRenderer();
 
   stage.dataset.worldReady = "true";
@@ -651,11 +740,12 @@ function updateMovement(delta) {
   const rightAmount = Number(getMoveState("right", "KeyD") || keys.has("ArrowRight")) -
     Number(getMoveState("left", "KeyA") || keys.has("ArrowLeft"));
 
+  let sprinting = false;
   if (forwardAmount || rightAmount) {
     const forward = new THREE.Vector3(0, 0, -1).applyAxisAngle(UP_AXIS, yaw);
     const right = new THREE.Vector3(1, 0, 0).applyAxisAngle(UP_AXIS, yaw);
     const direction = forward.multiplyScalar(forwardAmount).add(right.multiplyScalar(rightAmount)).normalize();
-    const sprinting = keys.has("ShiftLeft") || keys.has("ShiftRight") || (touchSprintMode && forwardAmount > 0);
+    sprinting = keys.has("ShiftLeft") || keys.has("ShiftRight") || (touchSprintMode && forwardAmount > 0);
     const speed = WALK_SPEED * (sprinting ? SPRINT_MULTIPLIER : 1);
     camera.position.addScaledVector(direction, speed * delta);
     camera.position.x = THREE.MathUtils.clamp(camera.position.x, -ROOM_LIMIT_X, ROOM_LIMIT_X);
@@ -674,7 +764,23 @@ function updateMovement(delta) {
       jumpVelocity = 0;
     }
   }
-  camera.position.y = PLAYER_HEIGHT + jumpOffset;
+  // walking head-bob. Tracks how hard you are moving so it eases in and out
+  // instead of snapping, and is skipped entirely mid-air or on reduced motion.
+  const walking = Math.min(1, Math.hypot(forwardAmount, rightAmount));
+  moveIntensity += (walking - moveIntensity) * Math.min(1, delta * 8);
+  const grounded = jumpOffset <= 0.001 && jumpVelocity === 0;
+  if (reducedMotion.matches || !grounded) {
+    bobAmount += (0 - bobAmount) * Math.min(1, delta * 10);
+  } else {
+    const stride = sprinting ? 13.5 : 9.2;
+    bobPhase += delta * stride * Math.max(moveIntensity, 0.0001);
+    bobAmount += (moveIntensity - bobAmount) * Math.min(1, delta * 8);
+  }
+  const bob = Math.sin(bobPhase * 2) * 0.032 * bobAmount;
+  const sway = Math.sin(bobPhase) * 0.018 * bobAmount;
+
+  camera.position.y = PLAYER_HEIGHT + jumpOffset + bob;
+  camera.position.x += Math.cos(yaw) * sway * delta * 6;
   stage.dataset.jumping = String(jumpOffset > 0);
 }
 
@@ -686,6 +792,7 @@ function updateNearestStation(elapsed) {
     const dx = camera.position.x - station.group.position.x;
     const dz = camera.position.z - station.group.position.z;
     const distance = Math.hypot(dx, dz);
+    station.distance = distance;
     if (distance < nearestDistance) {
       nearestDistance = distance;
       nextStation = station;
@@ -695,8 +802,16 @@ function updateNearestStation(elapsed) {
   nearestStation = nearestDistance <= INTERACTION_DISTANCE ? nextStation : null;
   stations.forEach((station) => {
     const active = station === nearestStation;
-    station.panelMaterial.emissiveIntensity = active ? 0.72 : 0.12;
-    station.ring.material.opacity = active ? 0.82 : 0.34;
+    // 0 far away -> 1 stood in front of it, so the light swells as you walk up
+    const proximity = THREE.MathUtils.clamp(1 - ((station.distance || 99) - 1.6) / 5.2, 0, 1);
+    station.panelMaterial.emissiveIntensity = active
+      ? 0.72
+      : 0.1 + proximity * 0.34;
+    station.ring.material.opacity = active ? 0.82 : 0.28 + proximity * 0.34;
+    if (station.spot) {
+      const want = (active ? 30 : 6 + proximity * 20);
+      station.spot.intensity += (want - station.spot.intensity) * 0.12;
+    }
     const pulse = active && !reducedMotion.matches ? 1 + Math.sin(elapsed * 4.5) * 0.08 : 1;
     station.ring.scale.setScalar(pulse);
   });
@@ -728,6 +843,16 @@ function updateDecorations(elapsed) {
   if (universityLogo) {
     universityLogo.rotation.y = elapsed * 0.18;
     universityLogo.position.y = universityLogo.userData.baseY + Math.sin(elapsed * 0.8) * 0.06;
+  }
+  if (dustField) {
+    const attr = dustField.geometry.getAttribute("position");
+    const base = dustField.userData.base;
+    for (let i = 0; i < attr.count; i += 1) {
+      const y = i * 3 + 1;
+      attr.array[y] = base[y] + Math.sin(elapsed * 0.28 + i * 0.7) * 0.22;
+      attr.array[i * 3] = base[i * 3] + Math.sin(elapsed * 0.16 + i) * 0.3;
+    }
+    attr.needsUpdate = true;
   }
 }
 
@@ -815,6 +940,32 @@ function sanitizeClone(clone) {
     button.setAttribute("aria-disabled", "true");
     button.tabIndex = -1;
   });
+
+  // The CV is scroll-animated: anything whose reveal has not fired yet still
+  // carries inline opacity:0 / transform / clip-path. Cloned into the exhibit
+  // dialog those never animate, so the panel would render blank. Reset the
+  // animation state and unmask the split headings.
+  const reset = (node) => {
+    node.style.removeProperty("opacity");
+    node.style.removeProperty("transform");
+    node.style.removeProperty("filter");
+    node.style.removeProperty("clip-path");
+    node.style.removeProperty("width");
+  };
+  reset(clone);
+  clone.querySelectorAll("*").forEach(reset);
+  clone.querySelectorAll(".tline").forEach((line) => {
+    line.style.overflow = "visible";
+  });
+  // sticky/parallax layout tricks make no sense inside a scrolling dialog
+  clone.querySelectorAll(".pcard").forEach((card) => {
+    card.style.position = "static";
+    card.style.marginBottom = "18px";
+  });
+  clone.querySelectorAll(".scrub .w").forEach((word) => {
+    word.style.color = "inherit";
+  });
+
   clone.classList.add("world-detail-section");
 }
 

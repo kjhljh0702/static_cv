@@ -506,12 +506,12 @@
     {
       "year": "2026",
       "type": {
-        "ko": "연구 포스터",
-        "en": "Research Poster"
+        "ko": "학술대회 논문",
+        "en": "Conference Paper"
       },
       "venue": {
-        "ko": "한양대학교 프로그램 시스템 연구실",
-        "en": "Programming Systems Lab, Hanyang University"
+        "ko": "2026 한국컴퓨터종합학술대회 (KCC 2026)",
+        "en": "Korea Computer Congress 2026 (KCC 2026)"
       },
       "title": {
         "ko": "피처 엔지니어링 없는 정적 분석 알람 랭킹을 위한 트레이스 기반 대조학습",
@@ -520,6 +520,10 @@
       "authors": {
         "ko": "이정훈, 이우석",
         "en": "Jeonghun Lee, Wooseok Lee"
+      },
+      "award": {
+        "ko": "우수발표논문상",
+        "en": "Outstanding Presentation Paper Award"
       }
     },
     {
@@ -563,19 +567,40 @@
   ],
   "awards": [
     {
-      "year": "2024",
+      "year": "2026",
+      "date": {
+        "ko": "2026년 7월 31일",
+        "en": "July 31, 2026"
+      },
       "title": {
-        "ko": "캡스톤 디자인 페어 우수상",
-        "en": "Excellence Award, Capstone Design Fair"
+        "ko": "우수발표논문상",
+        "en": "Outstanding Presentation Paper Award"
       },
       "organization": {
-        "ko": "한양대학교 ERICA 공학대학",
-        "en": "College of Engineering, Hanyang University ERICA"
+        "ko": "한국정보과학회 (KIISE)",
+        "en": "Korean Institute of Information Scientists and Engineers (KIISE)"
+      },
+      "venue": {
+        "ko": "2026 한국컴퓨터종합학술대회 (KCC 2026)",
+        "en": "Korea Computer Congress 2026 (KCC 2026)"
+      },
+      "track": {
+        "ko": "프로그래밍언어",
+        "en": "Programming Languages"
+      },
+      "certNo": {
+        "ko": "제26-791호",
+        "en": "No. 26-791"
+      },
+      "paper": {
+        "ko": "피처 엔지니어링 없는 정적 분석 알람 랭킹을 위한 트레이스 기반 대조 학습",
+        "en": "Trace-Based Contrastive Learning for Static Analysis Alarm Ranking Without Feature Engineering"
       },
       "description": {
-        "ko": "추력 기반 모듈형 고소 작업 로봇의 설계 완성도와 현장 적용 가능성을 인정받았습니다.",
-        "en": "Recognized for the design quality and field applicability of the thrust-assisted modular elevated-work robot."
-      }
+        "ko": "『2026 한국컴퓨터종합학술대회』에서 '프로그래밍언어' 분야의 우수발표논문으로 선정되어 한국정보과학회장 명의로 수여되었습니다.",
+        "en": "Awarded by the president of KIISE after the paper was selected as an outstanding presentation paper in the Programming Languages track of Korea Computer Congress 2026."
+      },
+      "image": "res/award-kcc-2026.jpeg"
     }
   ],
   "skills": [

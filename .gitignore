@@ -6,3 +6,6 @@ __pycache__/
 *.py[cod]
 *.log
 node_modules/
+
+# local snapshot of the pre-2026-09-03 static CV (also in git history at 8bc4e5f)
+_backup_original_*/

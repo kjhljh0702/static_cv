@@ -10,9 +10,9 @@
   let accent = $state.raw();
   const { renderer, scene, invalidate } = useThrelte();
   const geometries = [new THREE.TorusKnotGeometry(1.17,.34,220,28,2,3),new THREE.TorusKnotGeometry(1.16,.23,230,24,3,4),new THREE.TorusGeometry(1.34,.32,32,150)];
-  const material = new THREE.MeshPhysicalMaterial({color:'#313af2',metalness:.72,roughness:.22,clearcoat:1,clearcoatRoughness:.1});
-  const edgeMaterial = new THREE.MeshPhysicalMaterial({color:'#c9d0c3',metalness:1,roughness:.2});
-  let time = 0; let currentMode = 0; let custom;
+  const material = new THREE.MeshPhysicalMaterial({color:'#1d2475',metalness:.72,roughness:.22,clearcoat:1,clearcoatRoughness:.1});
+  const edgeMaterial = new THREE.MeshPhysicalMaterial({color:'#bfd0ec',metalness:1,roughness:.2});
+  let time = 0; let currentMode = 0; let custom; let customScale = 1;
   let envTarget;
   onMount(() => {
     const room = new RoomEnvironment();
@@ -28,7 +28,7 @@
       const size=box.getSize(new THREE.Vector3());
       const center=box.getCenter(new THREE.Vector3());
       custom.position.sub(center); const scale=3.1/Math.max(size.x,size.y,size.z);
-      const group=new THREE.Group();group.add(custom);group.scale.setScalar(scale);
+      const group=new THREE.Group();group.add(custom);group.scale.setScalar(scale);customScale=scale;
       form.visible=false;scene.add(group);custom=group;invalidate();
     },undefined,()=>{ /* Keep the complete default scene if an optional export fails. */ });
     controller.invalidate = () => {
@@ -44,10 +44,11 @@
     const scroll = controller.scroll;
     const target = custom || form;
     const smooth=1-Math.exp(-delta*4);
-    target.rotation.x += (.35 + controller.pointerY*.22 + scroll*.65-target.rotation.x)*smooth;
-    target.rotation.y += (time*.17 + controller.pointerX*.4 + controller.drag + scroll*.9-target.rotation.y)*smooth;
+    target.rotation.x += (.35 + controller.pointerY*.22 + scroll*1.4-target.rotation.x)*smooth;
+    target.rotation.y += (time*.17 + controller.pointerX*.4 + controller.drag + scroll*2.2-target.rotation.y)*smooth;
     target.rotation.z += (.15+Math.sin(time*.28)*.12-target.rotation.z)*smooth;
-    target.position.y=Math.sin(time*.65)*.09;
+    target.position.y=Math.sin(time*.65)*.09+Math.sin(scroll*Math.PI)*.15;
+    target.scale.setScalar((custom ? customScale : 1)*(1+Math.sin(scroll*Math.PI)*.08));
     if(accent){accent.rotation.z=-time*.1;accent.rotation.y=time*.08;}
   },{running:()=>active});
   onDestroy(()=>{envTarget?.dispose();material.dispose();edgeMaterial.dispose();geometries.forEach(g=>g.dispose());controller.invalidate=null; if(custom){scene.remove(custom);custom.traverse(o=>{o.geometry?.dispose(); if(o.material) (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose());});}});
@@ -55,7 +56,7 @@
 <T.PerspectiveCamera makeDefault position={[0, .1, 6.7]} fov={36} />
 <T.AmbientLight intensity={1.2}/>
 <T.DirectionalLight position={[3,4,4]} intensity={4} color="#faf6e8"/>
-<T.DirectionalLight position={[-4,-1,2]} intensity={2} color="#95a5ff"/>
+<T.DirectionalLight position={[-4,-1,2]} intensity={2} color="#a6caff"/>
 <T.Mesh bind:ref={form} geometry={geometries[0]} {material} rotation={[.4,-.6,.15]}/>
 <T.Mesh bind:ref={accent} position={[0,0,-.35]} rotation={[.7,.4,-.2]} material={edgeMaterial}>
  <T.TorusGeometry args={[1.95,.013,8,160]}/>

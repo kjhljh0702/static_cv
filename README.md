@@ -1,6 +1,6 @@
 # Jeonghun Lee — Code, Intelligence & Motion
 
-A bilingual personal CV and research portfolio: warm ivory, electric blue, editorial typography, scroll animations, and an interactive 3D sculpture.
+A bilingual personal CV and research portfolio: Hanyang Blue (#1D2475), navy and ice-blue surfaces, editorial typography, native scroll choreography, and an interactive 3D sculpture.
 
 ## Original backup
 
@@ -25,7 +25,9 @@ The production archive contains only the new site and the images it uses. The Cl
 
 ## Features
 
-- Anime.js entrance choreography and scroll-synchronized manifesto typography, progress, and rotation.
+- Anime.js timelines scrubbed by native scrolling: a pinned 3D hero, three consecutive manifesto scenes, parallax portrait and oversized type, a desktop project-card stack, a drawn experience timeline, and a contact reveal. The hero and project stack activate only on screens at least 1000px wide and 720px tall; the story simplifies on short screens.
+- A single requestAnimationFrame scheduler with cached layout bounds, resize/font recalculation, and cleanup. No wheel/touch interception or scroll hijacking. Pausing motion restores a normal reading layout, and keyboard focus brings covered project cards back into view.
+- Hanyang Blue uses the university’s documented web color: https://it.hanyang.ac.kr/-21.
 - A separately loaded Threlte/Svelte/Three.js scene mounted inside React, with cursor response, mouse drag, scroll-linked rotation, and three selectable geometries.
 - Official Magic UI Border Beam and Number Ticker components, with the MIT license retained in `app/components/magicui/LICENSE.md`.
 - English/Korean content and locally remembered language preference.

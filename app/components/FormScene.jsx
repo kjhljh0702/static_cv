@@ -15,7 +15,7 @@ export default function FormScene({ running, lang }) {
   return()=>{disposed=true;observer.disconnect();document.removeEventListener('visibilitychange',visibility);if(instance)unmount(instance);};
  },[]);
  useEffect(()=>{const c=controller.current;c.active=running && visibleRef.current && !document.hidden;c.onChange?.();},[running]);
- useEffect(()=>{let raf;const tick=()=>{controller.current.scroll=Math.min(window.scrollY/window.innerHeight,1.5);raf=null;};const scroll=()=>{if(!raf)raf=requestAnimationFrame(tick);};window.addEventListener('scroll',scroll,{passive:true});return()=>{window.removeEventListener('scroll',scroll);cancelAnimationFrame(raf);};},[]);
+ useEffect(()=>{let raf;const tick=()=>{controller.current.scroll=Math.min(window.scrollY/Math.max(1,(document.querySelector('.hero-sequence')?.offsetHeight || window.innerHeight)-window.innerHeight+88),1);raf=null;};const scroll=()=>{if(!raf)raf=requestAnimationFrame(tick);};tick();window.addEventListener('scroll',scroll,{passive:true});return()=>{window.removeEventListener('scroll',scroll);cancelAnimationFrame(raf);};},[]);
  const select=(i)=>{setMode(i);controller.current.mode=i;controller.current.invalidate?.();};
  const pointer=(e)=>{const r=frame.current.getBoundingClientRect();controller.current.pointerX=(e.clientX-r.left)/r.width-.5;controller.current.pointerY=(e.clientY-r.top)/r.height-.5;if(e.buttons===1&&e.pointerType==='mouse')controller.current.drag+=e.movementX*.012;};
  return <div className="scene-frame" ref={frame} onPointerMove={pointer} onPointerLeave={()=>{controller.current.pointerX=0;controller.current.pointerY=0;}}>

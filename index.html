@@ -1,20 +1,261 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko" data-lang="en" data-theme="dark" data-view="classic">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="theme-color" content="#1d2475" />
-<meta name="description" content="Jeonghun Lee — graduate researcher at Hanyang University. Exploring static analysis, code intelligence, and robotics." />
-<title>Jeonghun Lee — Code, Intelligence & Motion</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%231d2475'/%3E%3Ctext x='9' y='33' font-family='Arial' font-size='25' font-weight='bold' fill='white'%3EJL%3C/text%3E%3C/svg%3E" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;650;700;750;800&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="./compiled/index-BGGPdvx0.js"></script>
-  <link rel="stylesheet" crossorigin href="./compiled/index-CjCaGlq1.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jeonghun Lee — Static Analysis · Code Intelligence · Robotics</title>
+<meta name="description" content="Interactive CV of Jeonghun Lee, M.S. student at Hanyang University Programming Systems Lab.">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/jpeg" href="res/my_profile.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- style.css keeps the 3D world UI; the CV stylesheet loads last and wins -->
+<link rel="stylesheet" href="style.css?v=20260903.1">
+<link rel="stylesheet" href="assets/css/style.css?v=20260903.1">
 </head>
 <body>
-<div id="root"></div>
-<noscript><main style="max-width:700px;margin:60px auto;padding:24px;font-family:Arial"><h1>Jeonghun Lee</h1><p>Graduate Researcher · Programming Systems Lab, Hanyang University</p><p>Static analysis, contrastive learning, code intelligence and robotics.</p><p>Master of Engineering in Computer Science, 2025–2027 (expected). Bachelor of Engineering in Robotics Engineering, 2022–2025.</p><a href="mailto:jeonghuni443@gmail.com">jeonghuni443@gmail.com</a><p>Enable JavaScript to explore the interactive portfolio and full CV.</p></main></noscript>
+
+<a class="skip-link" href="#content-panel">본문으로 바로가기</a>
+
+    <div class="metaverse-stage" id="metaverse-stage" aria-hidden="true">
+      <canvas id="metaverse-canvas"></canvas>
+      <div class="world-ui" id="world-ui">
+        <div class="world-statusbar" aria-hidden="true">
+          <span>MYHUB // RESEARCH HOUSE</span>
+          <span>THREE.JS r184</span>
+        </div>
+
+        <button class="world-exit" id="worldExit" type="button" aria-label="Exit 3D view">
+          <span data-t="world">3D</span><span aria-hidden="true">&times;</span>
+        </button>
+
+        <div class="world-start" id="world-start" role="status">
+          <span class="world-start-kicker">SINGLE-PLAYER 3D HOUSE PORTFOLIO</span>
+          <strong>모던 연구 공간을 거닐어 보세요</strong>
+          <p>전시대로 걸어가 <kbd>E</kbd>를 누르면 CV 섹션이 열립니다.</p>
+          <button class="world-start-button" id="world-start-button" type="button">
+            탐험 시작
+          </button>
+          <span class="world-start-controls">WASD 이동 · 마우스 시점 · E 열기 · R 시작 위치</span>
+        </div>
+
+        <div class="world-crosshair" id="world-crosshair" aria-hidden="true"></div>
+        <div class="world-interaction" id="world-interaction" role="status" hidden>
+          <span class="world-interaction-key">E</span>
+          <span><strong id="world-interaction-title"></strong> <span id="world-interaction-action">전시대 열기</span></span>
+        </div>
+
+        <div class="world-help" aria-hidden="true">
+          <span><kbd>WASD</kbd> <em id="world-help-move">이동</em></span>
+          <span><kbd>MOUSE</kbd> <em id="world-help-look">시점</em></span>
+          <span><kbd>E</kbd> <em id="world-help-open">열기</em></span>
+          <span><kbd>R</kbd> <em id="world-help-reset">위치 초기화</em></span>
+          <span><kbd>SPACE</kbd> <em id="world-help-jump">점프</em></span>
+        </div>
+
+        <div class="world-touch-controls" id="world-touch-controls" aria-label="3D 이동 컨트롤">
+          <div class="world-touch-pad">
+            <button type="button" data-move="forward" aria-label="앞으로 이동 · 더블탭 달리기">▲</button>
+            <button type="button" data-move="left" aria-label="왼쪽으로 이동">◀</button>
+            <button type="button" data-move="backward" aria-label="뒤로 이동">▼</button>
+            <button type="button" data-move="right" aria-label="오른쪽으로 이동">▶</button>
+          </div>
+          <div class="world-touch-actions">
+            <button class="world-touch-jump" id="world-touch-jump" type="button">점프</button>
+            <button class="world-touch-interact" id="world-touch-interact" type="button" disabled>
+              열기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <dialog class="world-detail-dialog" id="world-detail-dialog" aria-labelledby="world-detail-title">
+      <div class="world-detail-shell">
+        <header class="world-detail-header">
+          <div>
+            <span>MYHUB // EXHIBIT</span>
+            <h2 id="world-detail-title"></h2>
+          </div>
+          <button class="world-detail-close" id="world-detail-close" type="button" aria-label="전시대 닫기">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m6 6 12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </header>
+        <div class="world-detail-content" id="world-detail-content"></div>
+      </div>
+    </dialog>
+
+<!-- ============ loader ============ -->
+<div class="loader" id="loader">
+  <div class="loader__name" id="loaderName"></div>
+  <div class="loader__bar"><i id="loadBar"></i></div>
+  <div class="loader__num"><span id="loadNum">000</span> %</div>
+</div>
+<div class="loader__curtain" id="curtain" hidden><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<div id="cv-shell">
+<canvas id="aurora"></canvas>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"><b id="curLabel"></b></div>
+
+<div class="progress"><i id="progressBar"></i></div>
+
+<!-- ============ nav ============ -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top">JL</a>
+  <nav class="nav__links" id="navLinks"></nav>
+  <div class="nav__right" style="display:flex;align-items:center;gap:10px">
+    <button class="worldbtn" id="worldBtn" type="button" aria-pressed="false" aria-label="3D portfolio"><span data-t="world">3D</span></button>
+    <button class="lang" id="langBtn" aria-label="Toggle language"><b id="langOn">EN</b><span>/</span><span id="langOff">KO</span></button>
+    <button class="navbtn" id="navBtn" aria-label="Menu" aria-expanded="false"><i></i><i></i></button>
+  </div>
+</header>
+
+<nav class="menu" id="menu" aria-hidden="true"><div id="menuLinks"></div></nav>
+
+<main id="top">
+
+  <!-- ============ hero ============ -->
+  <section class="hero" id="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__l">
+        <h1 class="hero__name" id="heroName"></h1>
+        <p class="hero__head" id="heroHead"></p>
+        <div class="hero__roles" id="heroRoles"></div>
+      </div>
+      <aside class="hero__card glass" data-tilt>
+        <div class="hero__ph"><img id="heroPhoto" alt="Jeonghun Lee" src="res/my_profile.jpeg"></div>
+        <div class="meta" id="heroMeta"></div>
+      </aside>
+    </div>
+    <div class="scrollcue"><i></i><span data-t="scroll">Scroll</span></div>
+  </section>
+
+  <!-- ============ about ============ -->
+  <section class="about" id="about" style="padding:0">
+    <div class="about__stage">
+      <div class="about__sticky">
+        <div class="wrap">
+          <h2 class="sr-only" data-t="about">About</h2>
+          <div class="eyebrow" data-t="about">About</div>
+          <p class="scrub" id="aboutScrub"></p>
+          <div class="focus-row" id="focusRow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ stat band ============ -->
+  <section class="statband">
+    <div class="wrap stat__row" id="statRow"></div>
+  </section>
+
+  <!-- ============ marquee ============ -->
+  <section class="marq">
+    <div class="marq__skew">
+      <div class="marq__track" id="marq"></div>
+      <div class="marq__track marq__track--b" id="marq2"></div>
+    </div>
+  </section>
+
+  <!-- ============ experience (horizontal pin) ============ -->
+  <section class="hstage" id="experience">
+    <div class="hpin">
+      <div class="wrap hpin__head">
+        <div class="eyebrow" data-t="exp">Experience</div>
+        <h2 class="title"><span data-t="expT1">Where I have</span> <em data-t="expT2">worked</em></h2>
+      </div>
+      <div class="htrack" id="htrack" data-cursor="Drag"></div>
+      <div class="wrap hrail"><i id="hrailFill"></i></div>
+    </div>
+  </section>
+
+  <!-- ============ education ============ -->
+  <section id="education">
+    <div class="wrap">
+      <div class="eyebrow" data-reveal data-t="edu">Education</div>
+      <h2 class="title" data-reveal><span data-t="eduT1">Trained in</span> <em data-t="eduT2">systems</em></h2>
+      <div class="edu__grid" style="margin-top:44px">
+        <div class="edu__rail">
+          <svg viewBox="0 0 52 600" preserveAspectRatio="none" fill="none">
+            <path id="eduLine" d="M26 0 L26 600" stroke="url(#eg)" stroke-width="1.5" stroke-linecap="round"/>
+            <defs><linearGradient id="eg" x1="0" y1="0" x2="0" y2="600" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#a78bfa"/><stop offset=".5" stop-color="#22d3ee"/><stop offset="1" stop-color="#f472b6"/>
+            </linearGradient></defs>
+          </svg>
+        </div>
+        <div class="edu__items" id="eduItems"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ projects ============ -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="eyebrow" data-reveal data-t="proj">Selected work</div>
+      <h2 class="title" data-reveal><span data-t="projT1">Six things I</span> <em data-t="projT2">built</em></h2>
+      <div id="pcards" style="margin-top:52px"></div>
+    </div>
+  </section>
+
+  <!-- ============ skills ============ -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="eyebrow" data-reveal data-t="sk">Toolkit</div>
+      <h2 class="title" data-reveal><span data-t="skT1">What I</span> <em data-t="skT2">work with</em></h2>
+      <div class="sk__grid" id="skGrid" style="margin-top:44px"></div>
+    </div>
+  </section>
+
+  <!-- ============ publications ============ -->
+  <section id="publications">
+    <div class="wrap">
+      <div class="eyebrow" data-reveal data-t="res">Research &amp; recognition</div>
+      <h2 class="title" data-reveal><span data-t="resT1">Papers,</span> <em data-t="resT2">posters, prizes</em></h2>
+      <div id="pubList" style="margin-top:44px"></div>
+    </div>
+  </section>
+
+  <!-- ============ awards ============ -->
+  <section id="awards">
+    <div class="wrap">
+      <div class="eyebrow" data-reveal data-t="aw">Recognition</div>
+      <h2 class="title" data-reveal><span data-t="awT1">Prizes and</span> <em data-t="awT2">honours</em></h2>
+      <div id="awardList" style="margin-top:44px;display:grid;gap:16px"></div>
+    </div>
+  </section>
+
+  <!-- ============ contact ============ -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="eyebrow" style="justify-content:center" data-reveal data-t="contact">Get in touch</div>
+      <h2 id="contactH"></h2>
+      <a class="cta" id="mailBtn" href="#" data-magnet><span data-t="cta">Send me an email</span> <span>&rarr;</span></a>
+      <div class="links" id="links"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="yr"></span> Jeonghun Lee</span>
+  <span>Built with anime.js v4</span>
+</footer>
+</div>
+
+<div class="lb" id="lightbox" hidden>
+  <div class="lb__in">
+    <img alt="">
+    <div class="lb__cap" id="lbCap"></div>
+  </div>
+  <button class="lb__x" aria-label="Close">&times;</button>
+</div>
+
+<script type="module" src="metaverse.js?v=20260903.1"></script>
+<script type="module" src="assets/js/main.js?v=20260903.1"></script>
 </body>
 </html>

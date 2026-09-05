@@ -396,22 +396,21 @@ function choreograph() {
   qa('.eyebrow').forEach(el => scrambleOn(el));
 
   /* -- 5.1 hero scrolls away ------------------------------------ */
-  // A single mobile swipe (plus momentum) can easily travel close to a full
-  // viewport height in one gesture, which is much further than a mouse-wheel
-  // tick covers. Tying the whole fade to ~1 viewport meant one touch scroll
-  // wiped the hero out before it had been seen. A small dead zone means the
-  // first, hesitant bit of scroll does nothing, and ~1.7 viewports of travel
-  // to fully fade gives a swipe (even with momentum) room to breathe.
+  // On narrow/touch screens the portrait sits below the name. Keep the
+  // entire opening readable until nearly all of the hero has left view.
   const hero = q('.hero');
+  const mobileHero = innerWidth <= 900 || matchMedia('(pointer:coarse)').matches;
   const heroRange = () => {
     const h = hero.offsetHeight;
-    return [h * 0.08, h * 1.7];
+    return mobileHero ? [h * .9, h * 1.65] : [h * .08, h * 1.7];
   };
-  scrub('.hero__grid', {
+  scrub('.hero__grid', mobileHero ? {
+    y: [0, -12], scale: [1, .99], opacity: [1, .85]
+  } : {
     y: [0, -70], scale: [1, .93], opacity: [1, 0], filter: ['blur(0px)', 'blur(14px)']
   }, heroRange);
-  /* the portrait drifts a touch slower than the copy -> depth */
-  scrub('.hero__card', { y: [0, 46] }, heroRange);
+  /* Keep portrait parallax subtle on touch screens. */
+  scrub('.hero__card', { y: [0, mobileHero ? 8 : 46] }, heroRange);
   scrub('.scrollcue', { opacity: [1, 0] }, () => [0, hero.offsetHeight * 0.4]);
 
   /* -- 5.2 about: word-by-word illumination --------------------- */
@@ -576,6 +575,13 @@ function choreograph() {
     whenSeen(m, m, {
       scale: [0, 1], rotate: [-140, 0], duration: 800,
       ease: spring({ stiffness: 170, damping: 11 })
+    });
+  });
+
+  qa('.edu__item,.pub').forEach(el => {
+    scrub(el, { '--detail-light': ['0%', '100%'] }, vh => {
+      const top = docTop(el);
+      return [top - vh * .9, top - vh * .25];
     });
   });
 

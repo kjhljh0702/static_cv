@@ -52,3 +52,16 @@
 :focus-visible{outline:2px solid #9ecaff;outline-offset:5px}
 @media(max-width:900px){.hero{min-height:100svh}.hero__l::before{font-size:8px;margin-bottom:22px}.hero-field{opacity:.6}.hero-coordinate{display:none}.chapter-rail{display:none}.scrub{font-size:clamp(18px,3.3vw,28px)}.hero__card{max-width:400px;width:100%;justify-self:end}.section-trace{top:15px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;scroll-behavior:auto!important}.section-trace{transform:none}.contact-orbit{scale:1}.hero-field{opacity:.35}}
+
+/* Korean syllables need more vertical space than Latin display text.
+   Solid blue also avoids clipped gradient glyphs in transformed Safari text. */
+html[data-lang="ko"] .title{line-height:1.3;word-break:keep-all;overflow-wrap:normal}
+html[data-lang="ko"] .tline{padding:.12em .13em .16em;margin:-.12em -.13em -.16em;white-space:nowrap;vertical-align:baseline}
+html[data-lang="ko"] .title em,html[data-lang="ko"] .tw.em{background:none;color:#a9ceff;-webkit-text-fill-color:#a9ceff}
+html[data-lang="ko"] .pub h4,html[data-lang="ko"] .pub .vn,html[data-lang="ko"] .stat span{word-break:keep-all;overflow-wrap:break-word;letter-spacing:0;line-height:1.6}
+.pub{grid-template-columns:64px minmax(0,1fr);position:relative}
+.edu__item::after,.pub::after{content:'';position:absolute;bottom:-1px;left:0;width:var(--detail-light,0%);height:1px;background:linear-gradient(90deg,transparent,#76b5ff,#d5eaff);box-shadow:0 0 12px #549aff55;pointer-events:none}
+.hero__ph::before{content:'';position:absolute;inset:-35%;z-index:2;background:linear-gradient(115deg,transparent 40%,#c6e5ff20 49%,transparent 58%);transform:translateX(-90%);pointer-events:none;animation:portrait-light 2.4s ease-in-out 3s both}
+@keyframes portrait-light{from{transform:translateX(-90%)}to{transform:translateX(90%)}}
+@media(max-width:900px),(pointer:coarse){.hero__grid{filter:none!important}.hero{padding-bottom:100px}}
+@media(prefers-reduced-motion:reduce){.edu__item::after,.pub::after{width:100%}.hero__ph::before{display:none}}

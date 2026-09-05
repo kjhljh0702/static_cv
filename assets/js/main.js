@@ -4,6 +4,7 @@
 import {
   animate, createTimeline, stagger, utils, svg, spring, eases
 } from '../../vendor/anime.esm.min.js';
+import { cinematic } from './cinematic.js?v=20260905.1';
 import { render, setLang, getLang, UI, chars } from './render.js';
 
 const q  = (s, r = document) => r.querySelector(s);
@@ -99,10 +100,10 @@ function aurora() {
   const ctx = cv.getContext('2d');
   const DPR = 0.28;                    // heavy downscale, then CSS-stretched
   const blobs = [
-    { x:.22, y:.28, r:.42, c:'139,92,246', s:.00021, p:0 },
-    { x:.78, y:.34, r:.36, c:'34,211,238', s:.00017, p:2.1 },
-    { x:.50, y:.78, r:.44, c:'244,114,182', s:.00013, p:4.2 },
-    { x:.10, y:.72, r:.30, c:'99,102,241', s:.00025, p:1.1 }
+    { x:.22, y:.28, r:.42, c:'29,36,117', s:.00021, p:0 },
+    { x:.78, y:.34, r:.36, c:'51,113,218', s:.00017, p:2.1 },
+    { x:.50, y:.78, r:.44, c:'39,69,153', s:.00013, p:4.2 },
+    { x:.10, y:.72, r:.30, c:'94,143,221', s:.00025, p:1.1 }
   ];
   let W, H;
   const size = () => {
@@ -130,7 +131,7 @@ function aurora() {
       ctx.beginPath(); ctx.arc(cx, cy, rr, 0, 6.2832); ctx.fill();
     }
     ctx.globalCompositeOperation = 'source-over';
-    requestAnimationFrame(draw);
+    if (!REDUCED) requestAnimationFrame(draw);
   };
   if (!REDUCED) requestAnimationFrame(draw); else draw(0);
 }
@@ -139,7 +140,7 @@ function aurora() {
    2. CURSOR — spring follower
    ================================================================== */
 function cursor() {
-  if (matchMedia('(pointer:coarse)').matches) return;
+  if (REDUCED || matchMedia('(pointer:coarse)').matches) return;
   const dot = q('#cur'), ring = q('#curRing');
   let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, scale = 1, tScale = 1;
   addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY;
@@ -188,9 +189,9 @@ function chrome() {
   /* each section owns an accent; --a is a registered custom property so the
      whole palette eases between them instead of snapping */
   const ACCENT = {
-    hero:'#a78bfa', about:'#a78bfa', experience:'#22d3ee', education:'#34d399',
-    projects:'#f472b6', skills:'#60a5fa', publications:'#fbbf24',
-    awards:'#fb923c', contact:'#a78bfa'
+    hero:'#8facff', about:'#91b7ff', experience:'#7abaff', education:'#a1c5ff',
+    projects:'#86aaff', skills:'#89c4ff', publications:'#a6c7ff',
+    awards:'#adc9f6', contact:'#8facff'
   };
 
   const movePill = (a) => {
@@ -750,6 +751,7 @@ function worldToggle() {
    6. POINTER FLOURISHES — tilt + magnetic
    ================================================================== */
 function pointerFx() {
+  if (REDUCED || matchMedia('(pointer:coarse)').matches) return;
   qa('[data-tilt]').forEach(el => {
     const r = () => el.getBoundingClientRect();
     el.addEventListener('pointermove', e => {
@@ -782,7 +784,7 @@ async function boot() {
   DATA = await (await fetch('data.json')).json();
   render(DATA);
 
-  aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
+  cinematic(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
   menu(); dragTrack(); lightbox(); worldToggle();
   requestAnimationFrame(loader);
 

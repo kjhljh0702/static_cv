@@ -7,7 +7,7 @@ This is an unofficial personal CV. Minecraft is a trademark of Mojang/Microsoft;
 - Legacy unreferenced custom item sprites, `skin/player.png`, `skin/player-front.png`, and `backgrounds/plains.png` were generated for the earlier design. The flat player image remains a loading-failure fallback. The old generator is retired to prevent overwriting downloaded assets.
 - Active player texture: `skin/steve.png`. An optional personal skin can replace this file with a compatible 64×64 classic-width skin.
 - Sidebar bevels, tooltips, XP, and glint are CSS implementations; inventory, chest and book backgrounds use the downloaded GUI atlases.
-- Sounds: original short synthesized tones in `minecraft/src/systems/sound.ts`, off by default. No game recordings or music included.
+- Sounds: original Minecraft Java Edition 1.20.1 recordings, copyright Mojang/Microsoft and their respective audio rights holders. Downloaded directly from Mojang’s content-addressed asset CDN; exact source URLs and checksums are in `sounds/source-manifest.json`. OGG originals are preserved; WAV copies are decoded PCM for browser compatibility. These assets are not covered by this project’s code license. Audio is off by default; no music is included. Reproduce with `python3 scripts/fetch-minecraft-sounds.py` then `node scripts/convert-minecraft-audio.mjs`.
 - `fonts/neodgm.woff2`: NeoDGM, SIL Open Font License 1.1. Full license is in `fonts/LICENSE.txt`. Source: https://github.com/neodgm/neodgm-webfont.
 - Three.js: MIT license, retained in the bundled source license comments and in the existing `vendor/LICENSE`.
 - CV text, portrait, project images, and award certificate are the pre-existing user-provided content from this repository. Their existing rights remain unchanged.

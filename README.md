@@ -4,7 +4,7 @@ A personal, bilingual CV. The restored Claude CV is the default; its header prov
 
 **Live:** https://kjhljh0702.github.io/static_cv/
 
-The interface includes a skinned Three.js player that follows the pointer, numbered sidebar navigation, chests, paginated books, crafting recipes, exploration XP, optional synthesized sounds, keyboard shortcuts, and a downloadable CV.
+The interface includes a skinned Three.js player that follows the pointer, numbered sidebar navigation, chests, paginated books, crafting recipes, exploration XP, optional original Minecraft sound recordings, keyboard shortcuts, and a downloadable CV.
 
 ## Run
 
@@ -52,7 +52,7 @@ No manual assets are required. The English PDF is generated from the existing CV
 
 The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The classic CV uses the previously restored Claude design, including the mobile portrait and Korean typography fixes. `?view=3d` opens the existing 3D world; `/inventory/` opens Minecraft. Minecraft’s toolbar links back to the default CV and 3D.
 
-This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. No game sound recordings or music are included.
+This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. Minecraft UI, chest, book, and advancement recordings are fetched from Mojang’s asset CDN and remain copyrighted by their respective owners. Audio starts muted; no music is included.
 
 ## 3D studio
 

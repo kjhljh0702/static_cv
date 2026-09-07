@@ -7,7 +7,7 @@ export type BookRecord = {
   imageLabel?: string;
   links?: { label: string; href: string }[];
 };
-export function paginate(text: string, width = 136, maxLines = 12): string[] {
+export function paginate(text: string, width = 112, maxLines = 12): string[] {
   const canvas = document.createElement("canvas"),
     ctx = canvas.getContext("2d")!;
   ctx.font = "8px InventoryPixel";

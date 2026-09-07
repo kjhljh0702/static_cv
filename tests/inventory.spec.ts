@@ -16,7 +16,7 @@ test("main inventory, mouse tracking, hotbar and browser history", async ({
   await expect(
     page.locator(".survival > .slot-grid").first().locator(".slot"),
   ).toHaveCount(27);
-  await expect(page.locator(".hud-hotbar .slot")).toHaveCount(9);
+  await expect(page.locator(".section-sidebar .section-tab")).toHaveCount(8);
   const canvas = page.locator(".player-canvas");
   const before = await canvas.screenshot();
   await page.mouse.move(1200, 100);
@@ -68,7 +68,7 @@ test("book pagination preserves complete source content in both languages", asyn
 test("keyboard slots, commands, sound, recipe and exploration", async ({
   page,
 }) => {
-  await page.keyboard.press("3");
+  await page.keyboard.press("4");
   const first = page.locator(".chest-window .slot").first();
   await first.focus();
   await page.keyboard.press("ArrowRight");
@@ -108,6 +108,7 @@ test("responsive integer slots and bounded tooltips", async ({ page }) => {
     [320, 568],
   ]) {
     await page.setViewportSize({ width, height });
+    await expect.poll(() => page.evaluate(() => Number(document.documentElement.dataset.scale))).toBe(Math.max(1, Math.min(4, Math.floor((width - 2) / (width <= 600 ? 194 : 250)), Math.floor((height - 32) / 310))));
     await page.keyboard.press("e");
     const box = await page.locator(".survival").boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);
@@ -140,7 +141,7 @@ test("touch navigation and reduced motion", async ({ browser }) => {
   const p = await context.newPage();
   await p.goto(process.env.CV_TEST_URL ?? "http://127.0.0.1:5175/static_cv/");
   await expect(p.locator("#loading")).toHaveCount(0);
-  await p.locator('.hud-hotbar [data-item="projects"]').tap();
+  await p.locator('.section-sidebar [data-section="projects"]').tap();
   await expect(p.locator(".container-title")).toContainText("Large Chest");
   await p.locator('.chest-window [data-item="trace-ranking"]').tap();
   await expect(p.locator(".book-text")).toContainText("Trace-Based");
@@ -151,7 +152,7 @@ test("touch navigation and reduced motion", async ({ browser }) => {
 test("direct links, missing image fallback, slow load and themed 404", async ({
   page,
 }) => {
-  await page.route("**/minecraft/skin/player.png", (r) => r.abort());
+  await page.route("**/minecraft/skin/steve.png", (r) => r.abort());
   await page.goto("./education");
   await expect(page.locator("#loading")).toHaveCount(0);
   await expect(page.locator(".container-title")).toHaveText("Education Chest");
@@ -220,7 +221,7 @@ test("book pages do not overflow, Korean labels and high-DPI zoom stay readable"
 test("asset loading reports real progress and gracefully handles missing artwork", async ({
   page,
 }) => {
-  await page.route("**/minecraft/skin/player.png", async (r) => {
+  await page.route("**/minecraft/skin/steve.png", async (r) => {
     await new Promise((resolve) => setTimeout(resolve, 1200));
     await r.continue();
   });
@@ -264,4 +265,18 @@ test("all known routes resolve with original record counts", async ({
   await page.keyboard.press("b");
   await page.keyboard.press("a");
   await expect(page.locator('[data-item="rare"]')).toBeVisible();
+});
+
+test("sidebar routes and distinct record sprites", async ({ page }) => {
+  const routes = ["inventory", "about", "experience", "education", "projects", "skills", "publications", "contact"];
+  for (const route of routes) {
+    await page.locator(`[data-section="${route}"]`).click();
+    await expect(page).toHaveURL(new RegExp(`${route}$`));
+    await expect(page.locator(`[data-section="${route}"]`)).toHaveAttribute("aria-current", "page");
+    const sprites = await page.locator(".chest-window [data-item] img").evaluateAll(nodes => nodes.map(n => (n as HTMLImageElement).src));
+    expect(new Set(sprites).size).toBe(sprites.length);
+  }
+  await page.locator('[data-section="inventory"]').focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.locator('[data-section="about"]')).toBeFocused();
 });

@@ -1,0 +1,257 @@
+[
+  {
+    "file": "items/book.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/book.png",
+    "sha256": "2941d48d49917a7ca0ebcf43fd7763310dafea5989b319fb9db584147bedcec3"
+  },
+  {
+    "file": "items/enchanted-book.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/enchanted_book.png",
+    "sha256": "43912a1891cc6fb1fae50e5f3c06827e4322e4fbb25a0d5d7c10ab8622c4a655"
+  },
+  {
+    "file": "items/paper.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/paper.png",
+    "sha256": "8ffee002bbc339552eb4d6be5948eb4eb66d016c19e7bbc55bc1cd4a575cc44a"
+  },
+  {
+    "file": "items/compass.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/compass_16.png",
+    "sha256": "0b14eabd82b84a1273057baac58cff50279329e15260b16b711e5a49ffdc56a4"
+  },
+  {
+    "file": "items/pickaxe.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_pickaxe.png",
+    "sha256": "67305d8bd14e1d60633258f52055fce5aeaea7837c10e62d436fc16f163be627"
+  },
+  {
+    "file": "items/diamond-pickaxe.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/diamond_pickaxe.png",
+    "sha256": "a11f6bcbda1201e37d3766546dceab9114a670d99ed36dd11d7ee385a36eddcb"
+  },
+  {
+    "file": "items/gold-pickaxe.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/golden_pickaxe.png",
+    "sha256": "72f15ac075ac9db91725c0d8958d143825314d3673e947c1ad3d662e1705cbb7"
+  },
+  {
+    "file": "items/axe.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_axe.png",
+    "sha256": "8dea40bac06c6f14bb0ad9e8b47de63250f6d6a46ae9439b85ddd1377f1edb49"
+  },
+  {
+    "file": "items/spyglass.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/spyglass.png",
+    "sha256": "dbd79fe07d2221385b200ddd596e7072950d55d5df02b7d2f8d575f5cf46200c"
+  },
+  {
+    "file": "items/eye.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/ender_eye.png",
+    "sha256": "b026e708ac2763f03a2cb70712a0303ef61e757f65245fcd9f235e0725169e78"
+  },
+  {
+    "file": "items/redstone.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/redstone.png",
+    "sha256": "b8e3f44e86514f1b215db01cbb560ebb51afa003b7b376c7cde58e08ff4845cd"
+  },
+  {
+    "file": "items/repeater.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/repeater.png",
+    "sha256": "4b138d411ece0cf321b655dd93ae6584a60249d7bb1294884072bc38eee0a531"
+  },
+  {
+    "file": "items/comparator.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/comparator.png",
+    "sha256": "5dffdf0354d58de8c353d32e4fba817664102ce96c563af8ea18f97181798db2"
+  },
+  {
+    "file": "items/diamond.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/diamond.png",
+    "sha256": "39ab9821ee4cd7194372cbc88f2225959f51c114a64848fc099be6d90ed214ab"
+  },
+  {
+    "file": "items/helmet.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_helmet.png",
+    "sha256": "db530074cf0a2b1e6d6958f66536625764f47e00e3c1cc9f558586c24a5cf9dc"
+  },
+  {
+    "file": "items/armor.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_chestplate.png",
+    "sha256": "028d1a738128c5622471a9d1b94f00b49a696e7c4fac3dfccd07272e50021f71"
+  },
+  {
+    "file": "items/leggings.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_leggings.png",
+    "sha256": "64fee8e18c943e5131041b6cd560c33e2d512f3a56f99cbc4a1c545479ccba2c"
+  },
+  {
+    "file": "items/boots.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_boots.png",
+    "sha256": "e4a500c023d7a54a63810b97187de55503960298a225bd64f68e18253e408a14"
+  },
+  {
+    "file": "items/writable-book.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/writable_book.png",
+    "sha256": "158c4b322044daefc59a8d48699e86b7b38d850329bb4197addc5a2a21109a6c"
+  },
+  {
+    "file": "items/written-book.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/written_book.png",
+    "sha256": "13ee07c5b96cf56a5e76f26da14a0e6d6a0d43806658c0410673f14dba154139"
+  },
+  {
+    "file": "items/map.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/map.png",
+    "sha256": "22e0f1856b995aa6a3f71525bba330ec31e739506d5565f52c05a0c60f93db42"
+  },
+  {
+    "file": "items/name-tag.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/name_tag.png",
+    "sha256": "b0fe4ec9b7914ef9406d58a8bc255e459bd66a0c3ae4e8064f13c421ad011972"
+  },
+  {
+    "file": "items/feather.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/feather.png",
+    "sha256": "56513599c70b5da268ebf37e3245ef1f0fc9645a8b654aedd69069ec2f757513"
+  },
+  {
+    "file": "items/amethyst.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/amethyst_shard.png",
+    "sha256": "452feb403a636242661a39316a9b9f1dd4fa83563cc8b5f492f2d327b1015052"
+  },
+  {
+    "file": "items/emerald.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/emerald.png",
+    "sha256": "25efe9ce7a979b3b7188fbe8a1aad5a8f25dccaa06260354c8270326c4608170"
+  },
+  {
+    "file": "items/quartz.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/quartz.png",
+    "sha256": "014b64fe82d8ec07fa63a5e1711cae5abb574511baf0113a39ef2e922a023658"
+  },
+  {
+    "file": "items/blaze.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/blaze_powder.png",
+    "sha256": "be1d8c93bbff955c94c194bb944b200d884d30fcc7e221fff739881d6ed5eca2"
+  },
+  {
+    "file": "items/pearl.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/ender_pearl.png",
+    "sha256": "b872cbe53fada2edf2a5b1549ff53f72120428b618b9249f01e6492f6dcd7279"
+  },
+  {
+    "file": "items/clock.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/clock_16.png",
+    "sha256": "2c722f88c5aa753893e5881e657c63f17ecfe3f00f309f0b4b55c4cf20f8ebc1"
+  },
+  {
+    "file": "items/ingot.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/iron_ingot.png",
+    "sha256": "4625aa2c32c74bd6796c7ba8e7ee6300db8d2f24fb38c9d9324a63b262a44391"
+  },
+  {
+    "file": "items/gold.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/gold_ingot.png",
+    "sha256": "b7e597e3153cb1157c68cfdb9d6067d3bbb0ef2f4c43ff791442b63bd575616e"
+  },
+  {
+    "file": "items/bucket.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/bucket.png",
+    "sha256": "3f14980d6d2dea8d547e44104a55a51d62bee71bd45f16068113b279b3d2d042"
+  },
+  {
+    "file": "items/slime.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/slime_ball.png",
+    "sha256": "3b2fcb5f37d4040be55590014f3ce16ef4aa3d4e826b27fb4632adc2cb886345"
+  },
+  {
+    "file": "items/prismarine.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/prismarine_crystals.png",
+    "sha256": "f55ed6efe0d9c40609a3e06da7928346d4779009c6382a979aa5bfb039c78f06"
+  },
+  {
+    "file": "items/nether-star.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/nether_star.png",
+    "sha256": "9deb09e7390f0c7c4cff35b3a0a0bc4ac8e1ea1c549b5459dc057936c7a30668"
+  },
+  {
+    "file": "items/flint.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/flint.png",
+    "sha256": "ba7c3c7a261bfcbc2f1d8c67b808d8bce73ff8f7445aa76d8dc62a7f28198fc0"
+  },
+  {
+    "file": "items/string.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/string.png",
+    "sha256": "e38d2e59056f8af400412309204c154b8e41e521f0df65dd5448f8279539cf63"
+  },
+  {
+    "file": "items/bow.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/bow.png",
+    "sha256": "6f62b5a5eac576af20f1ddd79e69df37b19a036691aa26b7523753f995e3dd8d"
+  },
+  {
+    "file": "items/crossbow.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/crossbow_standby.png",
+    "sha256": "e1bddad32a6ad647b08608b982ea509f424312ee41ce2558c5abd0387b0fd337"
+  },
+  {
+    "file": "items/lead.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/lead.png",
+    "sha256": "8970ef231b71a4aec68b56d77d4bab27d69fdeb59e4a5faa6c837c3ccc9f87a5"
+  },
+  {
+    "file": "items/shears.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/shears.png",
+    "sha256": "5297ebd3d3e1e6cdf874e76fd498b0495878fb085f630de55a4dc19f21eec15c"
+  },
+  {
+    "file": "items/honey.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/honey_bottle.png",
+    "sha256": "c41e02d9398446543c77a4a50678715d6182004e8f170c6b5c12d84578fe5d98"
+  },
+  {
+    "file": "items/bottle.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/item/experience_bottle.png",
+    "sha256": "bf824bc91dc620010fed8c7ae9da9f91d4ce7910317b1a056029fd2dad4b3a8c"
+  },
+  {
+    "file": "gui/inventory.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/container/inventory.png",
+    "sha256": "1952f9978a96e15197ad58d998a40840a86f41b1c8cd4323e04fd8eeff9f7337"
+  },
+  {
+    "file": "gui/chest.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/container/generic_54.png",
+    "sha256": "db580cc69f80de076704f2217270fc0690f71aa0cf0f3c626c2f0cc7ca8c0bd2"
+  },
+  {
+    "file": "gui/crafting.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/container/crafting_table.png",
+    "sha256": "1202a7044f06b221cdc3e2e059a8e83417f6afa6640038548022dc3b0d165394"
+  },
+  {
+    "file": "gui/book.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/book.png",
+    "sha256": "eeb514bf914da98bf120f177cde776129d8fe17d4d5bc934c8abb0a3b584ad60"
+  },
+  {
+    "file": "gui/widgets.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/widgets.png",
+    "sha256": "26a3d4b8a23b75fdb7a0c5e8b7835ce8bdf98873a81695dde9f7010845edfe8b"
+  },
+  {
+    "file": "gui/icons.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/icons.png",
+    "sha256": "8d720587f99e2c3d495706ea72249e9b2cc1d1cc9bcd75d4367613e71b898d28"
+  },
+  {
+    "file": "backgrounds/panorama.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/gui/title/background/panorama_0.png",
+    "sha256": "9ee6a674ba896e06e1c9e67737e25a7ad77ab30a136e3598c661f43464966ca8"
+  },
+  {
+    "file": "skin/steve.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/entity/player/wide/steve.png",
+    "sha256": "090da8d92c9f54fcbea87e6a2fb94125604a5a92a9ed6a52c10ee61c3b84bb79"
+  }
+]

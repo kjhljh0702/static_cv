@@ -20,7 +20,7 @@ export class PlayerPreview {
     this.canvas.setAttribute("role", "img");
     this.canvas.setAttribute(
       "aria-label",
-      "Block player wearing a blue sweater; head follows your pointer.",
+      "Minecraft Steve player; head follows your pointer.",
     );
     container.append(this.canvas);
     this.camera.position.set(0, 18, 80);
@@ -37,7 +37,7 @@ export class PlayerPreview {
       this.renderer.outputColorSpace = THREE.SRGBColorSpace;
       this.renderer.setClearColor(0x000000, 0);
       const tex = await new THREE.TextureLoader().loadAsync(
-        BASE + "minecraft/skin/player.png",
+        BASE + "minecraft/skin/steve.png",
       );
       tex.magFilter = THREE.NearestFilter;
       tex.minFilter = THREE.NearestFilter;

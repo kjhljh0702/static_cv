@@ -4,7 +4,7 @@ A personal, bilingual CV presented as a Minecraft-style survival inventory.
 
 **Live:** https://kjhljh0702.github.io/static_cv/
 
-The interface includes a skinned Three.js player that follows the pointer, inventory-item navigation, chests, paginated books, crafting recipes, exploration XP, optional synthesized sounds, keyboard shortcuts, and a downloadable CV.
+The interface includes a skinned Three.js player that follows the pointer, numbered sidebar navigation, chests, paginated books, crafting recipes, exploration XP, optional synthesized sounds, keyboard shortcuts, and a downloadable CV.
 
 ## Run
 
@@ -38,7 +38,7 @@ Commit the resulting root entry points, route directories, `mc-assets/`, and `mi
 ## Controls
 
 - Click/tap an item to inspect it; hover or keyboard focus shows its tooltip.
-- `1–9`: hotbar shortcuts; `E`: inventory; `Esc`: parent screen.
+- `1–8`: sidebar sections; `9`: download CV; `E`: inventory; `Esc`: parent screen.
 - Arrow keys and Enter navigate inventory slots.
 - `/` or `T`: command console; Tab autocompletes; `/help` lists commands.
 - Sound starts off; use the Sound button to enable it.
@@ -52,4 +52,4 @@ No manual assets are required. The English PDF is generated from the existing CV
 
 The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The previous `assets/`, `metaverse.js`, `style.css`, and `script.js` are retained but are not loaded by the new entry point.
 
-This is an unofficial personal project, not affiliated with Mojang or Microsoft. No Minecraft game textures, skins, sound recordings, or music are redistributed.
+This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. No game sound recordings or music are included.

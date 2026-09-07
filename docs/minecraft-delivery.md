@@ -7,7 +7,7 @@ The original application was a static HTML/CSS/JavaScript page using a local Thr
 - `minecraft/src/data.ts`: typed view adapters and item mappings over the unchanged root `data.json`.
 - `components/inventory.ts`: reusable sprites, slots, grids, equipment and hotbar primitives.
 - `components/tooltip.ts`: pointer/focus tooltips constrained to the viewport.
-- `components/player.ts`: orthographic Three.js character, original modern skin atlas, nearest filtering, damped head/body rotations, idle arms, flat fallback.
+- `components/player.ts`: orthographic Three.js character, Minecraft Steve skin atlas, nearest filtering, damped head/body rotations, idle arms, flat fallback.
 - `components/book.ts` and `records.ts`: measured pixel-font pagination and complete CV record conversion; figures appear as additional pages.
 - `systems/router.ts`: clean routes, history, refresh, parent navigation, and unknown-route handling.
 - `systems/sound.ts`: muted-by-default synthesized clicks, container/page sounds and advancement chimes.
@@ -45,7 +45,7 @@ npm run build
 
 ## Features
 
-Survival inventory with armor and offhand slots; 27 inventory slots and 9 hotbar slots; 2×2 navigation crafting area; 3×3 skill recipes; player pointer tracking; original pixel items and optional glint; project/research/education/experience/publication/award chests; paginated project and CV books; full-size images; real PDF download; English/Korean switching; factual item counts; exploration XP; optional sounds; advancement notifications; commands with Tab completion; 1–9/E/Escape/arrow/Enter keyboard controls; touch navigation; F1 hints toggle; F-key, character-click and Konami-code secrets; clean direct links; themed 404; semantic labels and keyboard focus; reduced-motion support; no analytics or trackers.
+Survival inventory with armor and offhand slots; 27 inventory slots and 9 hotbar slots; 2×2 crafting area with resume output; 3×3 skill recipes; player pointer tracking; Minecraft Java Edition item sprites and optional glint; project/research/education/experience/publication/award chests; paginated project and CV books; full-size images; real PDF download; English/Korean switching; factual item counts; exploration XP; optional sounds; advancement notifications; commands with Tab completion; 1–9/E/Escape/arrow/Enter keyboard controls; touch navigation; F1 hints toggle; F-key, character-click and Konami-code secrets; clean direct links; themed 404; semantic labels and keyboard focus; reduced-motion support; no analytics or trackers.
 
 ## Content and assets
 
@@ -63,12 +63,12 @@ No manual assets are required. The downloadable English PDF was generated from t
 6. Accessibility: labels, focused headings, keyboard grids, touch selection, command focus containment and reduced motion.
 7. Content: unchanged data file, exact record counts, full English/Korean project text recovered across pages.
 8. Style: obsolete scroll styles and scripts are not imported by the new entry point; no rounded/glass UI.
-9. Pixels: slot widths remain multiples of 18; sprite images are original 16px artwork; integer GUI scaling; non-antialiased player canvas.
+9. Pixels: slot widths remain multiples of 18; sprite images are Minecraft 16px textures; integer GUI scaling; non-antialiased player canvas.
 10. Release: lint, typecheck, production build, direct HTML route entries and final regression suite.
 
 ## Practical limits
 
-- It is a web recreation with original artwork and sounds, not Minecraft or a Mojang asset bundle.
+- It is a web recreation using Mojang/Microsoft game textures with original synthesized sounds; asset rights and download provenance are documented.
 - The background is a static block panorama; it is not a walkable game world.
 - Small screens may use 1× GUI scale; browser zoom remains available. Touch opens items directly rather than requiring dragging.
 - WebGL-unavailable browsers receive a flat character fallback. Automated testing uses Chromium, including touch/high-DPI/reduced-motion emulation; a physical iPhone/Safari session has not been run.
@@ -80,3 +80,7 @@ No manual assets are required. The downloadable English PDF was generated from t
 The final production build passed all 10 Playwright tests (17.2 seconds), ESLint, and TypeScript checking. The generated four-page PDF was rendered and visually inspected; no split entries or clipped text remained. The root CV data file is byte-for-byte unchanged from the pre-redesign version. The production renderer chunk is approximately 127 KB gzip.
 
 See `docs/minecraft-files.txt` for the complete changed-file list, including generated route entry points and public assets.
+
+## September sidebar and texture revision
+
+Eight persistent numbered tabs beside the armor panel replace duplicated section items and the navigation hotbar: Home, About, Experience, Education, Work, Skills, Papers, Contact. On narrow screens the numbers remain visible and accessible names retain the labels. Key 9 downloads the CV. Each chest record uses a distinct sprite, and each chest contains only its own records. The survival screen shows equipment, the player, an actual award, and resume output. Downloaded inventory, chest, book, panorama, and Steve textures replace the recreated artwork. Asset downloads require Python 3 only; application dependencies and run/build commands are unchanged.

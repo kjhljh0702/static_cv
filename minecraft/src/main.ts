@@ -7,7 +7,6 @@ import {
   language,
   setLanguage,
   navItems,
-  extraItems,
   projectItems,
   contactItems,
   period,
@@ -49,7 +48,7 @@ function scale() {
     1,
     Math.min(
       4,
-      Math.floor((innerWidth - 16) / 184),
+      Math.floor((innerWidth - 2) / (innerWidth <= 600 ? 194 : 250)),
       Math.floor((innerHeight - 32) / 310),
     ),
   );
@@ -111,76 +110,42 @@ function inventory() {
     ui("Survival inventory", "서바이벌 인벤토리"),
   );
   panel.append(el("h2", "sr-only", ui("Inventory", "인벤토리")));
-  const upper = el("div", "inventory-upper"),
-    armor = el("div", "armor-slots");
-  ["helmet", "armor", "leggings", "boots"].forEach((s, i) => {
-    const item = extraItems()[[0, 1, 2, 3][i]];
-    const equip = slot({ ...item, sprite: s }, tip, activate, i);
-    equip.classList.add("armor-slot");
-    armor.append(equip);
+  const armor = el("div", "armor-slots");
+  ["helmet", "armor", "leggings", "boots"].forEach((name) => {
+    const cell = el("div", "equipment-cell");
+    cell.append(sprite({ sprite: name }));
+    armor.append(cell);
   });
-  upper.append(armor, preview);
-  const craft = el("div", "survival-craft");
-  craft.append(el("div", "gui-label", ui("Crafting", "제작")));
-  const craftRow = el("div", "craft-row");
-  craftRow.append(
-    grid(
-      [extraItems()[4], extraItems()[5], extraItems()[2], extraItems()[3]],
-      4,
-      tip,
-      activate,
-      2,
-    ),
-    button("➜", () => router.go("/skills"), "craft-arrow"),
-    slot(navItems()[5], tip, activate),
-  );
-  craft.append(craftRow);
-  const offhand = slot(extraItems()[0], tip, activate);
-  offhand.classList.add("offhand-slot");
-  craft.append(offhand);
-  upper.append(craft);
-  panel.append(
-    upper,
-    el("div", "gui-label inventory-label", ui("Inventory", "인벤토리")),
-  );
+  panel.append(armor, preview);
+  panel.append(el("span", "survival-label", ui("Crafting", "제작")));
+  const output = slot(navItems()[8], tip, activate);
+  output.classList.add("resume-output");
+  panel.append(output);
   const contents: (Item | undefined)[] = Array(27).fill(undefined);
-  [...navItems().slice(1, 8), extraItems()[0], extraItems()[1]].forEach(
-    (v, i) => (contents[i] = v),
-  );
-  projectItems().forEach((v, i) => (contents[i + 9] = v));
-  contents[18] = extraItems()[2];
-  contents[19] = extraItems()[3];
-  contents[20] = extraItems()[4];
-  contents[21] = extraItems()[5];
-  contents[24] = contactItems().find((i) => i.id === "github");
-  contents[25] = contactItems()[0];
-  contents[26] = navItems()[8];
-  if (rare)
-    contents[23] = {
-      id: "rare",
-      name: ui("Debugging Diamond", "디버깅 다이아몬드"),
-      sprite: "diamond",
-      category: ui(
-        "A little curiosity goes a long way.",
-        "호기심이 세상을 넓힙니다.",
-      ),
-      enchanted: true,
-      route: "/about",
-      rarity: "purple",
-    };
-  panel.append(grid(contents, 27, tip, activate));
-  const innerHot = grid(navItems(), 9, tip, activate);
-  innerHot.classList.add("inventory-hotbar");
-  panel.append(innerHot);
+  contents[0] = {
+    id: "award-0", name: t(cv.awards[0].title), sprite: "nether-star",
+    category: t(cv.awards[0].venue), route: "/awards/0", rarity: "gold",
+  };
+  if (rare) contents[26] = {
+    id: "rare", name: ui("Debugging Diamond", "디버깅 다이아몬드"),
+    sprite: "diamond", category: ui("Curiosity rewarded", "호기심의 보상"),
+    route: "/about", enchanted: true,
+  };
+  const belongings = grid(contents, 27, tip, activate);
+  belongings.classList.add("belongings");
+  panel.append(belongings);
   return panel;
 }
 function chest(title: string, items: Item[], large = false) {
-  const panel = windowPanel(title, "chest-window");
-  panel.append(grid(items, large ? 54 : 27, tip, activate));
+  const panel = windowPanel(title, "chest-window" + (large ? " large-chest" : ""));
+  panel.append(grid(items, 54, tip, activate));
   panel.append(
     el("div", "gui-label inventory-label", ui("Inventory", "인벤토리")),
-    grid(navItems(), 9, tip, activate),
+    grid([], 27, tip, activate),
   );
+  const hotbar = grid([], 9, tip, activate);
+  hotbar.classList.add("chest-hotbar");
+  panel.append(hotbar);
   return panel;
 }
 function skills() {
@@ -209,13 +174,13 @@ function skills() {
     id: `skill-${i}`,
     name: t(s),
     sprite: [
-      "command",
-      "redstone",
-      "enchanted-book",
+      "blaze",
+      "amethyst",
       "eye",
-      "piston",
-      "paper",
-      "chest",
+      "quartz",
+      "pearl",
+      "comparator",
+      "bottle",
     ][i % 7],
     category: t(category.category),
     route: `/skills?recipe=${selected}`,
@@ -234,7 +199,7 @@ function skills() {
       {
         id: "result",
         name: t(category.category),
-        sprite: ["eye", "command", "piston", "book"][selected],
+        sprite: ["enchanted-book", "repeater", "ingot", "feather"][selected],
         category: ui("Skills recorded in this CV", "CV에 기록된 기술"),
         enchanted: selected === 0,
       },
@@ -243,7 +208,7 @@ function skills() {
         toast(
           ui("Recipe unlocked!", "제작법 잠금 해제!"),
           t(category.category),
-          "crafting",
+          "comparator",
         ),
     ),
   );
@@ -261,7 +226,7 @@ function skills() {
   );
   panel.append(
     el("div", "gui-label inventory-label", ui("Inventory", "인벤토리")),
-    grid(navItems(), 9, tip, activate),
+    grid([], 9, tip, activate),
   );
   return panel;
 }
@@ -330,7 +295,7 @@ function render() {
       cv.education.map((p, i) => ({
         id: `edu-${i}`,
         name: t(p.degree),
-        sprite: "enchanted-book",
+        sprite: ["enchanted-book", "book"][i],
         category: t(p.school),
         lines: [period(p), t(p.department)],
         enchanted: i === 0,
@@ -344,7 +309,7 @@ function render() {
       cv.experience.map((p, i) => ({
         id: `exp-${i}`,
         name: t(p.title),
-        sprite: "pickaxe",
+        sprite: ["diamond-pickaxe", "feather", "axe", "gold-pickaxe"][i],
         category: t(p.organization),
         lines: [period(p)],
         route: `/experience/${i}`,
@@ -356,7 +321,7 @@ function render() {
       cv.publications.map((p, i) => ({
         id: `pub-${i}`,
         name: t(p.title),
-        sprite: "book",
+        sprite: ["written-book", "map", "writable-book"][i],
         category: t(p.type),
         lines: [p.year, t(p.venue)],
         route: `/publications/${i}`,
@@ -401,7 +366,28 @@ function render() {
       ),
     );
   }
-  stage.append(panel);
+  const layout = el("div", "inventory-layout");
+  const navigation = el("nav", "section-sidebar");
+  navigation.setAttribute("aria-label", ui("CV sections", "CV 섹션"));
+  navItems().slice(0, 8).forEach((item, i) => {
+    const tab = button("", () => activate(item), "pixel-button section-tab");
+    tab.dataset.section = item.id;
+    tab.setAttribute("aria-label", `${i + 1}. ${item.name}`);
+    tab.title = `${i + 1}. ${item.name}`;
+    tab.append(el("span", "section-number", String(i + 1)), el("span", "section-name", item.name));
+    const active = item.id === group || (item.id === "projects" && ["research", "robotics"].includes(group));
+    if (active) tab.setAttribute("aria-current", "page");
+    navigation.append(tab);
+  });
+  navigation.addEventListener("keydown", (e) => {
+    if (!["ArrowDown", "ArrowUp"].includes(e.key)) return;
+    e.preventDefault();
+    const tabs = [...navigation.querySelectorAll<HTMLButtonElement>("button")];
+    const index = tabs.indexOf(document.activeElement as HTMLButtonElement);
+    tabs[(index + (e.key === "ArrowDown" ? 1 : 7)) % 8].focus();
+  });
+  layout.append(navigation, panel);
+  stage.append(layout);
   const mainRoutes = navItems()
     .slice(0, 8)
     .map((i) => i.id);
@@ -420,17 +406,7 @@ function render() {
   bar.append(fill);
   xp.append(bar);
   hud.append(xp);
-  const hot = grid(navItems(), 9, tip, activate);
-  hot.classList.add("hud-hotbar");
-  [...hot.children].forEach((n, i) => {
-    n.append(el("span", "hotkey", String(i + 1)));
-    if (navItems()[i].id === group) {
-      n.classList.add("selected");
-      n.setAttribute("aria-current", "page");
-    }
-  });
   hud.append(
-    hot,
     el(
       "p",
       "controls-hint",
@@ -629,7 +605,7 @@ async function boot() {
       document.querySelector<HTMLProgressElement>("#load-progress")!,
     label = document.querySelector("#load-label")!;
   await Promise.all([
-    preload(BASE + "minecraft/backgrounds/plains.png"),
+    preload(BASE + "minecraft/backgrounds/panorama.png"),
     ...navItems().map((i) => preload(BASE + `minecraft/items/${i.sprite}.png`)),
   ]);
   progress.value = 1;

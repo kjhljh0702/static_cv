@@ -38,13 +38,13 @@ export const slugs = [
 export const projectSprites = [
   "eye",
   "enchanted-book",
-  "command",
-  "piston",
-  "piston",
-  "redstone",
+  "comparator",
+  "ingot",
+  "lead",
+  "repeater",
 ];
 export function navItems(): Item[] {
-  return [
+  const items: Item[] = [
     {
       id: "inventory",
       name: ui("Inventory", "인벤토리"),
@@ -119,6 +119,13 @@ export function navItems(): Item[] {
       download: true,
     },
   ];
+  const publications: Item = { id: "publications", name: ui("Papers", "논문·포스터"), sprite: "written-book", category: ui("Posters and papers", "포스터 및 논문"), route: "/publications" };
+  items[0].name = ui("Home", "홈");
+  items[0].sprite = "compass";
+  items[4].name = ui("Work", "작업");
+  items[5].sprite = "comparator";
+  items[8].sprite = "written-book";
+  return [items[0], items[1], items[6], items[2], items[4], items[5], publications, items[7], items[8]];
 }
 export function extraItems(): Item[] {
   return [
@@ -210,7 +217,7 @@ export function contactItems(): Item[] {
     ...cv.profile.socials.map((s, i) => ({
       id: `social-${i}`,
       name: t(s.label),
-      sprite: i ? "enchanted-book" : "book",
+      sprite: i ? "emerald" : "name-tag",
       category: s.url,
       href: s.url,
     })),

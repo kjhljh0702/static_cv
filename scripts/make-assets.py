@@ -1,3 +1,7 @@
+# Legacy artwork generator. Never overwrite the downloaded Minecraft textures.
+import sys
+if __name__ == '__main__':
+ raise SystemExit('Retired: use python3 scripts/fetch-minecraft-assets.py for the current textures.')
 from PIL import Image, ImageDraw
 from pathlib import Path
 import random, math

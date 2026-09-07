@@ -93,8 +93,8 @@ a:hover {
   position: fixed;
   inset: 0;
   z-index: -3;
-  background: #81b7df url("/minecraft/backgrounds/plains.png") center center /
-    auto max(100vh, 720px) no-repeat;
+  background: #81b7df url("/minecraft/backgrounds/panorama.png") center center /
+    cover no-repeat;
   image-rendering: pixelated;
 }
 .world-dim {
@@ -164,7 +164,7 @@ a:hover {
 }
 @keyframes container-in {
   from {
-    opacity: 0.65;
+    visibility: visible;
     translate: 0 calc(1 * var(--p));
   }
   to {
@@ -875,3 +875,57 @@ a:hover {
     bottom: 8px;
   }
 }
+
+/* Java Edition 1.20.1 GUI atlases, rendered in integer logical pixels. */
+.inventory-layout { display:flex; align-items:flex-start; width:max-content; }
+.section-sidebar { width:calc(74 * var(--p)); display:flex; flex-direction:column; gap:var(--p); padding-top:calc(2 * var(--p)); }
+.section-tab { display:flex; align-items:center; gap:calc(5 * var(--p)); width:100%; height:calc(20 * var(--p)); padding:0 calc(4 * var(--p)); text-align:left; font-size:calc(8 * var(--p)); }
+.section-tab[aria-current] { color:#ffffa0; background-color:#8585a0; border-color:#fff; }
+.section-number { color:#aaa; }
+.section-tab[aria-current] .section-number { color:#ffffa0; }
+.survival { padding:0; border:0; box-shadow:none; background:transparent url('/minecraft/gui/inventory.png') 0 0 / calc(256 * var(--p)) calc(256 * var(--p)); }
+.survival .armor-slots { position:absolute; left:calc(7 * var(--p)); top:calc(7 * var(--p)); }
+.equipment-cell { width:calc(18 * var(--p)); height:calc(18 * var(--p)); display:grid; place-items:center; }
+.survival .player-preview { position:absolute; left:calc(26 * var(--p)); top:calc(8 * var(--p)); margin:0; width:calc(48 * var(--p)); height:calc(68 * var(--p)); }
+.survival-label { position:absolute; left:calc(97 * var(--p)); top:calc(7 * var(--p)); font-size:calc(8 * var(--p)); }
+.resume-output { position:absolute; left:calc(153 * var(--p)); top:calc(27 * var(--p)); }
+.belongings { position:absolute; left:calc(7 * var(--p)); top:calc(83 * var(--p)); }
+.survival .slot { background:transparent; border-color:transparent; box-shadow:none; }
+.survival .slot:hover { background:#ffffff55; }
+.chest-window { background:transparent url('/minecraft/gui/chest.png') 0 0 / calc(256 * var(--p)) calc(256 * var(--p)); border:0; box-shadow:none; padding:calc(7 * var(--p)); min-height:calc(222 * var(--p)); }
+.chest-window .container-heading { height:calc(10 * var(--p)); margin:0; }
+.chest-window > .slot-grid:first-of-type { min-height:calc(108 * var(--p)); }
+.chest-window .slot { background:transparent; border-color:transparent; box-shadow:none; }
+.chest-window .slot:hover { background:#ffffff55; }
+.chest-window .inventory-label { margin-top:calc(13 * var(--p)); margin-bottom:calc(5 * var(--p)); }
+.book-window { border:0; box-shadow:none; background:transparent url('/minecraft/gui/book.png') calc(-4 * var(--p)) 0 / calc(256 * var(--p)) calc(256 * var(--p)); padding:calc(12 * var(--p)) calc(28 * var(--p)); height:calc(204 * var(--p)); }
+.book-paper { background:none; border:0; box-shadow:none; padding:0; height:calc(150 * var(--p)); }
+.book-controls { position:absolute; left:calc(20 * var(--p)); right:calc(20 * var(--p)); bottom:0; }
+@media(max-width:600px) {
+  .section-sidebar { width:calc(18 * var(--p)); }
+  .section-tab { padding:0; justify-content:center; }
+  .section-name { display:none; }
+  .game-shell { padding-left:0; padding-right:0; }
+}
+
+.chest-window .inventory-label { margin-top:calc(4 * var(--p)); margin-bottom:calc(3 * var(--p)); }
+.chest-hotbar { margin-top:calc(4 * var(--p)); }
+
+.mc-window, .book-window { image-rendering:pixelated; image-rendering:crisp-edges; flex-shrink:0; }
+.book-window { background:none; isolation:isolate; }
+.book-window::before { content:""; position:absolute; inset:0 0 auto; height:calc(180 * var(--p)); z-index:-1; background:url('/minecraft/gui/book.png') calc(-4 * var(--p)) 0 / calc(256 * var(--p)) calc(256 * var(--p)) no-repeat; }
+
+.book-window { padding-left:calc(36 * var(--p)); }
+.crafting-window { height:calc(166 * var(--p)); padding:0; border:0; box-shadow:none; background:transparent url('/minecraft/gui/crafting.png') 0 0 / calc(256 * var(--p)) calc(256 * var(--p)); }
+.crafting-window .container-heading { position:absolute; left:calc(8 * var(--p)); top:calc(5 * var(--p)); right:calc(7 * var(--p)); }
+.crafting-window .recipe-tabs { position:absolute; top:calc(2 * var(--p)); left:calc(68 * var(--p)); margin:0; gap:var(--p); }
+.crafting-window .recipe-tab { width:calc(18 * var(--p)); height:calc(12 * var(--p)); min-height:0; padding:0; font-size:calc(7 * var(--p)); }
+.crafting-window .crafting-recipe { position:absolute; top:calc(17 * var(--p)); left:calc(29 * var(--p)); margin:0; display:block; }
+.crafting-window .crafting-recipe > .slot { position:absolute; left:calc(95 * var(--p)); top:calc(18 * var(--p)); }
+.crafting-window .craft-arrow { display:none; }
+.crafting-window .recipe-title { position:absolute; left:calc(92 * var(--p)); top:calc(58 * var(--p)); width:calc(76 * var(--p)); font-size:calc(6 * var(--p)); margin:0; }
+.crafting-window .recipe-caption { display:none; }
+.crafting-window > .inventory-label { position:absolute; left:calc(8 * var(--p)); top:calc(73 * var(--p)); margin:0; }
+.crafting-window > .slot-grid { position:absolute; left:calc(7 * var(--p)); top:calc(83 * var(--p)); }
+.crafting-window .slot { background:transparent; border-color:transparent; box-shadow:none; }
+.crafting-window .slot:hover { background:#ffffff55; }

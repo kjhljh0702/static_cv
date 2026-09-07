@@ -943,3 +943,16 @@ a:hover {
 .time-clock { width:24px; height:24px; image-rendering:pixelated; }
 .time-button[aria-pressed="true"] { color:#ffffa0; border-color:#fff; }
 @media(prefers-reduced-motion:reduce) { #world { animation:none; transform:none; } }
+
+/* Real block geometry supplies lighting; never brighten a baked sunset. */
+#world { inset:0; animation:none; transform:none; background-image:none; background-color:#78aaff; }
+[data-world-time] #world { filter:none; }
+.grove-canvas { width:100%; height:100%; display:block; image-rendering:pixelated; }
+[data-world-time="noon"] .world-dim { background:rgba(0,0,0,.22); }
+[data-world-time="dusk"] .world-dim { background:rgba(25,12,24,.28); }
+[data-world-time="night"] .world-dim { background:rgba(2,7,20,.3); }
+.toolbar .pixel-button { min-height:24px; padding:4px 7px; font-size:11px; line-height:1.2; border-width:2px; text-decoration:none; }
+.toolbar { gap:4px; }
+.world-controls { gap:4px; }
+.toolbar .time-button { min-height:26px; padding:3px 6px; gap:4px; }
+.time-clock { width:16px; height:16px; }

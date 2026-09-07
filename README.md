@@ -57,3 +57,5 @@ This is an unofficial personal project, not affiliated with Mojang or Microsoft.
 ## 3D studio
 
 The 3D view includes textured oak, stone, fabric and plaster, beveled furnishings, articulated robotics props, a skylight, and an exterior courtyard. WebGL initializes only when 3D is selected. See [upgrade and backup notes](docs/3d-studio-upgrade.md). The pre-upgrade standalone snapshot is in `backups/3d-cv-before-upgrade-2026-09-07/`.
+
+The Classic CV also includes a scroll-progress chapter dock, chapter jump controls, scroll-linked project image framing, and progress accents on education, skills, and papers. Mobile project records flow vertically with sharp, readable text and portrait imagery. These enhancements live in `assets/js/scroll-story.js` and respect reduced motion.

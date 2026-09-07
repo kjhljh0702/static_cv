@@ -956,3 +956,29 @@ a:hover {
 .world-controls { gap:4px; }
 .toolbar .time-button { min-height:26px; padding:3px 6px; gap:4px; }
 .time-clock { width:16px; height:16px; }
+
+@media(max-width:600px) {
+  .game-shell { padding:16px 12px 28px; gap:12px; justify-content:flex-start; }
+  .identity { max-width:100%; padding:0 8px; margin:0; }
+  .identity-role { font-size:12px; }
+  .identity-lab { font-size:11px; color:#e3e5e8; }
+  .identity-focus { display:none; }
+  .nametag { font-size:18px; margin-bottom:6px; }
+  .inventory-layout { flex-direction:column; align-items:center; gap:6px; }
+  .section-sidebar { width:calc(176 * var(--p)); display:grid; grid-template-columns:repeat(8,1fr); padding:0; gap:2px; }
+  .section-tab { height:36px; min-height:36px; font-size:14px; border-width:2px; box-shadow:inset 1px 1px #fff,inset -1px -1px #555; }
+  .section-number { color:#eee; }
+  .section-tab[aria-current] { background:#696982; }
+  .screen-stage { min-height:0; }
+  .hud { margin-top:0; }
+  .controls-hint { font-size:10px; margin:4px 0 0; }
+  .toolbar { max-width:352px; width:100%; margin:0; gap:6px; }
+  .toolbar .pixel-button { min-height:32px; padding:5px 8px; font-size:11px; }
+  .toolbar .inventory-shortcut { display:none; }
+  .toolbar .world-controls { padding-top:3px; gap:6px; }
+  .toolbar .time-button { min-height:32px; }
+  .time-clock { width:16px; height:16px; }
+  #advancement { max-width:210px; font-size:11px; bottom:6px; }
+}
+
+@media(max-width:600px){.toolbar .command-shortcut{display:none}}

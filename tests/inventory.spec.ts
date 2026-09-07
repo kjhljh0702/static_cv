@@ -108,7 +108,7 @@ test("responsive integer slots and bounded tooltips", async ({ page }) => {
     [320, 568],
   ]) {
     await page.setViewportSize({ width, height });
-    await expect.poll(() => page.evaluate(() => Number(document.documentElement.dataset.scale))).toBe(Math.max(1, Math.min(4, Math.floor((width - 2) / (width <= 600 ? 194 : 250)), Math.floor((height - 32) / 310))));
+    await expect.poll(() => page.evaluate(() => Number(document.documentElement.dataset.scale))).toBe(Math.max(1, Math.min(4, Math.floor((width - (width <= 600 ? 24 : 2)) / (width <= 600 ? 176 : 250)), Math.floor((height - 32) / 310))));
     await page.keyboard.press("e");
     const box = await page.locator(".survival").boundingBox();
     expect(box!.x).toBeGreaterThanOrEqual(0);

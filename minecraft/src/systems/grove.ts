@@ -49,7 +49,7 @@ export class CherryGrove {
     const resize=()=>{this.renderer.setSize(Math.ceil(innerWidth/3),Math.ceil(innerHeight/3),false);this.camera.aspect=innerWidth/innerHeight;this.camera.updateProjectionMatrix();};
     resize();addEventListener('resize',resize);
     const tick=(t:number)=>{requestAnimationFrame(tick);if(document.hidden)return;
-      this.camera.position.set(this.reduced.matches?0:Math.sin(t*.000045)*1.3,5.2,19);
+      this.camera.position.set((innerWidth<600?5:0)+(this.reduced.matches?0:Math.sin(t*.000045)*1.3),5.2,innerWidth<600?12:19);
       this.camera.lookAt(0,8,-9);this.disc.lookAt(this.camera.position);this.renderer.render(this.scene,this.camera);
     };requestAnimationFrame(tick);
   }

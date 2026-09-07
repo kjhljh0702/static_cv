@@ -4,6 +4,7 @@
 import {
   animate, createTimeline, stagger, utils, svg, spring, eases
 } from '../../vendor/anime.esm.min.js';
+import { scrollStory } from './scroll-story.js?v=20260908.1';
 import { cinematic } from './cinematic.js?v=20260905.1';
 import { render, setLang, getLang, UI, chars } from './render.js';
 
@@ -794,7 +795,7 @@ async function boot() {
   DATA = await (await fetch('data.json')).json();
   render(DATA);
 
-  cinematic(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
+  cinematic(); scrollStory(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
   menu(); dragTrack(); lightbox(); worldToggle();
   if (new URLSearchParams(location.search).get('view') === '3d') setWorld(true);
   requestAnimationFrame(loader);

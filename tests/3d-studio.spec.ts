@@ -23,6 +23,16 @@ test('upgraded studio preserves movement, exhibits and return navigation', async
     }, id);
     await expect(page.locator('#world-detail-dialog')).toBeVisible();
     await expect(page.locator('#world-detail-content')).not.toBeEmpty();
+    const invisible = await page.locator('#world-detail-content').evaluate(root =>
+      [...root.querySelectorAll('p,h3,h4,.edu__item,.sk,.pub,.award')].filter(n => {
+        if (!n.textContent?.trim()) return false;
+        for (let p: Element | null=n;p && p!==root;p=p.parentElement) {
+          const style=getComputedStyle(p);
+          if(style.opacity==='0' || style.visibility==='hidden' || style.display==='none') return true;
+        }
+        return false;
+      }).map(n=>n.textContent?.slice(0,50)));
+    expect(invisible).toEqual([]);
     await page.locator('#world-detail-close').click({timeout:10000});
   }
   await page.screenshot({ path: 'test-results/studio-desktop.png' });

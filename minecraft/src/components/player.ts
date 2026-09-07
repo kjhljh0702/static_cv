@@ -20,7 +20,7 @@ export class PlayerPreview {
     this.canvas.setAttribute("role", "img");
     this.canvas.setAttribute(
       "aria-label",
-      "Minecraft Steve player; head follows your pointer.",
+      "Minecraft researcher wearing a white lab coat; head follows your pointer.",
     );
     container.append(this.canvas);
     this.camera.position.set(0, 18, 80);
@@ -83,6 +83,11 @@ export class PlayerPreview {
         if (outer) m.scale.setScalar(1.055);
         return m;
       };
+      const coat = (w:number,h:number,d:number,x:number,y:number,z:number,color=0xf0f2f3) => {
+        const mesh = new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color}));
+        mesh.position.set(x,y,z);return mesh;
+      };
+      this.canvas.dataset.outfit = "lab-coat";
       this.scene.add(new THREE.AmbientLight(0xffffff, 2));
       const sun = new THREE.DirectionalLight(0xffffff, 2.1);
       sun.position.set(-25, 50, 70);
@@ -100,6 +105,15 @@ export class PlayerPreview {
       const torso = box(8, 12, 4, 16, 16);
       torso.position.y = 18;
       this.body.add(torso);
+      this.body.add(coat(8.5,13,1,0,17.5,-2.1));
+      for (const side of [-1,1]) {
+        this.body.add(coat(2.9,13,4.5,side*2.8,17.5,0));
+        this.body.add(coat(3.8,4,4.6,side*2,10,0));
+        this.body.add(coat(2,2,.2,side*2.6,14.3,2.4,0xd3dce1));
+        const lapel=coat(1,4,.3,side*1.3,21,2.45);lapel.rotation.z=side*.25;this.body.add(lapel);
+      }
+      this.body.add(coat(1.6,1,.3,-2.7,20.2,2.45,0x235d99));
+      for(const y of [18.5,16.5,14.5]) this.body.add(coat(.4,.4,.3,.9,y,2.45,0x7b8790));
       for (const [x, u, v] of [
         [-6, 40, 16],
         [6, 32, 48],
@@ -109,6 +123,7 @@ export class PlayerPreview {
         const arm = box(4, 12, 4, u, v);
         arm.position.y = -6;
         pivot.add(arm);
+        pivot.add(coat(4.4,8.5,4.4,0,-4.1,0));
         this.arms.push(pivot);
         this.body.add(pivot);
       }

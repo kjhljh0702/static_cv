@@ -19,3 +19,7 @@ The Classic CV remains the default page. Its 3D button and `?view=3d` open the u
 `npm run lint`, `npm run typecheck`, `npm run build`, and Playwright cover view switching, the original Minecraft CV, all seven 3D exhibit panels, keyboard movement/reset, mobile touch movement, and deferred WebGL initialization. Desktop and mobile screenshots are written to `test-results/studio-desktop.png` and `test-results/studio-mobile.png` by the 3D suite.
 
 This remains a stylized, browser-rendered architectural scene. The sky/environment is procedural, and material relief uses bump mapping rather than geometric displacement. The robotics props illustrate the space; they are not engineering reconstructions of the user's physical projects.
+
+## Exhibit visibility fix — September 8
+
+Exhibits explicitly reveal cloned content instead of inheriting the classic page's scroll-animation hidden states. About/experience sections lose their long-page sticky positioning inside dialogs, and GPA counters display their actual stored values immediately. Regression checks now inspect computed visibility of record content, rather than merely checking that a dialog contains DOM nodes.

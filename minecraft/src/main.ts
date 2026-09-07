@@ -1,4 +1,5 @@
 import "./style.css";
+import { CherryWorld } from "./systems/world";
 import {
   BASE,
   cv,
@@ -24,6 +25,7 @@ const app = document.querySelector<HTMLDivElement>("#app")!,
   tip = new TooltipManager(),
   sound = new SoundManager(),
   router = new Router();
+const cherryWorld = new CherryWorld();
 const visited = new Set<string>();
 let player: PlayerPreview;
 let toastTimer = 0;
@@ -268,6 +270,7 @@ function render() {
     lang,
     button(ui("Commands [/]", "명령어 [/]"), () => openCommands()),
   );
+  toolbar.append(cherryWorld.controls());
   const path = router.path,
     group = path.split("/")[1];
   stage.replaceChildren();

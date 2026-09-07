@@ -92,3 +92,7 @@ The existing Steve model now wears a geometric pixel-scale white lab coat with s
 ## Daylight and original cherry particles correction
 
 The baked sunset panorama has been replaced by a lightweight instanced-block cherry grove (`systems/grove.ts`). Noon uses a blue sky and daylight illumination; dusk and night change scene lighting, fog, and the celestial disc. The grove uses original Java Edition cherry leaves/log, grass, and dirt textures. Falling petals use the exact 12 `particle/cherry_*.png` game sprites, continuously emitted without pointer repulsion, click bursts, or a shake button. Utility and clock buttons are compact; time labels and accessible names remain present. Asset URLs and SHA-256 hashes are recorded in the source manifest. The tree arrangement is recreated geometry, not a captured Minecraft world. Reduced-motion stops camera drift and falling petals.
+
+## Mobile layout and touch wind
+
+On phones, the eight section tabs sit above the 176-unit inventory so its edges retain comfortable margins. Utility controls are grouped into two compact rows. The original game particle sprites continue falling automatically; touches and swipes in the background impart temporary wind to nearby particles without spawning bursts or blocking page gestures. The mobile camera frames a nearer part of the cherry grove. Desktop sidebar navigation is unchanged.

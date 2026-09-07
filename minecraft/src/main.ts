@@ -50,7 +50,7 @@ function scale() {
     1,
     Math.min(
       4,
-      Math.floor((innerWidth - 2) / (innerWidth <= 600 ? 194 : 250)),
+      Math.floor((innerWidth - (innerWidth <= 600 ? 24 : 2)) / (innerWidth <= 600 ? 176 : 250)),
       Math.floor((innerHeight - 32) / 310),
     ),
   );
@@ -245,6 +245,7 @@ function render() {
   const home = button(ui("Inventory [E]", "인벤토리 [E]"), () =>
     router.go("/inventory"),
   );
+  home.classList.add("inventory-shortcut");
   const audio = button(
     ui("Sound: ", "소리: ") +
       (sound.enabled ? ui("ON", "켜짐") : ui("OFF", "꺼짐")),
@@ -268,7 +269,7 @@ function render() {
     home,
     audio,
     lang,
-    button(ui("Commands [/]", "명령어 [/]"), () => openCommands()),
+    button(ui("Commands [/]", "명령어 [/]"), () => openCommands(), "pixel-button command-shortcut"),
   );
   toolbar.append(cherryWorld.controls());
   const path = router.path,

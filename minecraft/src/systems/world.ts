@@ -7,6 +7,7 @@ export class CherryWorld {
   grove: CherryGrove | null = null;
   textures: HTMLImageElement[] = [];
   spawnClock = 0;
+  touch = { x:-999, y:-999, until:0 };
   canvas = el('canvas', 'cherry-petals');
   context = this.canvas.getContext('2d')!;
   petals: {x:number;y:number;vx:number;vy:number;life:number;size:number;frame:number;phase:number}[] = [];
@@ -23,6 +24,15 @@ export class CherryWorld {
     for(let i=0;i<12;i++){const img=new Image();img.src=BASE+`minecraft/particles/cherry_${i}.png`;this.textures.push(img);}
     try {this.grove=new CherryGrove(document.querySelector('#world')!);} catch {document.querySelector<HTMLElement>('#world')!.style.backgroundImage='none';}
     for(let i=0;i<28;i++)this.spawn(Math.random()*this.canvas.width,Math.random()*this.canvas.height);
+    const stir=(e:PointerEvent)=>{
+      if ((e.target as HTMLElement).closest('button,a,input,.mc-window,.book-window,.section-sidebar')) return;
+      this.touch={x:e.clientX/3,y:e.clientY/3,until:performance.now()+900};
+      if(e.pointerType==='touch' && e.type==='pointerdown') {
+        // A touch stirs existing petals; it never creates a burst.
+        for(const p of this.petals) if(Math.hypot(p.x-this.touch.x,p.y-this.touch.y)<45) {p.vx+=(p.x-this.touch.x)*.9;p.vy-=14;}
+      }
+    };
+    addEventListener('pointerdown',stir,{passive:true});addEventListener('pointermove',stir,{passive:true});
     this.setTime(this.time);
     this.reduced.addEventListener('change',()=>{this.petals=[];this.context.clearRect(0,0,this.canvas.width,this.canvas.height);});
     const tick=(now:number)=>{
@@ -39,6 +49,11 @@ export class CherryWorld {
       this.petals=this.petals.filter(p=>p.life>0 && p.y<this.canvas.height+10);
       for(const p of this.petals) {
         if(this.reduced.matches) continue;
+        if(now<this.touch.until) {
+          const dx=p.x-this.touch.x,dy=p.y-this.touch.y,d=Math.hypot(dx,dy);
+          if(d>0 && d<45) {p.vx+=dx/d*dt*100;p.vy+=dy/d*dt*65;this.canvas.dataset.touchReaction='true';}
+        }
+        p.vx+=(5-p.vx)*dt*.6;p.vy+=(8-p.vy)*dt*.35;
         p.x+=(p.vx+Math.sin(now*.0006+p.y)*3)*dt;p.y+=p.vy*dt;p.life-=dt;
         const sprite=this.textures[p.frame];
         if(sprite.complete && sprite.naturalWidth) {

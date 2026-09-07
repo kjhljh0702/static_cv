@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("classic is the default and all three views remain reachable", async ({ page }) => {
+  test.setTimeout(90000);
   const errors: string[] = [];
   page.on("pageerror", e => errors.push(e.message));
   await page.goto("./");

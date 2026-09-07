@@ -1,6 +1,6 @@
-# Jeonghun Lee — Inventory CV
+# Jeonghun Lee — Classic, Minecraft & 3D CV
 
-A personal, bilingual CV presented as a Minecraft-style survival inventory.
+A personal, bilingual CV. The restored Claude CV is the default; its header provides Minecraft and 3D view buttons.
 
 **Live:** https://kjhljh0702.github.io/static_cv/
 
@@ -33,7 +33,7 @@ npm run build
 npm run publish:static
 ```
 
-Commit the resulting root entry points, route directories, `mc-assets/`, and `minecraft/` assets, then push to `main`. The existing GitHub Pages workflow publishes from the repository root. Source is in `minecraft/src/`; `data.json` remains the single CV content source. `404.html` provides a themed unknown-route screen, and known routes have generated HTML entry points for direct visits.
+Commit the resulting root entry points, route directories, `mc-assets/`, and `minecraft/` assets, then push to `main`. The existing GitHub Pages workflow publishes from the repository root. The default page template is `classic/index.html`, with its existing implementation in `assets/`, `style.css`, and `metaverse.js`. Minecraft source is in `minecraft/src/`; `data.json` remains the single CV content source. `404.html` provides a themed unknown-route screen, and known routes have generated HTML entry points for direct visits.
 
 ## Controls
 
@@ -50,6 +50,6 @@ Commit the resulting root entry points, route directories, `mc-assets/`, and `mi
 
 No manual assets are required. The English PDF is generated from the existing CV data. To regenerate it after updating `data.json`, follow the commands in the delivery notes.
 
-The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The previous `assets/`, `metaverse.js`, `style.css`, and `script.js` are retained but are not loaded by the new entry point.
+The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The classic CV uses the previously restored Claude design, including the mobile portrait and Korean typography fixes. `?view=3d` opens the existing 3D world; `/inventory/` opens Minecraft. Minecraft’s toolbar links back to the default CV and 3D.
 
 This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. No game sound recordings or music are included.

@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { readFileSync } from "node:fs";
 const cv = JSON.parse(readFileSync("data.json", "utf8"));
 test.beforeEach(async ({ page }) => {
-  await page.goto("./");
+  await page.goto("./inventory");
   await expect(page.locator("#loading")).toHaveCount(0);
 });
 test("main inventory, mouse tracking, hotbar and browser history", async ({
@@ -139,7 +139,7 @@ test("touch navigation and reduced motion", async ({ browser }) => {
     reducedMotion: "reduce",
   });
   const p = await context.newPage();
-  await p.goto(process.env.CV_TEST_URL ?? "http://127.0.0.1:5175/static_cv/");
+  await p.goto((process.env.CV_TEST_URL ?? "http://127.0.0.1:5175/static_cv/") + "inventory/");
   await expect(p.locator("#loading")).toHaveCount(0);
   await p.locator('.section-sidebar [data-section="projects"]').tap();
   await expect(p.locator(".container-title")).toContainText("Large Chest");
@@ -210,7 +210,7 @@ test("book pages do not overflow, Korean labels and high-DPI zoom stay readable"
     deviceScaleFactor: 2,
   });
   const p = await context.newPage();
-  await p.goto(process.env.CV_TEST_URL ?? "http://127.0.0.1:5175/static_cv/");
+  await p.goto((process.env.CV_TEST_URL ?? "http://127.0.0.1:5175/static_cv/") + "inventory/");
   await expect(p.locator("#loading")).toHaveCount(0);
   const overflow = await p.evaluate(
     () => document.documentElement.scrollWidth > innerWidth,
@@ -225,7 +225,7 @@ test("asset loading reports real progress and gracefully handles missing artwork
     await new Promise((resolve) => setTimeout(resolve, 1200));
     await r.continue();
   });
-  await page.goto("./", { waitUntil: "domcontentloaded" });
+  await page.goto("./inventory", { waitUntil: "domcontentloaded" });
   await expect(page.locator("#load-progress")).toHaveAttribute("value", "2");
   await expect(page.locator("#loading")).toHaveCount(0);
   await page.route("**/res/project-trace-ranking.png", (r) => r.abort());

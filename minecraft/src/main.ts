@@ -256,7 +256,13 @@ function render() {
     setLanguage();
     render();
   });
+  const classic = el("a", "pixel-button", ui("Classic CV", "기본 CV"));
+  classic.href = BASE;
+  const world = el("a", "pixel-button", "3D");
+  world.href = BASE + "?view=3d";
   toolbar.append(
+    classic,
+    world,
     home,
     audio,
     lang,

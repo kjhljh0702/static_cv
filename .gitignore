@@ -19,3 +19,10 @@ test-results/
 tmp/
 
 .venv/
+
+# Classic assets copied into Vite's public directory at startup.
+minecraft/public/assets/
+minecraft/public/vendor/
+minecraft/public/style.css
+minecraft/public/metaverse.js
+minecraft/public/data.json

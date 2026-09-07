@@ -527,3 +527,14 @@ body{height:auto;min-height:0;overflow:visible}
 /* Hidden curtains must not cover the CV when reduced motion skips the intro. */
 .loader__curtain[hidden]{display:none}
 .nav__right a.worldbtn{display:inline-flex;align-items:center;text-decoration:none;white-space:nowrap}
+
+/* Exhibits are documents, not scroll-triggered sections. */
+.world-detail-content .world-detail-section { padding:12px 0!important; height:auto!important; min-height:0!important; color:var(--ink); }
+.world-detail-content [data-reveal], .world-detail-content .sk, .world-detail-content .pub { opacity:1!important; }
+.world-detail-content .about__stage, .world-detail-content .about__sticky,
+.world-detail-content .hpin { position:static!important; height:auto!important; min-height:0!important; }
+.world-detail-content .htrack { display:grid; width:100%!important; transform:none!important; padding:12px 0; gap:18px; }
+.world-detail-content .xcard { width:100%; min-width:0; }
+.world-detail-content .wrap { width:100%; padding:0; }
+.world-detail-content .pcard { position:static!important; opacity:1!important; transform:none!important; }
+.world-detail-content .sk__fill { transform:scaleX(1)!important; }

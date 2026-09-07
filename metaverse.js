@@ -932,7 +932,8 @@ function sanitizeClone(clone) {
   // dialog those never animate, so the panel would render blank. Reset the
   // animation state and unmask the split headings.
   const reset = (node) => {
-    node.style.removeProperty("opacity");
+    node.style.setProperty("opacity", "1", "important");
+    node.removeAttribute("data-reveal");
     node.style.removeProperty("transform");
     node.style.removeProperty("filter");
     node.style.removeProperty("clip-path");
@@ -952,6 +953,9 @@ function sanitizeClone(clone) {
     word.style.color = "inherit";
   });
 
+  clone.querySelectorAll("[data-count]").forEach(node => {
+    node.textContent = Number(node.dataset.count).toFixed(Number(node.dataset.dp || 0));
+  });
   clone.classList.add("world-detail-section");
 }
 

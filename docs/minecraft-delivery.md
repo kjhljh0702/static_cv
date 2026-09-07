@@ -84,3 +84,7 @@ See `docs/minecraft-files.txt` for the complete changed-file list, including gen
 ## September sidebar and texture revision
 
 Eight persistent numbered tabs beside the armor panel replace duplicated section items and the navigation hotbar: Home, About, Experience, Education, Work, Skills, Papers, Contact. On narrow screens the numbers remain visible and accessible names retain the labels. Key 9 downloads the CV. Each chest record uses a distinct sprite, and each chest contains only its own records. The survival screen shows equipment, the player, an actual award, and resume output. Downloaded inventory, chest, book, panorama, and Steve textures replace the recreated artwork. Asset downloads require Python 3 only; application dependencies and run/build commands are unchanged.
+
+## Cherry world and researcher outfit — September 8
+
+The existing Steve model now wears a geometric pixel-scale white lab coat with sleeves, lapels, pockets, buttons and a blue badge. This is an original 3D overlay; the downloaded skin file remains unchanged. `systems/world.ts` provides a gently moving cherry panorama, pointer-reactive falling petals, a shake-blossoms button, and clock controls for noon, dusk and night. Time selection persists locally. Night adds a dark sky treatment and pixel stars; reduced-motion disables the panorama drift and automatic petals. The scene uses the existing attributed panorama and clock texture without new asset downloads.

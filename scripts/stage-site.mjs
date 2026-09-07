@@ -3,7 +3,8 @@ await copyFile("data.json", "dist/data.json");
 await cp("res", "dist/res", { recursive: true });
 await writeFile("dist/.nojekyll", "");
 // GitHub Pages restores clean deep links through a small redirect shim.
-const html = await readFile("dist/index.html", "utf8");
+const html = await readFile("dist/minecraft-app.html", "utf8").catch(() => readFile("dist/index.html", "utf8"));
+await writeFile("dist/minecraft-app.html", html);
 await writeFile("dist/404.html", html);
 
 const routes = [
@@ -39,3 +40,6 @@ for (const route of routes) {
   await writeFile("dist/" + route + "/index.html", html);
 }
 await writeFile("dist/routes.json", JSON.stringify(routes));
+
+// The classic CV owns the landing page; Minecraft retains its existing routes.
+await copyFile("classic/index.html", "dist/index.html");

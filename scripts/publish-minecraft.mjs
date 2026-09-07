@@ -11,3 +11,10 @@ for (const route of routes) {
   await mkdir(route, { recursive: true });
   await copyFile("dist/" + route + "/index.html", route + "/index.html");
 }
+
+for (const directory of ["assets", "vendor"]) {
+  await cp("dist/" + directory, directory, { recursive: true });
+}
+for (const file of ["style.css", "metaverse.js"]) {
+  await copyFile("dist/" + file, file);
+}

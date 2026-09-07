@@ -721,6 +721,10 @@ function syncWorldLang(lang) {
 function setWorld(on) {
   const root = document.documentElement, shell = q('#cv-shell'), btn = q('#worldBtn');
   if (!shell) return;
+  const url = new URL(location.href);
+  if (on) url.searchParams.set('view', '3d');
+  else url.searchParams.delete('view');
+  history.replaceState(null, '', url);
   root.dataset.view = on ? 'metaverse' : 'classic';
   shell.hidden = on;
   shell.inert = on;
@@ -792,6 +796,7 @@ async function boot() {
 
   cinematic(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
   menu(); dragTrack(); lightbox(); worldToggle();
+  if (new URLSearchParams(location.search).get('view') === '3d') setWorld(true);
   requestAnimationFrame(loader);
 
   // images change the document height -> rebuild the observers once everything is in

@@ -11,6 +11,9 @@ items={'book':'book','enchanted-book':'enchanted_book','paper':'paper','compass'
 for name,file in items.items():assets[f'items/{name}.png']=f'item/{file}.png'
 for name,path in {'inventory':'container/inventory','chest':'container/generic_54','crafting':'container/crafting_table','book':'book','widgets':'widgets','icons':'icons'}.items():assets[f'gui/{name}.png']=f'gui/{path}.png'
 assets['backgrounds/panorama.png']='gui/title/background/panorama_0.png'
+for i in range(12):assets[f'particles/cherry_{i}.png']=f'particle/cherry_{i}.png'
+for name in ['cherry_leaves','cherry_log','grass_block_top','dirt']:
+ assets[f'blocks/{name}.png']=f'block/{name}.png'
 assets['skin/steve.png']='entity/player/wide/steve.png'
 def fetch(entry):
  dest,src=entry;url=base+src

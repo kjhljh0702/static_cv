@@ -250,6 +250,86 @@
     "sha256": "9ee6a674ba896e06e1c9e67737e25a7ad77ab30a136e3598c661f43464966ca8"
   },
   {
+    "file": "particles/cherry_0.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_0.png",
+    "sha256": "b9dba5a1bd1a4e86ac36e4bb687e7bc7dc4582fb87b747256f40b7eae856a9f5"
+  },
+  {
+    "file": "particles/cherry_1.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_1.png",
+    "sha256": "3210b2573915398ba4aec95934b7491afb62912e5eeb7f270c93ad8baec35b67"
+  },
+  {
+    "file": "particles/cherry_2.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_2.png",
+    "sha256": "427fa0537c03a79930def495cf92e37a2d47df52d93740b8640c926c6d1cf339"
+  },
+  {
+    "file": "particles/cherry_3.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_3.png",
+    "sha256": "ec9caa19b5c76ee59cff917dfd6b95a63bcba505823ddc9c07b61e48e14533c0"
+  },
+  {
+    "file": "particles/cherry_4.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_4.png",
+    "sha256": "f7069e8a780fe2b97774624a3db1c5ca2a1d88bc0e747b2baf1d9b4031205bbb"
+  },
+  {
+    "file": "particles/cherry_5.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_5.png",
+    "sha256": "c30e437364b20cb27f3d1377c9064ab6744afa809c18d5db44ca03eef698f737"
+  },
+  {
+    "file": "particles/cherry_6.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_6.png",
+    "sha256": "257ca9093556d9000cc64cadc7ba0ee750adc01fd46e1e635559cdea4ea1e0a9"
+  },
+  {
+    "file": "particles/cherry_7.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_7.png",
+    "sha256": "19e6c6fece06fc9853498b2de783256217f5d019219cf7fdb2445bb149e28cec"
+  },
+  {
+    "file": "particles/cherry_8.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_8.png",
+    "sha256": "0c7b00b50bbca92e2c21473c7652411b73c0fc6e9162dfb1f1f48397f3d36506"
+  },
+  {
+    "file": "particles/cherry_9.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_9.png",
+    "sha256": "f247a9878ce2937dcef8d1b566ac096a53756060bf77fe7a12f1759fb3af670e"
+  },
+  {
+    "file": "particles/cherry_10.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_10.png",
+    "sha256": "fc7fb42efc1636f4d87f84b4a801890e44a50f2e9f53d5edfbe46e979781c2f8"
+  },
+  {
+    "file": "particles/cherry_11.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/particle/cherry_11.png",
+    "sha256": "a33c92555928b7382efa5b0c556fa6b82d2321d0fcc640a77026fea089bb4e6f"
+  },
+  {
+    "file": "blocks/cherry_leaves.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block/cherry_leaves.png",
+    "sha256": "6c775a5bf98c9aad5180ccc8be71590eee5938206c218d8ec730025b558fe351"
+  },
+  {
+    "file": "blocks/cherry_log.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block/cherry_log.png",
+    "sha256": "ae85ab1b2cfadfab2ef893b5aca0f0933657f1ce9514452864427aca2a47f13b"
+  },
+  {
+    "file": "blocks/grass_block_top.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block/grass_block_top.png",
+    "sha256": "b2aa2204118c7323c0f8d263eb30dee99b6b69cb1f6df3115272a69fd188e507"
+  },
+  {
+    "file": "blocks/dirt.png",
+    "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/block/dirt.png",
+    "sha256": "fb0450253248276e0b8d653d5a4d21c59763cbf775c0e048469ff500afaaef68"
+  },
+  {
     "file": "skin/steve.png",
     "url": "https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.20.1/assets/minecraft/textures/entity/player/wide/steve.png",
     "sha256": "090da8d92c9f54fcbea87e6a2fb94125604a5a92a9ed6a52c10ee61c3b84bb79"

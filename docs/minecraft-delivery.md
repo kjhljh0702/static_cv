@@ -88,3 +88,7 @@ Eight persistent numbered tabs beside the armor panel replace duplicated section
 ## Cherry world and researcher outfit — September 8
 
 The existing Steve model now wears a geometric pixel-scale white lab coat with sleeves, lapels, pockets, buttons and a blue badge. This is an original 3D overlay; the downloaded skin file remains unchanged. `systems/world.ts` provides a gently moving cherry panorama, pointer-reactive falling petals, a shake-blossoms button, and clock controls for noon, dusk and night. Time selection persists locally. Night adds a dark sky treatment and pixel stars; reduced-motion disables the panorama drift and automatic petals. The scene uses the existing attributed panorama and clock texture without new asset downloads.
+
+## Daylight and original cherry particles correction
+
+The baked sunset panorama has been replaced by a lightweight instanced-block cherry grove (`systems/grove.ts`). Noon uses a blue sky and daylight illumination; dusk and night change scene lighting, fog, and the celestial disc. The grove uses original Java Edition cherry leaves/log, grass, and dirt textures. Falling petals use the exact 12 `particle/cherry_*.png` game sprites, continuously emitted without pointer repulsion, click bursts, or a shake button. Utility and clock buttons are compact; time labels and accessible names remain present. Asset URLs and SHA-256 hashes are recorded in the source manifest. The tree arrangement is recreated geometry, not a captured Minecraft world. Reduced-motion stops camera drift and falling petals.

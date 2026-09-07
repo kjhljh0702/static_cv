@@ -75,7 +75,7 @@ function toast(title: string, description: string, icon = "book") {
   toastTimer = window.setTimeout(() => (root.hidden = true), 3400);
 }
 function activate(item: Item) {
-  sound.play(item.route ? "open" : "click");
+  sound.play(item.route && recordFor(item.route) ? "page" : item.route && !["/inventory", "/skills"].includes(item.route) ? "open" : "click");
   if (item.route) router.go(item.route);
   else if (item.href) {
     const link = el("a");
@@ -91,7 +91,7 @@ function activate(item: Item) {
   }
 }
 function close() {
-  sound.play("close");
+  sound.play(recordFor(router.path) ? "book-close" : "close");
   const parts = router.path.split("/").filter(Boolean);
   router.go(parts.length > 1 ? "/" + parts[0] : "/inventory");
 }

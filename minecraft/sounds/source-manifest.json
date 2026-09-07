@@ -1,0 +1,44 @@
+[
+  {
+    "file": "click.ogg",
+    "minecraft_asset": "minecraft/sounds/random/click_stereo.ogg",
+    "url": "https://resources.download.minecraft.net/2f/2fe092579d9637e2d160319820ee08e60a237bb7",
+    "sha1": "2fe092579d9637e2d160319820ee08e60a237bb7",
+    "sha256": "f69421ba05229236c7a4efbc9a5e18c4aeb0621feb95471241ef0063c21b865a"
+  },
+  {
+    "file": "open.ogg",
+    "minecraft_asset": "minecraft/sounds/block/chest/open.ogg",
+    "url": "https://resources.download.minecraft.net/f9/f993dbcc8cdde669020b9f988f091d997006ce8b",
+    "sha1": "f993dbcc8cdde669020b9f988f091d997006ce8b",
+    "sha256": "6b9b0c3672b4bb8413ea0371c28d79ebad41e49ea03850251b4e16f5cb533612"
+  },
+  {
+    "file": "close.ogg",
+    "minecraft_asset": "minecraft/sounds/block/chest/close1.ogg",
+    "url": "https://resources.download.minecraft.net/ed/eddb25d126a93fd0dd26e0dd9ac1c0ef094b79f6",
+    "sha1": "eddb25d126a93fd0dd26e0dd9ac1c0ef094b79f6",
+    "sha256": "40f0b3212c9a8dc835eb368f284485b2f2569c4339d36fda2ca82d0c750cace2"
+  },
+  {
+    "file": "page.ogg",
+    "minecraft_asset": "minecraft/sounds/item/book/open_flip1.ogg",
+    "url": "https://resources.download.minecraft.net/23/234d6a686516c264a370ea834b87d47ae7334ef7",
+    "sha1": "234d6a686516c264a370ea834b87d47ae7334ef7",
+    "sha256": "ad2082e9f719c8e61190171236855d118f40ecdd63aa5af10ca1e85ef86b3838"
+  },
+  {
+    "file": "book-close.ogg",
+    "minecraft_asset": "minecraft/sounds/item/book/close_put1.ogg",
+    "url": "https://resources.download.minecraft.net/1b/1bd5a33c1b50627d5fd45a44cf78ad6d96f483dd",
+    "sha1": "1bd5a33c1b50627d5fd45a44cf78ad6d96f483dd",
+    "sha256": "c91d829d8e7bf0a1c8d89703cae68576af40d0214e3294ada1a04a6f5b952c68"
+  },
+  {
+    "file": "advance.ogg",
+    "minecraft_asset": "minecraft/sounds/ui/toast/challenge_complete.ogg",
+    "url": "https://resources.download.minecraft.net/21/210c839d6fab655373b3a5e4c278f59dff4936d8",
+    "sha1": "210c839d6fab655373b3a5e4c278f59dff4936d8",
+    "sha256": "a33c4fb11899468701aabb514e6419740bbaded38f3646749bd4ae5f17ef3603"
+  }
+]

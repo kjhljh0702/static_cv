@@ -1,0 +1,1 @@
+Complete pre-upgrade Classic + 3D CV snapshot from commit 0c810c4. Extract original-3d-cv.zip into a separate folder, run python3 -m http.server 8080 there, then open http://localhost:8080/?view=3d. Includes HTML, scene code, styles, CV data, vendor libraries, and images. sha256.json records source file checksums. The Minecraft link requires the main site.

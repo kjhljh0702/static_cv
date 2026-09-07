@@ -53,3 +53,7 @@ No manual assets are required. The English PDF is generated from the existing CV
 The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The classic CV uses the previously restored Claude design, including the mobile portrait and Korean typography fixes. `?view=3d` opens the existing 3D world; `/inventory/` opens Minecraft. Minecraft’s toolbar links back to the default CV and 3D.
 
 This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. No game sound recordings or music are included.
+
+## 3D studio
+
+The 3D view includes textured oak, stone, fabric and plaster, beveled furnishings, articulated robotics props, a skylight, and an exterior courtyard. WebGL initializes only when 3D is selected. See [upgrade and backup notes](docs/3d-studio-upgrade.md). The pre-upgrade standalone snapshot is in `backups/3d-cv-before-upgrade-2026-09-07/`.

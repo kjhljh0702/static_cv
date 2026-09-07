@@ -1,5 +1,7 @@
 import * as THREE from "./vendor/three.module.min.js";
 
+import { surfaceMaps, softBox, addStudioDetails, detailRover, articulatedArm } from "./assets/js/world-details.js?v=20260907.1";
+
 const root = document.documentElement;
 const stage = document.getElementById("metaverse-stage");
 const canvas = document.getElementById("metaverse-canvas");
@@ -29,7 +31,7 @@ const ROOM_LIMIT_Z_MAX = 10.2;
 const INTERACTION_DISTANCE = 2.45;
 const START_POSITION = new THREE.Vector3(0, PLAYER_HEIGHT, 9.35);
 const UP_AXIS = new THREE.Vector3(0, 1, 0);
-const HOUSE_ACCENT = 0xb2744d;
+const HOUSE_ACCENT = 0x397cba;
 
 const stationDefinitions = [
   { id: "about", ko: "소개", en: "ABOUT", code: "01", position: [-11.55, 0, 8.45], rotation: Math.PI / 2 },
@@ -93,11 +95,11 @@ const palettes = {
     ambientGround: 0x9b8a78
   },
   dark: {
-    sky: 0x151714,
-    fog: 0x151714,
-    floor: 0x292722,
+    sky: 0x8295a5,
+    fog: 0x8295a5,
+    floor: 0xa9adb1,
     floorAlt: 0x624532,
-    wall: 0x272722,
+    wall: 0xd4d0c8,
     trim: 0xa39280,
     metal: 0x9b8a78,
     surface: 0x3b3730,
@@ -165,12 +167,14 @@ function createThemedMaterial(key, options = {}) {
     emissive: options.emissive ?? 0x000000,
     emissiveIntensity: options.emissiveIntensity ?? 0
   });
+  const textureKind = { wood: "wood", floor: "stone", wall: "plaster", surface: "fabric" }[key];
+  if (textureKind) Object.assign(material, surfaceMaps(textureKind));
   themedMaterials.push({ material, key });
   return material;
 }
 
 function addBox(parent, size, position, material, options = {}) {
-  const mesh = new THREE.Mesh(new THREE.BoxGeometry(size[0], size[1], size[2]), material);
+  const mesh = new THREE.Mesh(softBox(size), material);
   mesh.position.set(position[0], position[1], position[2]);
   mesh.castShadow = options.castShadow !== false;
   mesh.receiveShadow = options.receiveShadow !== false;
@@ -279,8 +283,9 @@ function createUniversityLogo() {
     });
     const logo = new THREE.Mesh(new THREE.PlaneGeometry(2.35, 2.35), material);
     universityLogo = new THREE.Group();
-    universityLogo.position.set(0, 3.02, -4.25);
-    universityLogo.userData.baseY = 3.02;
+    universityLogo.position.set(0, 4.55, -11.3);
+    universityLogo.scale.setScalar(.66);
+    universityLogo.userData.baseY = 4.55;
     universityLogo.add(logo);
     scene.add(universityLogo);
     stage.dataset.logoReady = "true";
@@ -303,9 +308,10 @@ function createPlant(position, scale = 1) {
   for (let index = 0; index < 7; index += 1) {
     const leaf = new THREE.Mesh(new THREE.SphereGeometry(0.28 * scale, 12, 10), leafMaterial);
     const angle = (Math.PI * 2 * index) / 7;
-    leaf.scale.set(0.55, 1.7, 0.55);
+    leaf.scale.set(0.7, 1.7, 0.09);
     leaf.position.set(Math.cos(angle) * 0.22 * scale, 0.77 * scale + (index % 2) * 0.1, Math.sin(angle) * 0.22 * scale);
-    leaf.rotation.z = Math.cos(angle) * 0.48;
+    leaf.rotation.y = angle;
+    leaf.rotation.z = Math.cos(angle) * 0.7;
     leaf.castShadow = true;
     plant.add(leaf);
   }
@@ -318,7 +324,7 @@ function createLounge() {
   const woodMaterial = createThemedMaterial("wood", { roughness: 0.76 });
   const cushionMaterial = createThemedMaterial("surface", { roughness: 0.88 });
   addBox(sofa, [4.6, 0.28, 0.86], [0, 0.54, 0.88], cushionMaterial);
-  addBox(sofa, [4.6, 0.75, 0.18], [0, 0.9, 1.22], cushionMaterial);
+  addBox(sofa, [4.6, 0.75, 0.18], [0, 0.9, -0.65], cushionMaterial);
   addBox(sofa, [0.22, 0.72, 2.15], [-2.2, 0.76, 0.24], cushionMaterial);
   addBox(sofa, [0.22, 0.72, 2.15], [2.2, 0.76, 0.24], cushionMaterial);
   addBox(sofa, [4.9, 0.12, 2.45], [0, 0.28, 0.25], woodMaterial);
@@ -334,6 +340,8 @@ function createRoom() {
   const floorMaterial = createThemedMaterial("floor", { roughness: 0.92 });
   const woodMaterial = createThemedMaterial("wood", { roughness: 0.82 });
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(28, 24), floorMaterial);
+  floorMaterial.map = floorMaterial.map.clone(); floorMaterial.map.repeat.set(10, 9);
+  floorMaterial.bumpMap = floorMaterial.bumpMap.clone(); floorMaterial.bumpMap.repeat.set(10, 9);
   floor.rotation.x = -Math.PI / 2;
   floor.receiveShadow = true;
   scene.add(floor);
@@ -456,7 +464,7 @@ function updateStationLabels() {
 
 function createRover() {
   rover = new THREE.Group();
-  rover.position.set(-6.35, 0.38, -0.4);
+  rover.position.set(-6.35, 0.04, -0.4);
   const bodyMaterial = createThemedMaterial("metal", { roughness: 0.35, metalness: 0.62 });
   const surfaceMaterial = createThemedMaterial("surface", { roughness: 0.72 });
   const wheelMaterial = createThemedMaterial("screen", { roughness: 0.76 });
@@ -467,7 +475,7 @@ function createRover() {
   [-0.85, 0.85].forEach((x) => {
     [-0.62, 0.62].forEach((z) => {
       const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.33, 0.33, 0.25, 20), wheelMaterial);
-      wheel.rotation.z = Math.PI / 2;
+      wheel.rotation.x = Math.PI / 2;
       wheel.position.set(x, 0.32, z);
       wheel.castShadow = true;
       rover.add(wheel);
@@ -482,6 +490,7 @@ function createRover() {
     rover.add(fan);
   });
 
+  detailRover(rover, addBox);
   scene.add(rover);
 }
 
@@ -500,29 +509,7 @@ function createRobotArm() {
   base.castShadow = true;
   robotArm.add(base);
 
-  const jointMaterial = new THREE.MeshStandardMaterial({
-    color: HOUSE_ACCENT,
-    roughness: 0.34,
-    metalness: 0.5
-  });
-  const upper = new THREE.Mesh(new THREE.BoxGeometry(0.3, 1.45, 0.3), jointMaterial);
-  upper.position.set(0, 1.92, 0);
-  upper.rotation.z = -0.28;
-  upper.castShadow = true;
-  robotArm.add(upper);
-  robotArm.userData.upper = upper;
-
-  const forearm = new THREE.Mesh(new THREE.BoxGeometry(0.25, 1.2, 0.25), metalMaterial);
-  forearm.position.set(0.48, 2.86, 0);
-  forearm.rotation.z = -0.78;
-  forearm.castShadow = true;
-  robotArm.add(forearm);
-  robotArm.userData.forearm = forearm;
-
-  const gripper = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.16, 0.38), jointMaterial);
-  gripper.position.set(0.95, 3.28, 0);
-  gripper.castShadow = true;
-  robotArm.add(gripper);
+  articulatedArm(robotArm, addBox);
   scene.add(robotArm);
 }
 
@@ -562,7 +549,7 @@ function createLighting() {
   const keyLight = new THREE.DirectionalLight(0xffe5c4, theme === "dark" ? 2.15 : 1.7);
   keyLight.position.set(-4, 8, 6);
   keyLight.castShadow = true;
-  keyLight.shadow.mapSize.set(2048, 2048);
+  keyLight.shadow.mapSize.set(coarsePointer.matches ? 1024 : 2048, coarsePointer.matches ? 1024 : 2048);
   keyLight.shadow.radius = 3;
   keyLight.shadow.bias = -0.0006;
   keyLight.shadow.camera.left = -14;
@@ -655,9 +642,9 @@ function createCertificate() {
 function initializeScene() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(palettes[theme].sky);
-  scene.fog = new THREE.Fog(palettes[theme].fog, 15, 34);
+  scene.fog = new THREE.Fog(palettes[theme].fog, 24, 80);
 
-  camera = new THREE.PerspectiveCamera(66, 1, 0.08, 70);
+  camera = new THREE.PerspectiveCamera(66, 1, 0.08, 120);
   camera.position.copy(START_POSITION);
   camera.rotation.order = "YXZ";
 
@@ -678,11 +665,13 @@ function initializeScene() {
   stationDefinitions.forEach(createStation);
   createRover();
   createRobotArm();
+  addStudioDetails(scene, renderer, addBox);
   createCertificate();
   createAtmosphere();
   resizeRenderer();
 
   stage.dataset.worldReady = "true";
+  stage.dataset.sceneEdition = "studio-2";
   stage.dataset.stationCount = String(stations.length);
 }
 
@@ -834,15 +823,11 @@ function updateDecorations(elapsed) {
     return;
   }
   if (robotArm) {
-    robotArm.userData.upper.rotation.z = -0.28 + Math.sin(elapsed * 0.65) * 0.12;
-    robotArm.userData.forearm.rotation.z = -0.78 + Math.sin(elapsed * 0.75 + 0.8) * 0.16;
+    robotArm.userData.upper.rotation.z = -.35 + Math.sin(elapsed * 0.65) * 0.12;
+    robotArm.userData.forearm.rotation.z = 1.2 + Math.sin(elapsed * 0.75 + 0.8) * 0.16;
   }
   if (rover) {
     rover.rotation.y = Math.sin(elapsed * 0.28) * 0.04;
-  }
-  if (universityLogo) {
-    universityLogo.rotation.y = elapsed * 0.18;
-    universityLogo.position.y = universityLogo.userData.baseY + Math.sin(elapsed * 0.8) * 0.06;
   }
   if (dustField) {
     const attr = dustField.geometry.getAttribute("position");
@@ -857,6 +842,7 @@ function updateDecorations(elapsed) {
 }
 
 function renderFrame(time) {
+  if (detailDialog.open) return;
   if (!renderer || !scene || !camera) {
     return;
   }
@@ -1017,6 +1003,7 @@ function refreshContent() {
 
 function setEnabled(nextEnabled) {
   const nextState = Boolean(nextEnabled);
+  if (nextState && !scene) initializeScene();
   const stateChanged = enabled !== nextState;
   enabled = nextState;
   stage.dataset.active = String(enabled);
@@ -1279,7 +1266,6 @@ function bindEvents() {
 }
 
 try {
-  initializeScene();
   bindEvents();
   setLanguage(language);
   stage.dataset.threeRevision = THREE.REVISION;

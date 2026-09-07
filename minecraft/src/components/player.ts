@@ -33,7 +33,7 @@ export class PlayerPreview {
         alpha: true,
         antialias: false,
       });
-      this.renderer.setPixelRatio(1);
+      this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
       this.renderer.outputColorSpace = THREE.SRGBColorSpace;
       this.renderer.setClearColor(0x000000, 0);
       const tex = await new THREE.TextureLoader().loadAsync(

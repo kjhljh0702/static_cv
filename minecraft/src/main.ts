@@ -46,14 +46,11 @@ preview.setAttribute(
   "Player preview. Move the pointer to look around.",
 );
 function scale() {
-  const s = Math.max(
-    1,
-    Math.min(
-      4,
-      Math.floor((innerWidth - (innerWidth <= 600 ? 24 : 2)) / (innerWidth <= 600 ? 176 : 250)),
-      Math.floor((innerHeight - 32) / 310),
-    ),
-  );
+  const landscape = innerWidth > 600 && innerHeight <= 560;
+  const s = Math.max(1, Math.min(4,
+    Math.floor((innerWidth - (landscape ? 160 : innerWidth <= 600 ? 24 : 24)) / (innerWidth <= 600 ? 176 : 250)),
+    landscape ? Math.max(2, Math.floor((innerHeight - 48) / 166)) : Math.floor((innerHeight - (innerWidth <= 600 ? 32 : 220)) / (innerWidth <= 600 ? 310 : 222)),
+  ));
   document.documentElement.style.setProperty("--gui-scale", String(s));
   document.documentElement.dataset.scale = String(s);
 }

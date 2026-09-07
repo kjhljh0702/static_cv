@@ -11,12 +11,12 @@ export class CherryGrove {
   reduced=matchMedia('(prefers-reduced-motion: reduce)');
   constructor(public host:HTMLElement) {
     this.renderer=new THREE.WebGLRenderer({antialias:false,alpha:true});
-    this.renderer.setPixelRatio(1);
+    this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
     this.renderer.outputColorSpace=THREE.SRGBColorSpace;
     this.renderer.domElement.className='grove-canvas';host.append(this.renderer.domElement);
     const loader=new THREE.TextureLoader();
-    const texture=(name:string)=>{const t=loader.load(BASE+'minecraft/blocks/'+name+'.png');t.magFilter=THREE.NearestFilter;t.minFilter=THREE.NearestFilter;t.colorSpace=THREE.SRGBColorSpace;return t;};
-    const leaves=new THREE.MeshLambertMaterial({map:texture('cherry_leaves'),alphaTest:.5,side:THREE.DoubleSide});
+    const texture=(name:string)=>{const t=loader.load(BASE+'minecraft/blocks/'+name+'.png');t.magFilter=THREE.NearestFilter;t.minFilter=THREE.NearestMipmapLinearFilter;t.anisotropy=Math.min(8,this.renderer.capabilities.getMaxAnisotropy());t.colorSpace=THREE.SRGBColorSpace;return t;};
+    const leaves=new THREE.MeshLambertMaterial({map:texture('cherry_leaves'),alphaTest:.5,side:THREE.FrontSide,emissive:0x6b3048,emissiveIntensity:.18});
     const wood=new THREE.MeshLambertMaterial({map:texture('cherry_log')});
     const dirt=new THREE.MeshLambertMaterial({map:texture('dirt')});
     const grass=new THREE.MeshLambertMaterial({map:texture('grass_block_top'),color:0x8ab651});
@@ -29,8 +29,11 @@ export class CherryGrove {
         trunks.push(new THREE.Vector3(x+side,h-1.5,z));
         trunks.push(new THREE.Vector3(x+side*2,h-.5,z));
       }
-      for(let dy=0;dy<3;dy++)for(let dx=-3;dx<=3;dx++)for(let dz=-3;dz<=3;dz++) {
-        if(Math.abs(dx)+Math.abs(dz)>5 || (dy===2 && Math.abs(dx)+Math.abs(dz)>3))continue;
+      // Broad, uneven lobes and hanging edges instead of identical rectangular crowns.
+      for(let dy=-1;dy<3;dy++)for(let dx=-4;dx<=4;dx++)for(let dz=-3;dz<=3;dz++) {
+        const edge=Math.abs(dx)+Math.abs(dz);
+        if(edge>6 || (dy===2 && edge>3) || (dy===-1 && (edge<4 || (dx+dz+x)%3!==0)))continue;
+        if(dy===1 && edge>5 || dy===0 && dx===4 && dz>0)continue;
         crowns.push(new THREE.Vector3(x+dx,h+dy+.5,z+dz));
       }
     }
@@ -46,7 +49,7 @@ export class CherryGrove {
     this.scene.add(floor,this.ambient,this.sun,this.disc);
     const cloud=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.8});
     for(let i=0;i<8;i++) {const c=new THREE.Mesh(new THREE.BoxGeometry(8+i%3*3,.35,3),cloud);c.position.set(-35+i*11,19,-30-i%3*12);this.scene.add(c);}
-    const resize=()=>{this.renderer.setSize(Math.ceil(innerWidth/3),Math.ceil(innerHeight/3),false);this.camera.aspect=innerWidth/innerHeight;this.camera.updateProjectionMatrix();};
+    const resize=()=>{this.renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));this.renderer.setSize(innerWidth,innerHeight,false);this.renderer.domElement.dataset.renderScale=String(this.renderer.getPixelRatio());this.camera.aspect=innerWidth/innerHeight;this.camera.updateProjectionMatrix();};
     resize();addEventListener('resize',resize);
     const tick=(t:number)=>{requestAnimationFrame(tick);if(document.hidden)return;
       this.camera.position.set((innerWidth<600?5:0)+(this.reduced.matches?0:Math.sin(t*.000045)*1.3),5.2,innerWidth<600?12:19);

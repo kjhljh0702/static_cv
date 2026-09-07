@@ -23,7 +23,7 @@ export class CherryWorld {
     resize(); addEventListener('resize',resize);
     for(let i=0;i<12;i++){const img=new Image();img.src=BASE+`minecraft/particles/cherry_${i}.png`;this.textures.push(img);}
     try {this.grove=new CherryGrove(document.querySelector('#world')!);} catch {document.querySelector<HTMLElement>('#world')!.style.backgroundImage='none';}
-    for(let i=0;i<28;i++)this.spawn(Math.random()*this.canvas.width,Math.random()*this.canvas.height);
+    for(let i=0;i<18;i++)this.spawn(Math.random()*this.canvas.width,Math.random()*this.canvas.height);
     const stir=(e:PointerEvent)=>{
       if ((e.target as HTMLElement).closest('button,a,input,.mc-window,.book-window,.section-sidebar')) return;
       this.touch={x:e.clientX/3,y:e.clientY/3,until:performance.now()+900};
@@ -65,7 +65,7 @@ export class CherryWorld {
     };
     requestAnimationFrame(tick);
   }
-  spawn(x:number,y:number) {if(this.petals.length<65)this.petals.push({x,y,vx:2+Math.random()*5,vy:5+Math.random()*6,life:100,size:6,frame:Math.floor(Math.random()*12),phase:Math.random()*6});}
+  spawn(x:number,y:number) {if(this.petals.length<40)this.petals.push({x,y,vx:2+Math.random()*5,vy:5+Math.random()*6,life:100,size:Math.random()<.25?3:2,frame:Math.floor(Math.random()*12),phase:Math.random()*6});}
   setTime(time:Time) {this.time=time;document.documentElement.dataset.worldTime=time;localStorage.setItem('cv-world-time',time);this.grove?.setTime(time);}
   controls() {
     const root=el('div','world-controls');root.setAttribute('role','group');root.setAttribute('aria-label',ui('World time and cherry blossoms','시간과 벚꽃'));

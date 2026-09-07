@@ -9,3 +9,13 @@ node_modules/
 
 # local snapshot of the pre-2026-09-03 static CV (also in git history at 8bc4e5f)
 _backup_original_*/
+
+# Minecraft build and verification artifacts
+dist/
+.vite/
+minecraft/public/res/
+playwright-report/
+test-results/
+tmp/
+
+.venv/

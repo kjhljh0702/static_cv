@@ -88,12 +88,12 @@ export class PlayerPreview {
         mesh.position.set(x,y,z);return mesh;
       };
       this.canvas.dataset.outfit = "lab-coat";
-      this.scene.add(new THREE.AmbientLight(0xffffff, 2));
-      const sun = new THREE.DirectionalLight(0xffffff, 2.1);
+      this.scene.add(new THREE.HemisphereLight(0xf1f5ff, 0x777080, 1.5));
+      const sun = new THREE.DirectionalLight(0xfff7ed, 1.8);
       sun.position.set(-25, 50, 70);
       this.scene.add(sun);
       this.scene.add(this.body);
-      this.body.rotation.y = -0.12;
+      this.body.rotation.y = -0.24;
       this.head.position.y = 24;
       const skull = box(8, 8, 8, 0, 0);
       skull.position.y = 4;
@@ -119,11 +119,13 @@ export class PlayerPreview {
         [6, 32, 48],
       ]) {
         const pivot = new THREE.Group();
-        pivot.position.set(x, 24, 0);
+        pivot.position.set(x, 23.5, 0);
+        pivot.rotation.z = x < 0 ? -0.055 : 0.055;
+        pivot.rotation.x = x < 0 ? -0.025 : 0.035;
         const arm = box(4, 12, 4, u, v);
         arm.position.y = -6;
         pivot.add(arm);
-        pivot.add(coat(4.4,8.5,4.4,0,-4.1,0));
+        pivot.add(coat(4.2,9.5,4.2,0,-4.75,0));
         this.arms.push(pivot);
         this.body.add(pivot);
       }
@@ -132,7 +134,8 @@ export class PlayerPreview {
         [2, 16, 48],
       ]) {
         const leg = box(4, 12, 4, u, v);
-        leg.position.set(x, 6, 0);
+        leg.position.set(x, 6, x < 0 ? 0.35 : -0.35);
+        leg.rotation.y = x < 0 ? 0.025 : -0.025;
         this.body.add(leg);
       }
       const resize = () => {
@@ -152,11 +155,17 @@ export class PlayerPreview {
           const r = this.container.getBoundingClientRect();
           const dx = (e.clientX - r.left - r.width / 2) / Math.max(80, r.width),
             dy = (e.clientY - r.top - r.height * 0.3) / Math.max(100, r.height);
-          this.target.x = THREE.MathUtils.clamp(dx * 0.42, -0.61, 0.61);
-          this.target.y = THREE.MathUtils.clamp(dy * 0.35, -0.44, 0.44);
+          this.target.x = Math.tanh(dx * 0.65) * 0.55;
+          this.target.y = Math.tanh(dy * 0.65) * 0.32;
         },
         { passive: true },
       );
+      addEventListener("pointerup", (event) => {
+        if (event.pointerType === "touch") this.target = { x: 0, y: 0 };
+      }, { passive: true });
+      document.documentElement.addEventListener("pointerleave", () => {
+        this.target = { x: 0, y: 0 };
+      });
       document.addEventListener("visibilitychange", () => {
         if (!document.hidden) this.start();
       });
@@ -192,7 +201,7 @@ export class PlayerPreview {
     this.last = time;
     this.head.rotation.y += (this.target.x - this.head.rotation.y) * d;
     this.head.rotation.x += (this.target.y - this.head.rotation.x) * d;
-    const yaw = this.target.x * 0.25 - 0.12;
+    const yaw = this.target.x * 0.2 - 0.24;
     this.body.rotation.y += (yaw - this.body.rotation.y) * d;
     if (this.spin > 0) {
       this.spin = Math.max(0, this.spin - 0.14);
@@ -202,7 +211,7 @@ export class PlayerPreview {
       this.arms.forEach(
         (a, i) =>
           (a.rotation.z =
-            (i ? 1 : -1) * (0.035 + Math.sin(time * 0.0015) * 0.02)),
+            (i ? 1 : -1) * (0.055 + Math.sin(time * 0.0012 + i * 0.5) * 0.012)),
       );
     this.renderer.render(this.scene, this.camera);
     if (this.visible && !document.hidden) this.start();

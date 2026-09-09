@@ -105,27 +105,45 @@ export class PlayerPreview {
       const torso = box(8, 12, 4, 16, 16);
       torso.position.y = 18;
       this.body.add(torso);
-      this.body.add(coat(8.5,13,1,0,17.5,-2.1));
+      // A continuous knee-length shell, with an inset shirt and tailored front.
+      this.body.add(coat(8.4,16,.25,0,16,-2.2,0xe5e9ec));
+      this.body.add(coat(7.8,11.8,.15,0,18,2.08,0xe0e7ed));
+      this.body.add(coat(.9,6,.16,0,20.1,2.2,0x234a6d));
+      this.body.add(coat(1.25,1,.18,0,23,2.21,0x193b59));
       for (const side of [-1,1]) {
-        this.body.add(coat(2.9,13,4.5,side*2.8,17.5,0));
-        this.body.add(coat(3.8,4,4.6,side*2,10,0));
-        this.body.add(coat(2,2,.2,side*2.6,14.3,2.4,0xd3dce1));
-        const lapel=coat(1,4,.3,side*1.3,21,2.45);lapel.rotation.z=side*.25;this.body.add(lapel);
+        this.body.add(coat(.25,16,4.4,side*4.1,16,0,0xe5e9ec));
+        this.body.add(coat(2.9,16,.3,side*2.65,16,2.22));
+        this.body.add(coat(1.12,10.8,.3,side*.64,13.4,2.22));
+        // Flat lapels follow the neckline; no intersecting rotated blocks.
+        const outline=new THREE.Shape();
+        [[.6,24],[2.8,24],[2.3,22.5],[2.7,21.6],[.65,18.6]].forEach(([x,y],i)=>{
+          if(i===0)outline.moveTo(side*x,y);else outline.lineTo(side*x,y);
+        });
+        outline.closePath();
+        const lapel=new THREE.Mesh(new THREE.ShapeGeometry(outline),new THREE.MeshLambertMaterial({color:0xffffff,side:THREE.DoubleSide}));
+        lapel.position.z=2.43;this.body.add(lapel);
+        this.body.add(coat(1.8,2,.12,side*2.7,12.5,2.43,0xebeff2));
+        this.body.add(coat(1.8,.18,.14,side*2.7,13.5,2.45,0xaab8c4));
       }
-      this.body.add(coat(1.6,1,.3,-2.7,20.2,2.45,0x235d99));
-      for(const y of [18.5,16.5,14.5]) this.body.add(coat(.4,.4,.3,.9,y,2.45,0x7b8790));
+      this.body.add(coat(1.6,1.6,.12,-2.7,19.8,2.43,0xebeff2));
+      this.body.add(coat(1.6,.18,.14,-2.7,20.6,2.45,0xaab8c4));
+      this.body.add(coat(.2,1.1,.16,-2.3,21,2.46,0x235d99));
+      for(const y of [17.5,15.2,12.9,10.6]) this.body.add(coat(.25,.25,.16,.35,y,2.45,0x8795a0));
       for (const [x, u, v] of [
         [-6, 40, 16],
         [6, 32, 48],
       ]) {
         const pivot = new THREE.Group();
-        pivot.position.set(x, 23.5, 0);
+        pivot.position.set(x * 1.025, 22, 0);
         pivot.rotation.z = x < 0 ? -0.055 : 0.055;
         pivot.rotation.x = x < 0 ? -0.025 : 0.035;
         const arm = box(4, 12, 4, u, v);
-        arm.position.y = -6;
+        arm.position.y = -4;
         pivot.add(arm);
-        pivot.add(coat(4.2,9.5,4.2,0,-4.75,0));
+        // Sleeve reaches the wrist, leaving two skin pixels for the hand.
+        pivot.add(coat(4.16,9,4.16,0,-2.5,0));
+        pivot.add(coat(4.18,1,4.18,0,-7.5,0,0xdce3e8));
+        pivot.add(coat(4.2,.16,4.2,0,-7,0,0xb7c3cb));
         this.arms.push(pivot);
         this.body.add(pivot);
       }
@@ -134,8 +152,7 @@ export class PlayerPreview {
         [2, 16, 48],
       ]) {
         const leg = box(4, 12, 4, u, v);
-        leg.position.set(x, 6, x < 0 ? 0.35 : -0.35);
-        leg.rotation.y = x < 0 ? 0.025 : -0.025;
+        leg.position.set(x, 6, 0);
         this.body.add(leg);
       }
       const resize = () => {

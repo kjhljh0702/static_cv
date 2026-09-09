@@ -45,8 +45,8 @@ add('Skills & Languages','SectionCV')
 for e in cv['skills']:add(e['category'],'EntryCV');add(' · '.join(map(t,e['items'])))
 out=Path('minecraft/public/minecraft/Jeonghun-Lee-CV.pdf')
 def footer(canvas,doc):
- canvas.setFont('Helvetica',8);canvas.setFillColor(HexColor('#777777'));canvas.drawString(42,27,'Jeonghun Lee | Curriculum Vitae');canvas.drawRightString(553,27,str(doc.page))
-doc=SimpleDocTemplate(str(out),pagesize=(595,842),rightMargin=42,leftMargin=42,topMargin=38,bottomMargin=45,title='Jeonghun Lee - Curriculum Vitae',author='Jeonghun Lee')
+ canvas.setFont('Helvetica',8);canvas.setFillColor(HexColor('#777777'));canvas.drawString(42,27,'Lee Jeong Hoon | Curriculum Vitae');canvas.drawRightString(553,27,str(doc.page))
+doc=SimpleDocTemplate(str(out),pagesize=(595,842),rightMargin=42,leftMargin=42,topMargin=38,bottomMargin=45,title='Lee Jeong Hoon - Curriculum Vitae',author='Lee Jeong Hoon')
 grouped=[];group=[]
 for flow in story:
  if flow.style.name in ('EntryCV','SectionCV','NameCV') and group:

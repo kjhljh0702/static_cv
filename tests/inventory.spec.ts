@@ -11,7 +11,7 @@ test("main inventory, mouse tracking, hotbar and browser history", async ({
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await expect(
-    page.getByRole("heading", { name: "Jeonghun Lee" }),
+    page.getByRole("heading", { name: "Lee Jeong Hoon" }),
   ).toBeVisible();
   await expect(
     page.locator(".survival > .slot-grid").first().locator(".slot"),
@@ -169,7 +169,7 @@ test("PDF download and external link destinations", async ({ page }) => {
   const download = page.waitForEvent("download");
   await page.keyboard.press("9");
   const pdf = await download;
-  expect(pdf.suggestedFilename()).toBe("Jeonghun-Lee-CV.pdf");
+  expect(pdf.suggestedFilename()).toBe("Lee-Jeong-Hoon-CV.pdf");
   const file = await pdf.path();
   expect(readFileSync(file!).subarray(0, 4).toString()).toBe("%PDF");
   await page.keyboard.press("8");

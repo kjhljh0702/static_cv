@@ -77,7 +77,7 @@ function activate(item: Item) {
   else if (item.href) {
     const link = el("a");
     link.href = safeLink(item.href);
-    if (item.download) link.download = "Jeonghun-Lee-CV.pdf";
+    if (item.download) link.download = "Lee-Jeong-Hoon-CV.pdf";
     else if (item.href.startsWith("http")) {
       link.target = "_blank";
       link.rel = "noopener noreferrer";
@@ -423,7 +423,7 @@ function render() {
       ),
     ),
   );
-  document.title = `${record?.title ?? navItems().find((i) => i.id === group)?.name ?? ui("Inventory CV", "인벤토리 CV")} — Jeonghun Lee`;
+  document.title = `${record?.title ?? navItems().find((i) => i.id === group)?.name ?? ui("Inventory CV", "인벤토리 CV")} — Lee Jeong Hoon`;
   if (!initial) {
     const focus = stage.querySelector<HTMLElement>("h2");
     if (focus) {

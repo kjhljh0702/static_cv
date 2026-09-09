@@ -113,7 +113,7 @@ export function navItems(): Item[] {
       id: "resume",
       name: ui("Download CV", "CV 다운로드"),
       sprite: "paper",
-      category: ui("Written by Jeonghun Lee", "이정훈 작성"),
+      category: ui("Written by Lee Jeong Hoon", "이정훈 작성"),
       lines: [ui("PDF · generated from the CV record", "PDF · CV 데이터 기반")],
       href: BASE + "minecraft/Jeonghun-Lee-CV.pdf",
       download: true,

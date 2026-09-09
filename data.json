@@ -3,11 +3,11 @@
     "photo": "res/my_profile.jpeg",
     "name": {
       "ko": "이정훈",
-      "en": "Jeonghun Lee"
+      "en": "Lee Jeong Hoon"
     },
     "displayName": {
-      "ko": "이정훈 · Jeonghun Lee",
-      "en": "Jeonghun Lee · 이정훈"
+      "ko": "이정훈 · Lee Jeong Hoon",
+      "en": "Lee Jeong Hoon · 이정훈"
     },
     "headline": {
       "ko": "정적 분석 · 코드 인텔리전스 · 로보틱스",
@@ -519,7 +519,7 @@
       },
       "authors": {
         "ko": "이정훈, 이우석",
-        "en": "Jeonghun Lee, Wooseok Lee"
+        "en": "Lee Jeong Hoon, Wooseok Lee"
       },
       "award": {
         "ko": "우수발표논문상",
@@ -542,7 +542,7 @@
       },
       "authors": {
         "ko": "왕호, 이정훈, 이우석",
-        "en": "Hao Wang, Jeonghun Lee, Wooseok Lee"
+        "en": "Hao Wang, Lee Jeong Hoon, Wooseok Lee"
       }
     },
     {
@@ -561,7 +561,7 @@
       },
       "authors": {
         "ko": "이정훈 외 4인 · 출원 전 아이디어 단계",
-        "en": "Jeonghun Lee et al. · Pre-filing concept stage"
+        "en": "Lee Jeong Hoon et al. · Pre-filing concept stage"
       }
     }
   ],

@@ -1,4 +1,4 @@
-# Jeonghun Lee — Classic, Minecraft & 3D CV
+# Lee Jeong Hoon — Classic, Minecraft & 3D CV
 
 A personal, bilingual CV. The restored Claude CV is the default; its header provides Minecraft and 3D view buttons.
 

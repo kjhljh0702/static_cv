@@ -603,10 +603,15 @@ function createAtmosphere() {
   scene.add(dustField);
 }
 
-/* the KCC 2026 certificate, framed on the back-right wall */
+/* Award on the solid rear wall; course and language certificates on the right wall. */
 function createCertificate(record, index = 0) {
   const group = new THREE.Group();
-  group.position.set(7.7 + index * 2.1, 2.62, -11.82);
+  if (index === 0) {
+    group.position.set(11.9, 2.62, -11.82);
+  } else {
+    group.position.set(13.65, 2.62, -9.4 + (index - 1) * 2.5);
+    group.rotation.y = -Math.PI / 2;
+  }
 
   const frameMaterial = createThemedMaterial("metal", { roughness: 0.38, metalness: 0.55 });
   addBox(group, [1.72, 2.26, 0.09], [0, 0, 0], frameMaterial, { castShadow: false });

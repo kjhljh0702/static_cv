@@ -406,6 +406,10 @@
         {
           "ko": "3D CAD 설계, 부품 제작, 하드웨어 통합 및 주행 테스트",
           "en": "Completed 3D CAD, fabrication, hardware integration, and mobility testing."
+        },
+        {
+          "ko": "캡스톤 설계 산출물: 추력 기반 벽면 이동 모바일 로봇의 부착 및 전방향 주행 시스템",
+          "en": "Capstone design output: Adhesion and Omnidirectional Locomotion System for a Thrust-assisted Wall-climbing Mobile Robot"
         }
       ],
       "skills": [
@@ -543,25 +547,6 @@
       "authors": {
         "ko": "왕호, 이정훈, 이우석",
         "en": "Hao Wang, Lee Jeong Hoon, Wooseok Lee"
-      }
-    },
-    {
-      "year": "2024",
-      "type": {
-        "ko": "특허 아이디어",
-        "en": "Patent Concept"
-      },
-      "venue": {
-        "ko": "캡스톤 디자인 산출물",
-        "en": "Capstone Design Output"
-      },
-      "title": {
-        "ko": "추력 기반 벽면 이동 모바일 로봇의 부착 및 전방향 주행 시스템",
-        "en": "Adhesion and Omnidirectional Locomotion System for a Thrust-assisted Wall-climbing Mobile Robot"
-      },
-      "authors": {
-        "ko": "이정훈 외 4인 · 출원 전 아이디어 단계",
-        "en": "Lee Jeong Hoon et al. · Pre-filing concept stage"
       }
     }
   ],

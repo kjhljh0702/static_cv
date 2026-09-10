@@ -90,7 +90,7 @@ function activate(item: Item) {
 function close() {
   sound.play(recordFor(router.path) ? "book-close" : "close");
   const parts = router.path.split("/").filter(Boolean);
-  router.go(parts.length > 1 ? "/" + parts[0] : "/inventory");
+  router.go(parts.length > 1 && parts[0] !== "certificates" ? "/" + parts[0] : "/inventory");
 }
 function windowPanel(title: string, className = "") {
   const panel = el("section", `mc-window ${className}`);
@@ -125,6 +125,12 @@ function inventory() {
     id: "award-0", name: t(cv.awards[0].title), sprite: "nether-star",
     category: t(cv.awards[0].venue), route: "/awards/0", rarity: "gold",
   };
+  cv.certificates.forEach((certificate, i) => {
+    contents[i + 1] = {
+      id: `certificate-${certificate.id}`, name: t(certificate.title), sprite: "nether-star",
+      category: t(certificate.description), route: `/certificates/${certificate.id}`, rarity: "gold",
+    };
+  });
   if (rare) contents[26] = {
     id: "rare", name: ui("Debugging Diamond", "디버깅 다이아몬드"),
     sprite: "diamond", category: ui("Curiosity rewarded", "호기심의 보상"),

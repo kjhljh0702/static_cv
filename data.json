@@ -676,5 +676,31 @@
         }
       ]
     }
+  ],
+  "certificates": [
+    {
+      "id": "ai-engineering",
+      "title": {
+        "ko": "AI 증강 명세 주도 개발과 하네스 엔지니어링 수료증",
+        "en": "AI-Augmented Specification-Driven Development and Harness Engineering"
+      },
+      "description": {
+        "ko": "한국정보과학회 소프트웨어공학 소사이어티\n교육 기간: 2026년 8월 10–11일\n이수 시간: 총 13시간\n수료일: 2026년 8월 11일",
+        "en": "KIISE Software Engineering Society\nCourse dates: August 10–11, 2026\n13 hours completed\nCompletion date: August 11, 2026"
+      },
+      "image": "res/completion-ai-engineering.jpeg"
+    },
+    {
+      "id": "gtelp",
+      "title": {
+        "ko": "G-TELP Level 2 성적표",
+        "en": "G-TELP Level 2 Score Report"
+      },
+      "description": {
+        "ko": "Mastery · 98%\n청취 96% · 독해 및 어휘 100% · 문법 96%\n2026년 9월 8일",
+        "en": "Mastery · 98%\nListening 96% · Reading & Vocabulary 100% · Grammar 96%\nSeptember 8, 2026"
+      },
+      "image": "res/gtelp-level-2.jpeg"
+    }
   ]
 }

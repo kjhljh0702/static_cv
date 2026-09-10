@@ -1,6 +1,6 @@
 import * as THREE from "./vendor/three.module.min.js";
 
-import { surfaceMaps, softBox, addStudioDetails, detailRover, articulatedArm } from "./assets/js/world-details.js?v=20260907.1";
+import { surfaceMaps, softBox, addStudioDetails, detailRover, articulatedArm } from "./assets/js/world-details.js?v=20260910.1";
 
 const root = document.documentElement;
 const stage = document.getElementById("metaverse-stage");
@@ -323,12 +323,22 @@ function createLounge() {
   const sofa = new THREE.Group();
   sofa.position.set(0, 0, -1.7);
   const woodMaterial = createThemedMaterial("wood", { roughness: 0.76 });
-  const cushionMaterial = createThemedMaterial("surface", { roughness: 0.88 });
-  addBox(sofa, [4.6, 0.28, 0.86], [0, 0.54, 0.88], cushionMaterial);
-  addBox(sofa, [4.6, 0.75, 0.18], [0, 0.9, -0.65], cushionMaterial);
-  addBox(sofa, [0.22, 0.72, 2.15], [-2.2, 0.76, 0.24], cushionMaterial);
-  addBox(sofa, [0.22, 0.72, 2.15], [2.2, 0.76, 0.24], cushionMaterial);
-  addBox(sofa, [4.9, 0.12, 2.45], [0, 0.28, 0.25], woodMaterial);
+  const upholstery = new THREE.MeshStandardMaterial({color:0x345b7a,roughness:.94,...surfaceMaps("upholstery")});
+  const shell = new THREE.MeshStandardMaterial({color:0x273b4c,roughness:.94,...surfaceMaps("upholstery")});
+  const feet = createThemedMaterial("metal", {roughness:.55,metalness:.6});
+  // One supporting base: seat cushions meet the back instead of exposing the floor.
+  addBox(sofa,[4.56,.24,1.68],[0,.36,.1],shell);
+  addBox(sofa,[4.04,.78,.22],[0,.89,-.61],shell);
+  for(const x of [-1.34,0,1.34]) {
+    addBox(sofa,[1.30,.23,1.30],[x,.595,.16],upholstery);
+    const back=addBox(sofa,[1.30,.76,.25],[x,1.01,-.48],upholstery);
+    back.rotation.x=-.09;
+  }
+  for(const x of [-2.15,2.15]) {
+    addBox(sofa,[.26,.56,1.66],[x,.64,.1],shell);
+    addBox(sofa,[.28,.11,1.61],[x,.96,.1],upholstery);
+    for(const z of [-.52,.7]) addBox(sofa,[.1,.24,.1],[x,.13,z],feet);
+  }
   const table = new THREE.Group();
   table.position.set(0, 0, -0.1);
   const stoneMaterial = createThemedMaterial("floor", { roughness: 0.62 });

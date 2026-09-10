@@ -13,6 +13,7 @@ export function surfaceMaps(kind) {
   for (let y = 0; y < 512; y++) for (let x = 0; x < 512; x++) {
     let v = 185 + rand() * 18;
     if (kind === 'wood') v = 186 + 7 * Math.sin(y * 1.6 + Math.sin(x * .014) * 2 + Math.sin(x * .039) * .5) + rand() * 16;
+    if (kind === 'upholstery') v = 193 + (x % 4 < 2 ? 3 : 0) + (y % 4 < 2 ? 3 : 0) + rand() * 5;
     if (kind === 'fabric') v = 172 + (x % 4 < 2 ? 17 : 0) + (y % 4 < 2 ? 15 : 0) + rand() * 13;
     if (kind === 'stone') v = 194 + Math.sin(x * .027 + Math.sin(y * .02) * 3) * 5 + rand() * 12;
     if (kind === 'plaster') v = 205 + rand() * 16;
@@ -31,7 +32,7 @@ export function surfaceMaps(kind) {
   const map = new THREE.CanvasTexture(canvas); map.colorSpace = THREE.SRGBColorSpace;
   map.wrapS = map.wrapT = THREE.RepeatWrapping; map.anisotropy = 4;
   const bump = map.clone(); bump.colorSpace = THREE.NoColorSpace; bump.needsUpdate = true;
-  const value = { map, bumpMap: bump, bumpScale: kind === 'fabric' ? .016 : .035 };
+  const value = { map, bumpMap: bump, bumpScale: kind === 'upholstery' ? .003 : kind === 'fabric' ? .016 : .035 };
   maps.set(kind, value); return value;
 }
 
@@ -88,12 +89,7 @@ export function addStudioDetails(scene, renderer, box) {
   for(const z of [-10,-5,0,5,10]) box(scene,[28,.16,.12],[0,5.8,z],steel,{castShadow:false});
   const skylight = new THREE.Mesh(new THREE.PlaneGeometry(8,24),new THREE.MeshPhysicalMaterial({color:0xb9d4e5,roughness:.12,metalness:.12,transparent:true,opacity:.25,side:THREE.DoubleSide}));
   skylight.rotation.x=Math.PI/2;skylight.position.y=6.05;scene.add(skylight);
-  // Individual cushions, seams, feet, and reading objects add human scale.
-  for(const x of [-1.5,0,1.5]) {
-    box(scene,[1.39,.25,.87],[x,.73,-.82],blue);
-    const pillow=box(scene,[1.35,.58,.22],[x,1.1,-2.23],blue); pillow.rotation.x=-.13;
-  }
-  for(const x of [-2,2]) for(const z of [-2.45,-.5]) box(scene,[.08,.22,.08],[x,.15,z],steel);
+  // Reading objects sit on the lounge table; sofa geometry lives in createLounge.
   for(let i=0;i<3;i++) { const book=box(scene,[.45,.045,.32],[-.32+i*.055,.63+i*.05,-.05],i%2?blue:oak);book.rotation.y=.15*i; }
   const cup=new THREE.Mesh(new THREE.CylinderGeometry(.07,.06,.14,20,1,true),new THREE.MeshStandardMaterial({color:0xe4e0d4,roughness:.35,side:THREE.DoubleSide}));cup.position.set(.55,.65,-.05);scene.add(cup);
   // Broad luminous panels provide inexpensive reflections for brushed metal.

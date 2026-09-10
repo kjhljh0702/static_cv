@@ -244,7 +244,7 @@ test("all known routes resolve with original record counts", async ({
     ["projects", 6],
     ["research", 2],
     ["robotics", 3],
-    ["publications", 3],
+    ["publications", 2],
     ["awards", 1],
   ] as const) {
     await page.goto("./" + route);

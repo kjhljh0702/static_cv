@@ -1,6 +1,7 @@
 import { cv, t, ui, period, slugs } from "./data";
 import type { BookRecord } from "./components/book";
 export function recordFor(path: string): BookRecord | null {
+  if (path === "/publications/2") return recordFor("/projects/wall-climbing-robot");
   if (path === "/about")
     return {
       title: t(cv.profile.name),

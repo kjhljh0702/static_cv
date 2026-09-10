@@ -34,6 +34,7 @@ const routes = [
   ...Array.from({ length: 4 }, (_, i) => "experience/" + i),
   ...Array.from({ length: 3 }, (_, i) => "publications/" + i),
   "awards/0",
+  ...JSON.parse(await readFile("data.json", "utf8")).certificates.map(item => "certificates/" + item.id),
 ];
 for (const route of routes) {
   await mkdir("dist/" + route, { recursive: true });

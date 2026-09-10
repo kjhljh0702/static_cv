@@ -90,6 +90,11 @@ export function recordFor(path: string): BookRecord | null {
       ].join("\n"),
     };
   }
+  if (path.startsWith("/certificates/")) {
+    const certificate = cv.certificates.find(item => item.id === path.split("/")[2]);
+    if (!certificate) return null;
+    return { title: t(certificate.title), text: t(certificate.description), image: certificate.image };
+  }
   if (path.startsWith("/awards/")) {
     const p = cv.awards[Number(path.split("/")[2])];
     if (!p) return null;

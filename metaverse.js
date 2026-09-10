@@ -135,7 +135,8 @@ let wallDisplayMaterial;
 let jumpVelocity = 0;
 let jumpOffset = 0;
 let dustField;
-let certificate;
+const certificateFrames = [];
+const certificateRecords = new Map();
 let bobPhase = 0;
 let bobAmount = 0;
 let moveIntensity = 0;
@@ -603,9 +604,9 @@ function createAtmosphere() {
 }
 
 /* the KCC 2026 certificate, framed on the back-right wall */
-function createCertificate() {
+function createCertificate(record, index = 0) {
   const group = new THREE.Group();
-  group.position.set(11.9, 2.62, -11.82);
+  group.position.set(7.7 + index * 2.1, 2.62, -11.82);
 
   const frameMaterial = createThemedMaterial("metal", { roughness: 0.38, metalness: 0.55 });
   addBox(group, [1.72, 2.26, 0.09], [0, 0, 0], frameMaterial, { castShadow: false });
@@ -618,7 +619,7 @@ function createCertificate() {
   paper.position.set(0, 0, 0.07);
   group.add(paper);
 
-  new THREE.TextureLoader().load("res/award-kcc-2026.jpeg", (texture) => {
+  new THREE.TextureLoader().load(record.image, (texture) => {
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = renderer?.capabilities.getMaxAnisotropy?.() || 1;
     paperMaterial.map = texture;
@@ -635,7 +636,9 @@ function createCertificate() {
   group.add(light, target);
   light.target = target;
 
-  certificate = group;
+  certificateFrames.push({group, definition:{id:record.id,ko:record.title.ko,en:record.title.en}});
+  certificateRecords.set(record.id,record);
+  stage.dataset.certificateCount=String(certificateFrames.length);
   scene.add(group);
 }
 
@@ -666,7 +669,10 @@ function initializeScene() {
   createRover();
   createRobotArm();
   addStudioDetails(scene, renderer, addBox);
-  createCertificate();
+  createCertificate({id:"awards",title:{ko:"우수발표논문상",en:"Outstanding Paper Award"},image:"res/award-kcc-2026.jpeg"});
+  fetch("data.json").then(response=>response.json()).then(data=>{
+    (data.certificates || []).forEach((record,index)=>createCertificate({...record,id:"certificates/"+record.id},index+1));
+  }).catch(()=>{});
   createAtmosphere();
   resizeRenderer();
 
@@ -777,7 +783,7 @@ function updateNearestStation(elapsed) {
   let nextStation = null;
   let nearestDistance = Infinity;
 
-  stations.forEach((station) => {
+  [...stations, ...certificateFrames].forEach((station) => {
     const dx = camera.position.x - station.group.position.x;
     const dz = camera.position.z - station.group.position.z;
     const distance = Math.hypot(dx, dz);
@@ -960,6 +966,13 @@ function sanitizeClone(clone) {
 }
 
 function renderDetail(sectionId) {
+  const certificate=certificateRecords.get(sectionId);
+  if(certificate && sectionId.startsWith("certificates/")) {
+    detailTitle.textContent=certificate.title[language];
+    const description=document.createElement("p");description.textContent=certificate.description[language];description.style.whiteSpace="pre-line";
+    const image=document.createElement("img");image.src=certificate.image;image.alt=certificate.title[language];image.style.cssText="display:block;width:100%;max-width:760px;height:auto;margin:20px auto";
+    detailContent.replaceChildren(description,image);return true;
+  }
   const source = document.getElementById(sectionId);
   if (!source) {
     return false;

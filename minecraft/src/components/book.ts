@@ -1,4 +1,5 @@
 import { el, button, image } from "./dom";
+import {viewArtifact} from "./viewer";
 import { BASE, ui } from "../data";
 export type BookRecord = {
   title: string;
@@ -77,7 +78,8 @@ export function book(
     view.href = BASE + record.image;
     view.target = "_blank";
     view.rel = "noopener";
-    paper.append(view);
+    const inspect=button(ui("Inspect document", "증서 확대 보기"),()=>viewArtifact(BASE+record.image!,record.title),"pixel-button book-inspect");
+    paper.append(inspect,view);
   } else paper.append(el("p", "book-text", pages[current]));
   shell.append(paper);
   const controls = el("div", "book-controls");

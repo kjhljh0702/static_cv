@@ -4,6 +4,7 @@
 import {
   animate, createTimeline, stagger, utils, svg, spring, eases
 } from '../../vendor/anime.esm.min.js';
+import { upgradePortfolio } from './portfolio-studio.js?v=20261028.1';
 import { scrollStory } from './scroll-story.js?v=20260908.1';
 import { cinematic } from './cinematic.js?v=20260905.1';
 import { render, setLang, getLang, UI, chars } from './render.js';
@@ -241,7 +242,7 @@ function chrome() {
    ================================================================== */
 function loader() {
   const wrap = q('#loader'), curtain = q('#curtain');
-  q('#loaderName').innerHTML = chars('JEONGHUN LEE');
+  q('#loaderName').innerHTML = chars('LEE JEONG HOON');
   document.body.classList.add('is-locked');
 
   const counter = { v: 0 };
@@ -685,7 +686,7 @@ function lightbox() {
   };
 
   document.addEventListener('click', ev => {
-    const card = ev.target.closest('.pcard,.award__cert');
+    const card = ev.target.closest('.pcard__img,.award__cert');
     if (card) {
       const src = q('img', card);
       if (!src) return;
@@ -794,6 +795,7 @@ async function boot() {
 
   DATA = await (await fetch('data.json')).json();
   render(DATA);
+  upgradePortfolio(DATA);
 
   cinematic(); scrollStory(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
   menu(); dragTrack(); lightbox(); worldToggle();
@@ -812,6 +814,7 @@ async function boot() {
     q('#langOn').textContent = next.toUpperCase();
     q('#langOff').textContent = next === 'en' ? 'KO' : 'EN';
     render(DATA);
+    upgradePortfolio(DATA);
     pointerFx();
     requestAnimationFrame(() => {
       choreograph();

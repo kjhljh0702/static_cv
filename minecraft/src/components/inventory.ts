@@ -35,6 +35,7 @@ export function slot(
     s.append(el("span", "stack-count", String(item.count)));
   s.addEventListener("pointerenter", (e) => {
     if (e.pointerType !== "touch") tooltip.show(item, e.clientX, e.clientY);
+    document.dispatchEvent(new CustomEvent("cv-inspect-item",{detail:item}));
   });
   s.addEventListener("pointermove", (e) => {
     if (e.pointerType !== "touch") tooltip.move(e.clientX, e.clientY);
@@ -43,6 +44,7 @@ export function slot(
   s.addEventListener("focus", () => {
     const r = s.getBoundingClientRect();
     tooltip.show(item, r.right, r.top);
+    document.dispatchEvent(new CustomEvent("cv-inspect-item",{detail:item}));
   });
   s.addEventListener("blur", () => tooltip.hide());
   s.addEventListener("click", () => {

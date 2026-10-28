@@ -59,3 +59,10 @@ This is an unofficial personal project, not affiliated with Mojang or Microsoft.
 The 3D view includes textured oak, stone, fabric and plaster, beveled furnishings, articulated robotics props, a skylight, and an exterior courtyard. WebGL initializes only when 3D is selected. See [upgrade and backup notes](docs/3d-studio-upgrade.md). The pre-upgrade standalone snapshot is in `backups/3d-cv-before-upgrade-2026-09-07/`.
 
 The Classic CV also includes a scroll-progress chapter dock, chapter jump controls, scroll-linked project image framing, and progress accents on education, skills, and papers. Mobile project records flow vertically with sharp, readable text and portrait imagery. These enhancements live in `assets/js/scroll-story.js` and respect reduced motion.
+
+
+## October 2026 portfolio refinement
+
+Classic uses an editorial Hanyang-blue layout with responsive typography, project category filters, accessible project dossiers, CV download, and a three-document certificate gallery. `assets/js/portfolio-studio.js` derives all content from the existing CV data and supports English/Korean. Presentation overrides live in `assets/css/studio.css`.
+
+Minecraft retains its native inventory atlases, numbered section navigation, lab-coated player, and original game recordings. It now includes a persistent nine-slot hotbar, desktop item inspection pane, crafting ingredients, in-place certificate viewing with zoom, and a layered cherry grove with a pond, bridge, lanterns and moving clouds. Distant terrain is instanced and the background renders at 30 FPS independently of player tracking. No dependencies were added.

@@ -4,7 +4,7 @@ import type { TooltipManager } from "./tooltip";
 export function sprite(item: Pick<Item, "sprite" | "enchanted">) {
   const wrap = el("span", `item-sprite${item.enchanted ? " enchanted" : ""}`);
   wrap.append(
-    image(BASE + `minecraft/items/${item.sprite}.png`, "", "pixel-image"),
+    image(BASE + `minecraft/items/${item.sprite}.png?v=vanilla-1.20.1`, "", "pixel-image"),
   );
   return wrap;
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "file": "items/command.png",
+    "model": "command_block",
+    "render": "16×16 nearest-filtered render using vanilla 1.20.1 geometry, GUI transform and textures",
+    "sha256": "516fa987f1743ce9d9f9f4370fffccf7fced554e33e5c68d7ad3a13e30f4620c"
+  },
+  {
+    "file": "items/crafting.png",
+    "model": "crafting_table",
+    "render": "16×16 nearest-filtered render using vanilla 1.20.1 geometry, GUI transform and textures",
+    "sha256": "29b62ab630c1fee466ca0b13ea18dc99ae2a30d5e495cc26df09585a4c0f9af7"
+  },
+  {
+    "file": "items/piston.png",
+    "model": "piston_inventory",
+    "render": "16×16 nearest-filtered render using vanilla 1.20.1 geometry, GUI transform and textures",
+    "sha256": "3f53738f5f46fa7a1602c7c0992ad73d07ac16ff8d8e5b7d90b67877a4a57ba1"
+  },
+  {
+    "file": "items/chest.png",
+    "model": "chest",
+    "render": "16×16 nearest-filtered render using vanilla 1.20.1 geometry, GUI transform and textures",
+    "sha256": "d64507f8146f3ceb966dd8053332cda7f5b06dc54181391418450c9234f9d640"
+  }
+]

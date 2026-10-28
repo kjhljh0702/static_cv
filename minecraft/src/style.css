@@ -1025,5 +1025,5 @@ a:hover {
 @media(max-width:600px){.game-shell{gap:12px}.navigation-hotbar{--p:2px}.controls-hint{font-size:9px}.hud{width:100%;max-width:364px}.identity-lab{font-size:10px}.identity-role{font-size:11px}.nametag{font-size:19px}.artifact-heading h2{font-size:11px}.artifact-viewer{padding:9px}.artifact-viewport{padding:4px}.artifact-controls{gap:9px}}
 @media(min-width:601px) and (max-height:560px){.inspection-window{display:none}.navigation-hotbar{display:none}}
 @media(prefers-reduced-motion:reduce){.section-tab{transition:none}}
-.inventory-ingredients{position:absolute;left:calc(97 * var(--p));top:calc(27 * var(--p))}.mobile-section-caption{display:none}
+.inventory-ingredients{position:absolute;left:calc(97 * var(--p));top:calc(17 * var(--p))}.mobile-section-caption{display:none}
 @media(max-width:600px){.mobile-section-caption{display:block;max-width:calc(176 * var(--p));font-size:10px;color:#e8e8d7;line-height:1.25;margin:0;text-shadow:1px 1px #222}.inventory-layout{gap:5px}}

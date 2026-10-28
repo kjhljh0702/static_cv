@@ -1,0 +1,72 @@
+{
+  "version": "1.20.1",
+  "client_url": "https://piston-data.mojang.com/v1/objects/0c3ec587af28e5a785c0b4a7b8a30f9a8f78f838/client.jar",
+  "client_sha1": "0c3ec587af28e5a785c0b4a7b8a30f9a8f78f838",
+  "assets": [
+    {
+      "file": "blocks/glowstone.png",
+      "minecraft_asset": "assets/minecraft/textures/block/glowstone.png",
+      "sha256": "8daac30bdc6f018d7f648b3c31b329bab78c6e185ab83c9a80993969582ba797"
+    },
+    {
+      "file": "blocks/cherry_planks.png",
+      "minecraft_asset": "assets/minecraft/textures/block/cherry_planks.png",
+      "sha256": "7f06e0f17313710ca9e2865190829e5bce8b04ad85f50e1c7f54c134d344afaa"
+    },
+    {
+      "file": "blocks/command_block_front.png",
+      "minecraft_asset": "assets/minecraft/textures/block/command_block_front.png",
+      "sha256": "460460caef535e5fb474cac71298dd89bccb38ac2ad8cd58aa49a38aa4c4f8e0"
+    },
+    {
+      "file": "blocks/command_block_back.png",
+      "minecraft_asset": "assets/minecraft/textures/block/command_block_back.png",
+      "sha256": "709afc801701a452ee99120bdc6d1c76ffd8609ff88419428703ab735dc8c668"
+    },
+    {
+      "file": "blocks/command_block_side.png",
+      "minecraft_asset": "assets/minecraft/textures/block/command_block_side.png",
+      "sha256": "4d11cb9c595cb80c0db197db964e0d87df1795e38dda64ca65c1c6fbdecd6124"
+    },
+    {
+      "file": "blocks/crafting_table_top.png",
+      "minecraft_asset": "assets/minecraft/textures/block/crafting_table_top.png",
+      "sha256": "989c4e768fa5f145e5eea1027c1fe4c6adcf5eaf5234dc4140bb6404b4c1b532"
+    },
+    {
+      "file": "blocks/crafting_table_front.png",
+      "minecraft_asset": "assets/minecraft/textures/block/crafting_table_front.png",
+      "sha256": "ff53d9803d469fec24d2bc0d547f5e2155b080788f3cd701ca3e39973985665d"
+    },
+    {
+      "file": "blocks/crafting_table_side.png",
+      "minecraft_asset": "assets/minecraft/textures/block/crafting_table_side.png",
+      "sha256": "414736f6eab354a21063908a71e0372a6c52191d808113f1c8bfbbdf4c39ffc3"
+    },
+    {
+      "file": "blocks/oak_planks.png",
+      "minecraft_asset": "assets/minecraft/textures/block/oak_planks.png",
+      "sha256": "3b00412fec87bd07b83825b86de49bcb6c186ca7799f41721a36b04e5d8ed161"
+    },
+    {
+      "file": "blocks/piston_side.png",
+      "minecraft_asset": "assets/minecraft/textures/block/piston_side.png",
+      "sha256": "ee0373fb6ad8a67b28e96cd267276917e131dc59263d1a3fb9736cf34b53e11f"
+    },
+    {
+      "file": "blocks/piston_top.png",
+      "minecraft_asset": "assets/minecraft/textures/block/piston_top.png",
+      "sha256": "6c78293024deffbea320b7ccf21ec1291f407e879ef8384fc0c8e353bbfbb303"
+    },
+    {
+      "file": "blocks/piston_bottom.png",
+      "minecraft_asset": "assets/minecraft/textures/block/piston_bottom.png",
+      "sha256": "320ba58de04f3af18415cb4a71a0068c75129b5816c4f87980532cd7db6fbcea"
+    },
+    {
+      "file": "blocks/chest.png",
+      "minecraft_asset": "assets/minecraft/textures/entity/chest/normal.png",
+      "sha256": "8e74d2298fe59992fff90591626585381efb24ff2255413be3364677b01111fc"
+    }
+  ]
+}

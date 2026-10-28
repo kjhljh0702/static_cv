@@ -9,6 +9,7 @@ export class CherryGrove {
   sun=new THREE.DirectionalLight(0xffffff,2.4);
   disc=new THREE.Mesh(new THREE.PlaneGeometry(5,5),new THREE.MeshBasicMaterial({color:0xfff5cc}));
   clouds:THREE.Mesh[]=[];
+  blockLights:THREE.PointLight[]=[];
   lastDraw=0;
   reduced=matchMedia('(prefers-reduced-motion: reduce)');
   constructor(public host:HTMLElement) {
@@ -48,7 +49,12 @@ export class CherryGrove {
     // World-space UVs keep each top-face tile one Minecraft block wide.
     const uv=floor.geometry.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)*110,uv.getY(i)*110);
     for(const m of [grass,dirt]) {m.map!.wrapS=m.map!.wrapT=THREE.RepeatWrapping;}
-    this.scene.add(floor,this.ambient,this.sun,this.disc);
+    // Vertex-lit ground needs a modest surface grid for local block light to reach it.
+    const groundGeometry=new THREE.PlaneGeometry(110,110,55,55);
+    const groundUV=groundGeometry.attributes.uv;
+    for(let i=0;i<groundUV.count;i++)groundUV.setXY(i,groundUV.getX(i)*110,groundUV.getY(i)*110);
+    const ground=new THREE.Mesh(groundGeometry,grass);ground.rotation.x=-Math.PI/2;ground.position.set(0,.01,-25);
+    this.scene.add(floor,ground,this.ambient,this.sun,this.disc);
     // Distant stepped terrain gives the grove a horizon and believable depth.
     const heights:{x:number;z:number;height:number}[]=[];
     for(let x=-42;x<=42;x+=3)for(let z=-65;z<=-36;z+=3) {
@@ -63,18 +69,21 @@ export class CherryGrove {
     const planks:THREE.Vector3[]=[];
     for(let x=-16;x<=-4;x++)for(let z=-4;z<=6;z++)if(x===-16||x===-4||z===-4||z===6)planks.push(new THREE.Vector3(x,.25,z));
     instances(planks,[dirt,dirt,grass,dirt,dirt,dirt]);
-    const boardMaterial=new THREE.MeshLambertMaterial({map:wood.map,color:0xc79f91});
+    const boardMaterial=new THREE.MeshLambertMaterial({map:texture('cherry_planks')});
     for(let z=-4;z<=6;z++) {
       const plank=new THREE.Mesh(new THREE.BoxGeometry(3,.2,.94),boardMaterial);plank.position.set(-10,.65,z);this.scene.add(plank);
       if(z%3===0)for(const x of [-11.25,-8.75]) {const post=new THREE.Mesh(new THREE.BoxGeometry(.22,1.25,.22),wood);post.position.set(x,1,z);this.scene.add(post);}
     }
-    const lanternFrame=new THREE.MeshLambertMaterial({color:0x3b3938});
-    const lanternGlow=new THREE.MeshBasicMaterial({color:0xffd18a});
+    const glowstoneTexture=texture('glowstone');
+    const glowstone=new THREE.MeshLambertMaterial({map:glowstoneTexture,emissiveMap:glowstoneTexture,emissive:0xffffff,emissiveIntensity:.8});
     for(const [x,z] of [[-5,5],[6,4],[-5,-11],[6,-12],[-6,-24],[6,-25]]) {
-      const post=new THREE.Mesh(new THREE.BoxGeometry(.3,2.6,.3),wood);post.position.set(x,1.3,z);this.scene.add(post);
-      const casing=new THREE.Mesh(new THREE.BoxGeometry(.7,.9,.7),lanternFrame);casing.position.set(x,2.8,z);this.scene.add(casing);
-      const glow=new THREE.Mesh(new THREE.BoxGeometry(.72,.55,.72),lanternGlow);glow.position.set(x,2.8,z);this.scene.add(glow);
+      const post=new THREE.Mesh(new THREE.BoxGeometry(.25,2.5,.25),wood);post.position.set(x,1.25,z);this.scene.add(post);
+      const block=new THREE.Mesh(new THREE.BoxGeometry(1,1,1),glowstone);block.position.set(x,3,z);this.scene.add(block);
+      // No shadow maps: warm local light, without six expensive shadow renders.
+      const light=new THREE.PointLight(0xffc878,14,11,2);light.position.set(x,2.45,z);this.scene.add(light);this.blockLights.push(light);
     }
+    this.renderer.domElement.dataset.lighting='glowstone';
+    this.renderer.domElement.dataset.blockLights=String(this.blockLights.length);
 
     const cloud=new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:.8});
     for(let i=0;i<8;i++) {const c=new THREE.Mesh(new THREE.BoxGeometry(8+i%3*3,.35,3),cloud);c.position.set(-35+i*11,19,-30-i%3*12);this.scene.add(c);this.clouds.push(c);}

@@ -10,7 +10,7 @@ test('phone layout has margins, top tabs and touch-reactive petals',async({brows
  await expect.poll(async()=>{
   point=await page.locator('.cherry-petals').evaluate((c:HTMLCanvasElement)=>{
    const d=c.getContext('2d')!.getImageData(0,0,c.width,c.height).data;
-   for(let y=Math.floor(c.height*.78);y<c.height-15;y++)for(let x=5;x<c.width-5;x++)if(d[(y*c.width+x)*4+3]>0)return{x:x*3,y:y*3};return null;
+   for(let y=Math.floor(c.height*.78);y<c.height-15;y++)for(let x=5;x<c.width-5;x++)if(d[(y*c.width+x)*4+3]>0 && !document.elementFromPoint(x*3,y*3)?.closest('button,a,.mc-window,.book-window'))return{x:x*3,y:y*3};return null;
   });return point!==null;
  }).toBe(true);
  await page.touchscreen.tap(point!.x,point!.y);

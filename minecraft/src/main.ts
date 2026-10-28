@@ -17,6 +17,7 @@ import { el, button, safeLink } from "./components/dom";
 import { grid, slot, sprite } from "./components/inventory";
 import { TooltipManager } from "./components/tooltip";
 import { PlayerPreview } from "./components/player";
+import {inspection} from "./components/inspection";
 import { book } from "./components/book";
 import { recordFor } from "./records";
 import { SoundManager } from "./systems/sound";
@@ -48,7 +49,7 @@ preview.setAttribute(
 function scale() {
   const landscape = innerWidth > 600 && innerHeight <= 560;
   const s = Math.max(1, Math.min(4,
-    Math.floor((innerWidth - (landscape ? 160 : innerWidth <= 600 ? 24 : 24)) / (innerWidth <= 600 ? 176 : 250)),
+    Math.floor((innerWidth - (landscape ? 160 : innerWidth <= 600 ? 24 : 24)) / (innerWidth <= 600 ? 176 : innerWidth > 1100 ? 356 : 250)),
     landscape ? Math.max(2, Math.floor((innerHeight - 48) / 166)) : Math.floor((innerHeight - (innerWidth <= 600 ? 32 : 220)) / (innerWidth <= 600 ? 310 : 222)),
   ));
   document.documentElement.style.setProperty("--gui-scale", String(s));
@@ -120,6 +121,12 @@ function inventory() {
   const output = slot(navItems()[8], tip, activate);
   output.classList.add("resume-output");
   panel.append(output);
+  const ingredients=grid([
+    {id:"ingredient-code",name:ui("Code intelligence","코드 인텔리전스"),sprite:"command",category:ui("Research ingredient","연구 재료"),route:"/research"},
+    {id:"ingredient-analysis",name:ui("Static analysis","정적 분석"),sprite:"eye",category:ui("Research ingredient","연구 재료"),route:"/projects"},
+    {id:"ingredient-robotics",name:ui("Robotics","로보틱스"),sprite:"piston",category:ui("Engineering ingredient","공학 재료"),route:"/robotics"},
+    {id:"ingredient-knowledge",name:ui("Research output","연구 성과"),sprite:"paper",category:ui("Knowledge ingredient","지식 재료"),route:"/publications"},
+  ],4,tip,activate,2);ingredients.classList.add("inventory-ingredients");panel.append(ingredients);
   const contents: (Item | undefined)[] = Array(27).fill(undefined);
   contents[0] = {
     id: "award-0", name: t(cv.awards[0].title), sprite: "nether-star",
@@ -399,7 +406,9 @@ function render() {
     const index = tabs.indexOf(document.activeElement as HTMLButtonElement);
     tabs[(index + (e.key === "ArrowDown" ? 1 : 7)) % 8].focus();
   });
-  layout.append(navigation, panel);
+  const caption=el("div","mobile-section-caption",`${String(Math.max(0,navItems().findIndex(item=>item.id===group))+1).padStart(2,"0")} / ${navItems().find(item=>item.id===group)?.name??record?.title??ui("Inventory","인벤토리")}`);
+  layout.append(navigation,caption,panel);
+  if(path === "/inventory") layout.append(inspection(activate));
   stage.append(layout);
   const mainRoutes = navItems()
     .slice(0, 8)
@@ -419,6 +428,12 @@ function render() {
   bar.append(fill);
   xp.append(bar);
   hud.append(xp);
+  const hotbar=grid(navItems(),9,tip,activate);hotbar.classList.add("navigation-hotbar");hotbar.setAttribute("aria-label",ui("Quick access hotbar","빠른 이동 핫바"));
+  hotbar.querySelectorAll<HTMLButtonElement>(".slot").forEach((slot,index)=>{
+    const selected=navItems()[index].route?.split("?")[0]===path;
+    if(selected)slot.setAttribute("aria-current","page");
+    slot.append(el("span","hotbar-key",String(index+1)));
+  });hud.append(hotbar);
   hud.append(
     el(
       "p",
@@ -553,6 +568,7 @@ function openCommands() {
 }
 addEventListener("keydown", (e) => {
   if (
+    document.querySelector(".artifact-viewer[open]") ||
     (e.target as HTMLElement).matches("input,textarea") ||
     document.querySelector("#command-root")!.childElementCount
   )

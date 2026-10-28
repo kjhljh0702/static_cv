@@ -13,7 +13,7 @@ export const UI = {
     present:'Present', role:'Role', contactH:["Let's","build","something"],
     navHome:'Home', navAbout:'About', navExp:'Experience', navEdu:'Education',
     navProj:'Work', navSkills:'Skills', navRes:'Research', navContact:'Contact',
-    stPapers:'Papers & posters', stProjects:'Shipped projects',
+    stPapers:'Papers & posters', stProjects:'Selected projects',
     stRoles:'Roles held', stGpa:'Major GPA',
     awTrack:'Track', awCert:'Certificate', awPaper:'Awarded paper',
     awBadge:'Award', drag:'Drag',
@@ -82,7 +82,7 @@ export function render(D) {
   const name = t(P.name);
   const parts = LANG === 'ko'
     ? (name.length > 2 ? [name.slice(0, 1), name.slice(1)] : [name])   // 이 / 정훈
-    : name.split(' ');
+    : [name.split(' ')[0], name.split(' ').slice(1).join(' ')];
   $('#heroName').innerHTML = parts.map((w,i) =>
     `<span class="hero__line">${chars(w)}</span>`).join('') ;
   // gradient-tint the last line

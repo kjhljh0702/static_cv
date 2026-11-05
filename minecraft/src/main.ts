@@ -122,9 +122,9 @@ function inventory() {
   output.classList.add("resume-output");
   panel.append(output);
   const ingredients=grid([
-    {id:"ingredient-code",name:ui("Code intelligence","코드 인텔리전스"),sprite:"command",category:ui("Research ingredient","연구 재료"),route:"/research"},
+    {id:"ingredient-code",name:ui("Code intelligence","코드 인텔리전스"),sprite:"repeater",category:ui("Research ingredient","연구 재료"),route:"/research"},
     {id:"ingredient-analysis",name:ui("Static analysis","정적 분석"),sprite:"eye",category:ui("Research ingredient","연구 재료"),route:"/projects"},
-    {id:"ingredient-robotics",name:ui("Robotics","로보틱스"),sprite:"piston",category:ui("Engineering ingredient","공학 재료"),route:"/robotics"},
+    {id:"ingredient-robotics",name:ui("Robotics","로보틱스"),sprite:"crossbow",category:ui("Engineering ingredient","공학 재료"),route:"/robotics"},
     {id:"ingredient-knowledge",name:ui("Research output","연구 성과"),sprite:"paper",category:ui("Knowledge ingredient","지식 재료"),route:"/publications"},
   ],4,tip,activate,2);ingredients.classList.add("inventory-ingredients");panel.append(ingredients);
   const contents: (Item | undefined)[] = Array(27).fill(undefined);

@@ -68,3 +68,12 @@ Classic uses an editorial Hanyang-blue layout with responsive typography, projec
 Minecraft retains its native inventory atlases, numbered section navigation, lab-coated player, and original game recordings. It now includes a persistent nine-slot hotbar, desktop item inspection pane, crafting ingredients, in-place certificate viewing with zoom, and a layered cherry grove with a pond, bridge, textured glowstone lights and moving clouds. Distant terrain is instanced and the background renders at 30 FPS independently of player tracking. No dependencies were added.
 
 Glowstone uses the original 1.20.1 block texture and local point lights that illuminate a subdivided ground surface at night. `scripts/fetch-vanilla-blocks.py` extracts and verifies original client/CDN assets; `scripts/render-vanilla-items.mjs` renders the four block-item icons from vanilla textures/models using the built preview. Asset provenance and hashes are retained under `minecraft/public/minecraft/`.
+
+
+## November 2026 cursor effect and item corrections
+
+Classic includes an original, dependency-free cursor swarm in `assets/js/swarm-studio.js` and `assets/css/swarm.css`. Small local cursors outline and reveal visible content while scrolling. The Swarm control provides pause and replay; the preference persists locally, and reduced-motion mode disables the effect. It suspends in the 3D view, hidden tabs, and open dialogs. The former artificial percentage-loading sequence is removed.
+
+Concept references: [DhvanilPatel/swarm-cursors](https://github.com/DhvanilPatel/swarm-cursors) and [Joel Califa’s Swarm](https://califa.github.io/swarm/). Neither project’s code is included. The linked repository describes itself as an extension and does not grant a reuse license.
+
+Active Minecraft item icons now use the original game PNGs directly. The programming/research item uses the vanilla repeater, and robotics uses the vanilla crossbow; locally rendered command-block and piston icons are no longer displayed. Inventory layout and glowstone lighting are preserved. `tests/swarm-cursors.spec.ts` checks asset checksums as well as motion preferences and cursor controls.

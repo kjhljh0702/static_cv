@@ -4,10 +4,11 @@
 import {
   animate, createTimeline, stagger, utils, svg, spring, eases
 } from '../../vendor/anime.esm.min.js';
-import { upgradePortfolio } from './portfolio-studio.js?v=20261028.1';
+import {initSwarm} from './swarm-studio.js?v=20261105.1';
+import { upgradePortfolio } from './portfolio-studio.js?v=20261105.1';
 import { scrollStory } from './scroll-story.js?v=20260908.1';
 import { cinematic } from './cinematic.js?v=20260905.1';
-import { render, setLang, getLang, UI, chars } from './render.js';
+import { render, setLang, getLang, UI, chars } from './render.js?v=20261105.1';
 
 const q  = (s, r = document) => r.querySelector(s);
 const qa = (s, r = document) => [...r.querySelectorAll(s)];
@@ -241,46 +242,17 @@ function chrome() {
    4. LOADER
    ================================================================== */
 function loader() {
-  const wrap = q('#loader'), curtain = q('#curtain');
-  q('#loaderName').innerHTML = chars('LEE JEONG HOON');
-  document.body.classList.add('is-locked');
+  const wrap=q('#loader'), curtain=q('#curtain');
+  wrap.hidden=true;wrap.style.display='none';curtain.hidden=true;curtain.style.display='none';
+  document.body.classList.remove('is-locked');
+  heroIn();
+  requestAnimationFrame(()=>{choreograph();dispatchEvent(new Event('portfolio-ready'));});
 
-  const counter = { v: 0 };
-  const tl = createTimeline({ defaults: { ease: 'out(3)' } })
-    .add('#loaderName .ch', {
-      y: ['110%', '0%'], opacity: [0, 1], duration: 900,
-      delay: stagger(28), ease: 'out(4)'
-    }, 0)
-    .add('#loadBar', { width: ['0%', '100%'], duration: 1500, ease: 'inOut(2)' }, 200)
-    .add(counter, {
-      v: 100, duration: 1500, ease: 'inOut(2)', modifier: utils.round(0),
-      onUpdate: () => { q('#loadNum').textContent = String(Math.round(counter.v)).padStart(3, '0'); }
-    }, 200)
-    .add('#loaderName .ch', { y: '-110%', opacity: 0, duration: 620, delay: stagger(14), ease: 'in(3)' }, 1850)
-    .add(['#loadBar', '#loadNum'], { opacity: 0, duration: 400 }, 1850)
-    .call(() => { curtain.hidden = false; }, 2150)
-    .add('#curtain i', {
-      scaleY: [1, 0], duration: 800, delay: stagger(70), ease: 'inOut(4)',
-      onComplete: () => { curtain.hidden = true; }
-    }, 2200)
-    .call(() => {
-      wrap.style.display = 'none';
-      document.body.classList.remove('is-locked');
-      heroIn();
-      // build the scroll choreography only once the page is at full height again
-      requestAnimationFrame(() => requestAnimationFrame(choreograph));
-    }, 2260);
-
-  if (REDUCED) {
-    tl.pause(); wrap.style.display = 'none';
-    document.body.classList.remove('is-locked');
-    heroIn(); requestAnimationFrame(choreograph);
-  }
 }
 
 /* hero entrance (runs once after the loader) */
 function heroIn() {
-  if (REDUCED) { qa('#heroName .ch,.hero__head,.hero__roles .chip,.hero__card,.scrollcue').forEach(e => e.style.opacity = 1); return; }
+  if (REDUCED || document.documentElement.dataset.swarm === 'on') { qa('#heroName .ch,.hero__head,.hero__roles .chip,.hero__card,.scrollcue').forEach(e => e.style.opacity = 1); return; }
   createTimeline()
     .add('#heroName .ch', {
       y: ['118%', '0%'], rotateX: [-78, 0], opacity: [0, 1],
@@ -797,7 +769,7 @@ async function boot() {
   render(DATA);
   upgradePortfolio(DATA);
 
-  cinematic(); scrollStory(); aurora(); cursor(); chrome(); pointerFx(); marqueeSkew();
+  initSwarm(); cinematic(); scrollStory(); aurora(); chrome(); pointerFx(); marqueeSkew();
   menu(); dragTrack(); lightbox(); worldToggle();
   if (new URLSearchParams(location.search).get('view') === '3d') setWorld(true);
   requestAnimationFrame(loader);

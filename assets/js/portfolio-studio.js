@@ -1,4 +1,4 @@
-import { t, getLang } from './render.js';
+import { t, getLang } from './render.js?v=20261105.1';
 let data;
 let filter = 'all';
 let initialized = false;
@@ -52,4 +52,5 @@ export function upgradePortfolio(source) {
  document.querySelectorAll('#pcards .pcard').forEach((card,index)=>{card.dataset.project=String(index);const button=node('button','dossier-trigger',local('Open project dossier','프로젝트 자세히 보기'));button.type='button';button.dataset.dossier=String(index);button.append(node('span','','↗'));card.querySelector('.pcard__txt').append(button);const image=card.querySelector('.pcard__img');image.removeAttribute('data-cursor');image.tabIndex=0;image.setAttribute('role','button');image.setAttribute('aria-label',local('View project image: ','프로젝트 이미지 보기: ')+t(data.projects[index].title));image.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();image.click();}});});
  const gallery=$('#credential-gallery');gallery.replaceChildren();[...data.awards,...data.certificates].forEach((record,index)=>{const button=node('button','credential');button.type='button';button.dataset.certificate=String(index);button.setAttribute('aria-label',local('View certificate: ','증서 보기: ')+t(record.title));const image=node('img','');image.src=record.image;image.alt=t(record.title);image.loading='lazy';const frame=node('div','credential-frame');frame.append(image,node('span','credential-open','↗'));button.append(frame,node('span','credential-index',`0${index+1} / ${local('VERIFIED DOCUMENT','증빙 자료')}`),node('strong','',t(record.title)));gallery.append(button);});
  applyFilter();
+ dispatchEvent(new Event('portfolio-rendered'));
 }

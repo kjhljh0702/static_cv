@@ -48,7 +48,7 @@ export function navItems(): Item[] {
     {
       id: "inventory",
       name: ui("Inventory", "인벤토리"),
-      sprite: "chest",
+      sprite: "compass",
       category: t(cv.profile.name),
       route: "/inventory",
     },
@@ -90,7 +90,7 @@ export function navItems(): Item[] {
     {
       id: "skills",
       name: ui("Skills", "기술"),
-      sprite: "crafting",
+      sprite: "comparator",
       category: ui("Crafting expertise", "전문 분야 조합"),
       route: "/skills",
     },
@@ -154,7 +154,7 @@ export function extraItems(): Item[] {
     {
       id: "robotics",
       name: ui("Robotics", "로보틱스"),
-      sprite: "piston",
+      sprite: "crossbow",
       category: t(cv.skills[2].category),
       route: "/robotics",
     },
@@ -168,7 +168,7 @@ export function extraItems(): Item[] {
     {
       id: "programming",
       name: ui("Programming", "프로그래밍"),
-      sprite: "command",
+      sprite: "repeater",
       category: cv.skills[1].items.map(t).join(", "),
       route: "/skills?recipe=1",
     },

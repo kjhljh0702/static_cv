@@ -1,13 +1,22 @@
-/* This is an original local visual effect, not multiplayer or an extension. */
-.swarm-stage{position:fixed;inset:0;width:100%;height:100%;z-index:640;pointer-events:none;contain:strict}
-#cv-shell [data-swarm-building]{clip-path:inset(0 var(--swarm-cut,0%) 0 0)!important}
-.swarm-controls{position:fixed;right:22px;bottom:23px;z-index:720;font:10px var(--mono);color:#bfd5eb}
+/* A visual build layer; native page content and actions stay in the real DOM. */
+.swarm-surface{position:fixed;inset:0;z-index:760;pointer-events:none;overflow:hidden;contain:layout paint}
+.swarm-surface[data-mode=intro]{background:radial-gradient(ellipse at 90% 0,#14335255,transparent 60%),#071222}
+.swarm-stage{position:fixed;inset:0;width:100%;height:100%;z-index:770;pointer-events:none;contain:strict}
+.swarm-piece{position:absolute;pointer-events:none}.swarm-copy{pointer-events:none!important;user-select:none!important}
+.swarm-draft{position:absolute;inset:0;overflow:hidden;pointer-events:none;white-space:pre-wrap}.swarm-caret{color:#b8d9fb;font-weight:400}
+#cv-shell [data-build-pending]{opacity:0!important;transform:none!important;filter:none!important}
+#cv-shell [data-build-complete]{opacity:1!important;filter:none!important;transform:none!important;clip-path:none!important}
+#cv-shell [data-build-complete] :is(.tw,.ch,.tag,li,[data-reveal]){opacity:1!important;transform:none!important;clip-path:none!important}
+#cv-shell [data-build-complete] .w{color:var(--ink)!important}
+.swarm-skip{position:fixed;top:18px;left:50%;translate:-50% 0;z-index:790;background:#102b45ed;border:1px solid #87add56b;color:#c5dbef;font:10px var(--mono);padding:10px 17px;border-radius:3px;cursor:pointer}
+.swarm-controls{position:fixed;right:22px;bottom:23px;z-index:790;font:10px var(--mono);color:#bfd5eb}
 .swarm-controls summary{list-style:none;cursor:pointer;border:1px solid #87add54d;background:#0b2035ed;padding:10px 13px;border-radius:3px;user-select:none;min-height:36px;display:flex;align-items:center;gap:8px}
-.swarm-controls summary::-webkit-details-marker{display:none}.swarm-controls summary::before{content:'';width:5px;height:5px;background:#8fc6ff;box-shadow:0 0 8px #8fc6ff55;border-radius:50%}
+.swarm-controls summary::-webkit-details-marker{display:none}.swarm-controls summary::before{content:'';width:5px;height:5px;background:#8fc6ff;border-radius:50%}
 .swarm-controls-panel{position:absolute;right:0;bottom:46px;display:grid;grid-template-columns:1fr 1fr;gap:9px;width:260px;padding:15px;background:#0b2035f5;border:1px solid #87add54d;border-radius:4px;box-shadow:0 14px 40px #0005}
 .swarm-controls-panel p{grid-column:1 / -1;margin:0 0 4px;font:11px/1.6 var(--sans);color:#9ab5cf}
 .swarm-controls-panel button{padding:9px 5px;border:1px solid #93b4d34d;border-radius:2px;background:#17324d;font:9px var(--mono);color:#c4d9ee}.swarm-controls-panel button:disabled{opacity:.45;cursor:default}
 .swarm-controls-panel a{grid-column:1 / -1;font-size:8px;color:#799bbd;margin-top:5px;text-decoration:underline;text-underline-offset:3px}
-html[data-view=metaverse] .swarm-controls,html[data-view=metaverse] .swarm-stage{display:none!important}
-@media(max-width:680px){.swarm-controls{right:12px;bottom:70px}.swarm-controls summary{font-size:8px;padding:8px 10px;min-height:30px}.swarm-controls-panel{bottom:40px;width:245px}.swarm-stage{z-index:640}}
-@media(prefers-reduced-motion:reduce){.swarm-stage{display:none!important}#cv-shell [data-swarm-building]{clip-path:none!important}}
+html[data-view=metaverse] :is(.swarm-controls,.swarm-stage,.swarm-surface,.swarm-skip){display:none!important}
+@media(max-width:680px){.swarm-controls{right:12px;bottom:70px}.swarm-controls summary{font-size:8px;padding:8px 10px;min-height:30px}.swarm-controls-panel{bottom:40px;width:245px}.swarm-skip{font-size:9px;top:12px;padding:9px 13px}}
+@media(prefers-reduced-motion:reduce){.swarm-stage,.swarm-surface,.swarm-skip{display:none!important}#cv-shell [data-build-pending]{opacity:1!important}}
+.swarm-typed{box-decoration-break:clone;-webkit-box-decoration-break:clone}

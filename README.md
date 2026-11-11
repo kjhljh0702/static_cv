@@ -72,8 +72,15 @@ Glowstone uses the original 1.20.1 block texture and local point lights that ill
 
 ## November 2026 cursor effect and item corrections
 
-Classic includes an original, dependency-free cursor swarm in `assets/js/swarm-studio.js` and `assets/css/swarm.css`. Small local cursors outline and reveal visible content while scrolling. The Swarm control provides pause and replay; the preference persists locally, and reduced-motion mode disables the effect. It suspends in the 3D view, hidden tabs, and open dialogs. The former artificial percentage-loading sequence is removed.
+Classic includes an original, dependency-free cursor swarm in `assets/js/swarm-studio.js` and `assets/css/swarm.css`. Cursors lay out components, type text, refine typography, and place images from a background-only stage. The Swarm control provides pause and replay; the preference persists locally, and reduced-motion mode disables the effect. It suspends in the 3D view, hidden tabs, and open dialogs. The former artificial percentage-loading sequence is removed.
 
 Concept references: [DhvanilPatel/swarm-cursors](https://github.com/DhvanilPatel/swarm-cursors) and [Joel Califa’s Swarm](https://califa.github.io/swarm/). Neither project’s code is included. The linked repository describes itself as an extension and does not grant a reuse license.
 
 Active Minecraft item icons now use the original game PNGs directly. The programming/research item uses the vanilla repeater, and robotics uses the vanilla crossbow; locally rendered command-block and piston icons are no longer displayed. Inventory layout and glowstone lighting are preserved. `tests/swarm-cursors.spec.ts` checks asset checksums as well as motion preferences and cursor controls.
+
+
+### Fast page-construction sequence
+
+The Classic opening now starts with a background-only visual stage. Cursors construct the navigation and layout, type draft text, select and resize typography, switch fonts, and place the portrait before handing off to the live CV. New sections are built in components as they enter the viewport. Cursors do not follow the visitor after construction. The opening completes in roughly two to three seconds, depending on viewport; the page can be used or skipped immediately.
+
+`swarm-blueprint.js` makes inert visual copies from the real CV layout; `swarm-studio.js` choreographs them. Source text, controls and links are preserved. Replay, pause, reduced-motion, keyboard focus and mobile behavior are covered in the browser tests. No code from the referenced third-party swarm projects is included.

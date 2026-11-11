@@ -4,7 +4,7 @@
 import {
   animate, createTimeline, stagger, utils, svg, spring, eases
 } from '../../vendor/anime.esm.min.js';
-import {initSwarm} from './swarm-studio.js?v=20261105.1';
+import {initSwarm} from './swarm-studio.js?v=20261111.1';
 import { upgradePortfolio } from './portfolio-studio.js?v=20261105.1';
 import { scrollStory } from './scroll-story.js?v=20260908.1';
 import { cinematic } from './cinematic.js?v=20260905.1';
@@ -246,7 +246,7 @@ function loader() {
   wrap.hidden=true;wrap.style.display='none';curtain.hidden=true;curtain.style.display='none';
   document.body.classList.remove('is-locked');
   heroIn();
-  requestAnimationFrame(()=>{choreograph();dispatchEvent(new Event('portfolio-ready'));});
+  choreograph();dispatchEvent(new Event('portfolio-ready'));
 
 }
 

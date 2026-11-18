@@ -1,6 +1,6 @@
 # Lee Jeong Hoon — Classic, Minecraft & 3D CV
 
-A personal, bilingual CV. The restored Claude CV is the default; its header provides Minecraft and 3D view buttons.
+A personal, bilingual CV. The Classic CV is the default; its header provides Minecraft and 3D view buttons.
 
 **Live:** https://kjhljh0702.github.io/static_cv/
 
@@ -50,7 +50,7 @@ Commit the resulting root entry points, route directories, `mc-assets/`, and `mi
 
 No manual assets are required. The English PDF is generated from the existing CV data. To regenerate it after updating `data.json`, follow the commands in the delivery notes.
 
-The previous designs remain in Git history, and the local `Claude made CV/` backup is untouched. The classic CV uses the previously restored Claude design, including the mobile portrait and Korean typography fixes. `?view=3d` opens the existing 3D world; `/inventory/` opens Minecraft. Minecraft’s toolbar links back to the default CV and 3D.
+The previous designs remain in Git history and local backups. The Classic CV includes the mobile portrait and Korean typography fixes. `?view=3d` opens the existing 3D world; `/inventory/` opens Minecraft. Minecraft’s toolbar links back to the default CV and 3D.
 
 This is an unofficial personal project, not affiliated with Mojang or Microsoft. Minecraft Java Edition textures are sourced from the public asset mirror and remain Mojang/Microsoft copyrighted artwork; see asset provenance. Minecraft UI, chest, book, and advancement recordings are fetched from Mojang’s asset CDN and remain copyrighted by their respective owners. Audio starts muted; no music is included.
 

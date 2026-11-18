@@ -80,3 +80,38 @@ test('mobile opening completes and keyboard focus can reveal a pending section',
  await page.locator('.dossier-trigger').first().focus();await expect(page.locator('#pcards .pcard').first()).toHaveCSS('opacity','1');
  await page.keyboard.press('Enter');await expect(page.locator('#studio-dialog')).toBeVisible();
 });
+
+test('each cursor owns one operation at a time throughout the opening',async({page})=>{
+ await page.addInitScript(()=>{
+  addEventListener('portfolio-ready',()=>queueMicrotask(()=>{
+   Object.assign(window,{cursorSchedule:[...document.querySelectorAll<HTMLElement>('.swarm-piece')].map(node=>({worker:Number(node.dataset.worker),start:Number(node.dataset.start),end:Number(node.dataset.end),kind:node.dataset.kind}))});
+  }));
+ });
+ await page.goto('./');await expect(page.locator('#loader')).toBeHidden();
+ const tasks=await page.evaluate(()=>(window as unknown as {cursorSchedule:{worker:number;start:number;end:number;kind:string}[]}).cursorSchedule);
+ expect(tasks.length).toBeGreaterThan(8);
+ for(const worker of new Set(tasks.map(task=>task.worker))){
+  const queue=tasks.filter(task=>task.worker===worker).sort((a,b)=>a.start-b.start);
+  for(let index=1;index<queue.length;index++)expect(queue[index].start).toBeGreaterThanOrEqual(queue[index-1].end);
+ }
+ expect(tasks.some(task=>task.kind==='text'&&task.end-task.start>=900)).toBe(true);
+ await expect(page.locator('.swarm-stage')).toBeHidden({timeout:10000});
+ await page.mouse.move(100,100);await page.mouse.move(1100,600);
+ await expect(page.locator('.swarm-stage')).toBeHidden();
+});
+
+test('newly queued operations wait for an already busy cursor',async({page})=>{
+ await page.goto('./');await expect(page.locator('#loader')).toBeHidden();
+ const timeline=await page.evaluate(async()=>{
+  const url=new URL('assets/js/swarm-scheduler.js',location.href).href;
+  const {scheduleJobs}=await import(url);
+  const existing=[{slot:0,start:0,duration:900,done:false},{slot:1,start:0,duration:500,done:false}];
+  const next=Array.from({length:8},(_,index)=>({slot:-1,start:Infinity,duration:180+index*30,done:false}));
+  scheduleJobs(next,existing,100,2);
+  return [...existing,...next];
+ });
+ for(const worker of [0,1]){
+  const queue=timeline.filter(task=>task.slot===worker).sort((a,b)=>a.start-b.start);
+  for(let index=1;index<queue.length;index++)expect(queue[index].start).toBeGreaterThanOrEqual(queue[index-1].start+queue[index-1].duration);
+ }
+});

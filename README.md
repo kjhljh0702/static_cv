@@ -81,6 +81,11 @@ Active Minecraft item icons now use the original game PNGs directly. The program
 
 ### Fast page-construction sequence
 
-The Classic opening now starts with a background-only visual stage. Cursors construct the navigation and layout, type draft text, select and resize typography, switch fonts, and place the portrait before handing off to the live CV. New sections are built in components as they enter the viewport. Cursors do not follow the visitor after construction. The opening completes in roughly two to three seconds, depending on viewport; the page can be used or skipped immediately.
+The Classic opening now starts with a background-only visual stage. Cursors construct the navigation and layout, type draft text, select and resize typography, switch fonts, and place the portrait before handing off to the live CV. New sections are built in components as they enter the viewport. Cursors do not follow the visitor after construction. The opening completes in a few seconds, depending on viewport; the page can be used or skipped immediately.
 
 `swarm-blueprint.js` makes inert visual copies from the real CV layout; `swarm-studio.js` choreographs them. Source text, controls and links are preserved. Replay, pause, reduced-motion, keyboard focus and mobile behavior are covered in the browser tests. No code from the referenced third-party swarm projects is included.
+
+
+### Cursor work ownership and pacing
+
+`swarm-scheduler.js` assigns exclusive, non-overlapping work to each visible cursor, including work queued during scrolling. Cursor motion is coupled directly to the frame drag, text caret, font selection, or image resize it is performing. There are no idle orbits or border-tracing laps after content appears. Per-operation timing is 20% slower than the previous release. Regression checks cover exclusive scheduling, queued work, typing and font changes, pause/replay, reduced motion, keyboard access, and mobile layout.
